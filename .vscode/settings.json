@@ -1,0 +1,12 @@
+{
+  "liveServer.settings.root": "/dist",
+  "liveServer.settings.port": 4000,
+  "cSpell.words": [
+    "clsx",
+    "Kanban",
+    "octicon",
+    "solidjs",
+    "Windster"
+  ],
+  "headwind.removeDuplicates": true
+}

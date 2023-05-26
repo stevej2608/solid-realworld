@@ -1,6 +1,4 @@
-public/*
-!public/index.html
-
+dist/*
 
 # dependencies
 /node_modules

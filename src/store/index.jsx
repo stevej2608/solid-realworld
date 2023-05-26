@@ -10,8 +10,11 @@ import createRouteHandler from "./createRouteHandler";
 
 const StoreContext = createContext();
 const RouterContext = createContext();
+
 export function Provider(props) {
   let articles, comments, tags, profile, currentUser;
+
+  
   const router = createRouteHandler(""),
     [state, setState] = createStore({
       get articles() {
