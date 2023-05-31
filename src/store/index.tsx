@@ -8,14 +8,21 @@ import createComments from "./createComments";
 import createProfile from "./createProfile";
 import createRouteHandler from "./createRouteHandler";
 
-const StoreContext = createContext();
+
+type StoreContextData = {
+  count: number,
+  name: string
+};
+
+const StoreContext = createContext<StoreContextData>();
 const RouterContext = createContext();
 
 export function Provider(props) {
   let articles, comments, tags, profile, currentUser;
 
-  
+
   const router = createRouteHandler(""),
+  
     [state, setState] = createStore({
       get articles() {
         return articles();
@@ -37,7 +44,9 @@ export function Provider(props) {
       token: localStorage.getItem("jwt"),
       appName: "conduit"
     }),
+
     actions = {},
+
     store = [state, actions],
     agent = createAgent(store);
 
