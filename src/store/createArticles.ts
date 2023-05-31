@@ -27,13 +27,17 @@ export default function createArticles(agent, actions, state, setState) {
   const [articleSource, setArticleSource] = createSignal();
 
   const fetchArticles = (args, { value }) => {
+    console.log('fetchArticles args %s', args[0])
     if (args[0] === "articles") {
       return $req(args[1]).then(({ articles, articlesCount }) => {
+
         queueMicrotask(() => setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) }));
+
         return articles.reduce((memo, article) => {
           memo[article.slug] = article;
           return memo;
         }, {});
+
       });
     }
     const article = state.articles[args[1]];
@@ -56,9 +60,11 @@ export default function createArticles(agent, actions, state, setState) {
 
   Object.assign(actions, {
     setPage: (page) => setState({ page }),
+
     loadArticles(predicate) {
       setArticleSource(["articles", predicate]);
     },
+
     loadArticle(slug) {
       setArticleSource(["article", slug]);
     },

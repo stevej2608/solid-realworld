@@ -6,7 +6,7 @@ import createAuth from "./createAuth";
 import createCommon from "./createCommon";
 import createComments from "./createComments";
 import createProfile from "./createProfile";
-import createRouteHandler from "./createRouteHandler";
+import { createRouteHandler, IRouteContext} from "./createRouteHandler";
 
 
 type StoreContextData = {
@@ -21,9 +21,9 @@ export function Provider(props) {
   let articles, comments, tags, profile, currentUser;
 
 
-  const router = createRouteHandler(""),
-  
-    [state, setState] = createStore({
+  const router = createRouteHandler("")
+
+  const [state, setState] = createStore({
       get articles() {
         return articles();
       },
@@ -68,5 +68,5 @@ export function useStore() {
 }
 
 export function useRouter() {
-  return useContext(RouterContext);
+  return useContext<IRouteContext>(RouterContext);
 }
