@@ -38,7 +38,7 @@ export default () => {
                     class="form-control"
                     type="text"
                     placeholder="URL of profile picture"
-                    value={state.image}
+                    value={state.image || ""}
                     onChange={updateState("image")}
                     disabled={state.updatingUser}
                   />
@@ -48,7 +48,7 @@ export default () => {
                     class="form-control form-control-lg"
                     type="text"
                     placeholder="Your Name"
-                    value={state.username}
+                    value={state.username || ""}
                     onChange={updateState("username")}
                     disabled={state.updatingUser}
                   />
@@ -58,7 +58,7 @@ export default () => {
                     class="form-control form-control-lg"
                     rows="8"
                     placeholder="Short bio about you"
-                    value={state.bio}
+                    value={state.bio || ""}
                     onChange={updateState("bio")}
                     disabled={state.updatingUser}
                   ></textarea>
@@ -68,7 +68,7 @@ export default () => {
                     class="form-control form-control-lg"
                     type="text"
                     placeholder="Email"
-                    value={state.email}
+                    value={state.email || ""}
                     onChange={updateState("email")}
                     disabled={state.updatingUser}
                   />
@@ -78,7 +78,7 @@ export default () => {
                     class="form-control form-control-lg"
                     type="password"
                     placeholder="Password"
-                    value={state.password}
+                    value={state.password || ""}
                     onChange={updateState("password")}
                     disabled={state.updatingUser}
                   />

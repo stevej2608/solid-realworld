@@ -1,6 +1,13 @@
 import NavLink from "../../components/NavLink";
 import ArticleList from "../../components/ArticleList";
 
+/**
+ * This is the conduit home page. Display navbar, banner
+ * tabs and article list.
+ *
+ * https://demo.realworld.io/#/
+ */
+
 export default ({ appName, token, handleSetPage, tab, store }) => {
   return (
     <div class="home-page">
@@ -14,8 +21,14 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
       <div class="container page">
         <div class="row">
           <div class="col-md-9">
+
+            {/* Display feed tabs */}
+
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
+
+                {/* Users feed - only if a user is logged in */}
+
                 {token && (
                   <li class="nav-item">
                     <NavLink class="nav-link" href="?tab=feed" active={tab() === "feed"}>
@@ -23,11 +36,17 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
                     </NavLink>
                   </li>
                 )}
+
+                {/* Global feed - always */}
+
                 <li class="nav-item">
                   <NavLink class="nav-link" href="?tab=all" active={tab() === "all"}>
                     Global Feed
                   </NavLink>
                 </li>
+
+                {/* Show popular tag feed - if one is selected */}
+
                 <Show when={tab() !== "all" && tab() !== "feed"}>
                   <li class="nav-item">
                     <a href="" class="nav-link active">
@@ -35,8 +54,12 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
                     </a>
                   </li>
                 </Show>
+
+
               </ul>
             </div>
+
+            {/* Display articles for selected feed */}
 
             <ArticleList
               articles={Object.values(store.articles)}
@@ -45,6 +68,8 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
               onSetPage={handleSetPage}
             />
           </div>
+
+          {/* Popular tags panel */}
 
           <div class="col-md-3">
             <div class="sidebar">
@@ -62,6 +87,7 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
               </Suspense>
             </div>
           </div>
+
         </div>
       </div>
     </div>

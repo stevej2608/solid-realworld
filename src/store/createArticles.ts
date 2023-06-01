@@ -42,7 +42,7 @@ export function createArticles(agent, actions, state, setState) {
   const [articleSource, setArticleSource] = createSignal();
 
   const fetchArticles = (args, { value }) => {
-    console.log('fetchArticles args %s', args[0])
+    console.log('fetchArticles args=[%s]', args[0])
     if (args[0] === "articles") {
       return $req(args[1]).then(({ articles, articlesCount }) => {
 

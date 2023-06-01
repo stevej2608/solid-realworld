@@ -5,8 +5,10 @@ const encode = encodeURIComponent;
 export function createAgent([state, actions]) {
 
   async function send(method, url, data, resKey) {
-    const headers = {},
-      opts = { method, headers };
+    const headers = {}
+    const opts = { method, headers }
+
+    console.log('send url=%s', url)
 
     if (data !== undefined) {
       headers["Content-Type"] = "application/json";

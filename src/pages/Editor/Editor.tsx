@@ -5,46 +5,54 @@ import { useStore } from "../../store/storeContext";
 import ListErrors from "../../components/ListErrors";
 
 export default ({ slug }) => {
-  const [store, { createArticle, updateArticle }] = useStore(),
-    [state, setState] = createStore({ tagInput: "", tagList: [] }),
-    updateState = field => ev => setState(field, ev.target.value),
-    handleAddTag = () => {
-      if (state.tagInput) {
-        setState(s => {
-          s.tagList.push(s.tagInput.trim());
-          s.tagInput = "";
-        });
-      }
-    },
-    handleRemoveTag = tag => {
-      !state.inProgress && setState("tagList", tags => tags.filter(t => t !== tag));
-    },
-    handleTagInputKeyDown = ev => {
-      switch (ev.keyCode) {
-        case 13: // Enter
-        case 9: // Tab
-        case 188: // ,
-          if (ev.keyCode !== 9) ev.preventDefault();
-          handleAddTag();
-          break;
-        default:
-          break;
-      }
-    },
-    submitForm = ev => {
-      ev.preventDefault();
-      setState({ inProgress: true });
-      const { inProgress, tagsInput, ...article } = state;
-      (slug ? updateArticle : createArticle)(article)
-        .then(article => (location.hash = `/article/${article.slug}`))
-        .catch(errors => setState({ errors }))
-        .finally(() => setState({ inProgress: false }));
-    };
+  const [store, { createArticle, updateArticle }] = useStore()
+  const [state, setState] = createStore({ tagInput: "", tagList: [] })
+
+  const updateState = field => ev => {
+    setState(field, ev.target.value)
+  }
+
+  const handleAddTag = () => {
+    if (state.tagInput) {
+      setState(s => {
+        s.tagList.push(s.tagInput.trim());
+        s.tagInput = "";
+      });
+    }
+  }
+
+  const handleRemoveTag = tag => {
+    !state.inProgress && setState("tagList", tags => tags.filter(t => t !== tag));
+  }
+
+  const handleTagInputKeyDown = ev => {
+    switch (ev.keyCode) {
+      case 13: // Enter
+      case 9: // Tab
+      case 188: // ,
+        if (ev.keyCode !== 9) ev.preventDefault();
+        handleAddTag();
+        break;
+      default:
+        break;
+    }
+  }
+
+  const submitForm = ev => {
+    ev.preventDefault();
+    setState({ inProgress: true });
+    const { inProgress, tagsInput, ...article } = state;
+    (slug ? updateArticle : createArticle)(article)
+      .then(article => (location.hash = `/article/${article.slug}`))
+      .catch(errors => setState({ errors }))
+      .finally(() => setState({ inProgress: false }));
+  }
+
   createComputed(() => {
     let article;
     if (!slug || !(article = store.articles[slug])) return;
     setState(article);
-  });
+  })
 
   return (
     <div class="editor-page">
@@ -59,7 +67,7 @@ export default ({ slug }) => {
                     type="text"
                     class="form-control form-control-lg"
                     placeholder="Article Title"
-                    value={state.title}
+                    value={state.title || ""}
                     onChange={updateState("title")}
                     disabled={state.inProgress}
                   />
@@ -69,7 +77,7 @@ export default ({ slug }) => {
                     type="text"
                     class="form-control"
                     placeholder="What's this article about?"
-                    value={state.description}
+                    value={state.description || ""}
                     onChange={updateState("description")}
                     disabled={state.inProgress}
                   />
@@ -79,7 +87,7 @@ export default ({ slug }) => {
                     class="form-control"
                     rows="8"
                     placeholder="Write your article (in markdown)"
-                    value={state.body}
+                    value={state.body || ""}
                     onChange={updateState("body")}
                     disabled={state.inProgress}
                   ></textarea>

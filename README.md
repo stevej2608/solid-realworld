@@ -9,9 +9,7 @@ The following changes have be made:
 - [X] Rationalised code and added extensive comments
 
 
-### realworld
-
-This project is a solid.js implementation of the canonical [realworld] project.
+The canonical [realworld] project links.
 
 * The reference demo for the project [demo.realworld.io]
 * The demo source [angularjs-realworld-example-app]

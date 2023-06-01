@@ -39,7 +39,7 @@ export default () => {
                     class="form-control form-control-lg"
                     type="text"
                     placeholder="Username"
-                    value={state.username}
+                    value={state.username || ""}
                     onChange={e => setState({ username: e.target.value })}
                   />
                 </fieldset>
@@ -49,7 +49,7 @@ export default () => {
                   class="form-control form-control-lg"
                   type="text"
                   placeholder="Email"
-                  value={state.email}
+                  value={state.email || ""}
                   onChange={e => setState({ email: e.target.value })}
                 />
               </fieldset>
@@ -58,7 +58,7 @@ export default () => {
                   class="form-control form-control-lg"
                   type="password"
                   placeholder="Password"
-                  value={state.password}
+                  value={state.password || ""}
                   onChange={e => setState({ password: e.target.value })}
                 />
               </fieldset>
