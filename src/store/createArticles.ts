@@ -22,8 +22,23 @@ export interface IArticlesResponse {
   article: IArticle;
 }
 
+export interface IArticleActions {
 
-export default function createArticles(agent, actions, state, setState) {
+  async deleteArticle(slug: any): Promise<void>;
+  async makeFavorite(slug: string): Promise<void>;
+  async unmakeFavorite(slug: string): Promise<void>;
+  async updateArticle(data: IArticle): Promise<void>;
+
+  createArticle(newArticle: INewArticle): IArticlesResponse;
+  loadArticle(slug: any): void;
+  loadArticles(predicate: any): void;
+  setPage: (page: any) => any;
+
+}
+
+
+export function createArticles(agent, actions, state, setState) {
+
   const [articleSource, setArticleSource] = createSignal();
 
   const fetchArticles = (args, { value }) => {
@@ -58,7 +73,10 @@ export default function createArticles(agent, actions, state, setState) {
     return agent.Articles.all(state.page, LIMIT, predicate);
   }
 
+  // Populate the provided actions container our actions
+
   Object.assign(actions, {
+
     setPage: (page) => setState({ page }),
 
     loadArticles(predicate) {

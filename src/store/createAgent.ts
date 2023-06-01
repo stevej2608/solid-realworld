@@ -2,8 +2,8 @@ const API_ROOT = "https://api.realworld.io/api";
 
 const encode = encodeURIComponent;
 
-export default function createAgent([state, actions]) {
-  
+export function createAgent([state, actions]) {
+
   async function send(method, url, data, resKey) {
     const headers = {},
       opts = { method, headers };

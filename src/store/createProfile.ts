@@ -1,6 +1,6 @@
 import { createSignal, createResource } from "solid-js";
 
-export default function createProfile(agent, actions, state, setState) {
+export function createProfile(agent, actions, state, setState) {
   const [username, setUsername] = createSignal();
   const [profile] = createResource(username, agent.Profile.get);
   Object.assign(actions, {

@@ -1,6 +1,6 @@
 import { createResource } from "solid-js";
 
-export default function createComments(agent, actions, state, setState) {
+export function createComments(agent, actions, state, setState) {
   const [comments, { mutate, refetch }] = createResource(
     () => state.articleSlug,
     agent.Comments.forArticle,

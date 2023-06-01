@@ -6,13 +6,13 @@ import Article from "./pages/Article";
 import Profile from "./pages/Profile";
 import Editor from "./pages/Editor";
 
-const Settings = lazy(() => import("./pages/Settings")),
-  Auth = lazy(() => import("./pages/Auth"));
+const Settings = lazy(() => import("./pages/Settings"))
+const Auth = lazy(() => import("./pages/Auth"))
 
-export default () => {
-  const [store, { pullUser }] = useStore(),
-    [appLoaded, setAppLoaded] = createSignal(false),
-    { match, getParams } = useRouter();
+export const App = () => {
+  const [store, { pullUser }] = useStore()
+  const [appLoaded, setAppLoaded] = createSignal(false)
+  const { match, getParams } = useRouter();
 
   if (!store.token) setAppLoaded(true);
   else {

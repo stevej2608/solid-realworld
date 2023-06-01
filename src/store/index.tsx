@@ -1,21 +1,38 @@
 import { createContext, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
-import createAgent from "./createAgent";
-import createArticles from "./createArticles";
-import createAuth from "./createAuth";
-import createCommon from "./createCommon";
-import createComments from "./createComments";
-import createProfile from "./createProfile";
+import { createAgent } from "./createAgent";
+import { createArticles, IArticleActions } from "./createArticles";
+import { createAuth, IAuthorActions } from "./createAuth";
+import { createCommon } from "./createCommon";
+import { createComments } from "./createComments";
+import { createProfile } from "./createProfile";
 import { createRouteHandler, IRouteContext} from "./createRouteHandler";
 
 
-type StoreContextData = {
-  count: number,
-  name: string
-};
+export interface IStoreContext {
+  state: {
 
-const StoreContext = createContext<StoreContextData>();
-const RouterContext = createContext();
+    readonly articles: any;
+    readonly comments: any;
+    readonly tags: any;
+    readonly profile: any;
+    readonly currentUser: any;
+
+    page: number;
+    totalPagesCount: number;
+    token: string;
+    appName: string;
+  }
+
+  actions: IAuthorActions & IArticleActions;
+}
+
+const StoreContext = createContext<IStoreContext>();
+const RouterContext = createContext<IRouteContext>();
+
+/**
+ * Aggregate of StoreContext and RouterContext
+ */
 
 export function Provider(props) {
   let articles, comments, tags, profile, currentUser;
@@ -23,27 +40,34 @@ export function Provider(props) {
 
   const router = createRouteHandler("")
 
-  const [state, setState] = createStore({
+  const [state, setState] = createStore<IStoreContext>({
       get articles() {
         return articles();
       },
+
       get comments() {
         return comments();
       },
+
       get tags() {
         return tags();
       },
+
       get profile() {
         return profile();
       },
+
       get currentUser() {
         return currentUser();
       },
+
       page: 0,
       totalPagesCount: 0,
       token: localStorage.getItem("jwt"),
       appName: "conduit"
     }),
+
+    // Holder for the setters
 
     actions = {},
 
@@ -64,7 +88,7 @@ export function Provider(props) {
 }
 
 export function useStore() {
-  return useContext(StoreContext);
+  return useContext<IStoreContext>(StoreContext);
 }
 
 export function useRouter() {

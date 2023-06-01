@@ -1,6 +1,6 @@
 import { createEffect, createResource } from "solid-js";
 
-export default function createCommon(agent, actions, state, setState) {
+export function createCommon(agent, actions, state, setState) {
   const [tags] = createResource(
     "tags",
     () => agent.Tags.getAll().then((tags) => tags.map((t) => t.toLowerCase())),
