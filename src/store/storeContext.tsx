@@ -54,14 +54,13 @@ export function createApplicationStore() {
       totalPagesCount: 0,
       token: localStorage.getItem("jwt"),
       appName: "conduit"
-    }),
+    })
 
     // Holder for ALL the store's actions
 
-    actions = {},
-
-    store = [state, actions],
-    agent = createAgent(store);
+    const actions = {}
+    const store = [state, actions]
+    const agent = createAgent(store)
 
     articles = createArticles(agent, actions, state, setState);
     comments = createComments(agent, actions, state, setState);
