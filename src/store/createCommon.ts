@@ -1,14 +1,28 @@
 import { createEffect, createResource } from "solid-js";
 
 export function createCommon(agent, actions, state, setState) {
-  const [tags] = createResource(
-    "tags",
-    () => agent.Tags.getAll().then((tags) => tags.map((t) => t.toLowerCase())),
-    { initialValue: [] }
-  );
+
+  const getTags = () => {
+    console.log('getTags')
+    return agent.Tags.getAll().then((tags) => tags.map((t) => t.toLowerCase()))
+  }
+
+  const [tags] = createResource("tags", getTags, { initialValue: [] } );
+
   createEffect(() => {
-    state.token ? localStorage.setItem("jwt", state.token) : localStorage.removeItem("jwt");
+
+    if (state.token) {
+      console.log('Add token %s', state.token)
+      localStorage.setItem("jwt", state.token)
+    }
+    else {
+      console.log('Remove token')
+      localStorage.removeItem("jwt");
+    }
+
   });
+
   actions.setToken = (token) => setState({ token });
+
   return tags;
 }

@@ -19,12 +19,16 @@ export function createAuth(agent, actions, setState): InitializedResource<boolea
 
     pullUser: () => setLoggedIn(true),
 
+    // TODO: Used
+
     async login(email, password) {
       const { user, errors } = await agent.Auth.login(email, password);
       if (errors) throw errors;
       actions.setToken(user.token);
       setLoggedIn(true);
     },
+
+    // TODO: Used
 
     async register(username, email, password) {
       const { user, errors } = await agent.Auth.register(username, email, password);
@@ -33,12 +37,16 @@ export function createAuth(agent, actions, setState): InitializedResource<boolea
       setLoggedIn(true);
     },
 
+    // TODO: used
+
     logout() {
       batch(() => {
         setState({ token: undefined });
         mutate(undefined);
       })
     },
+
+    // TODO: used
 
     async updateUser(newUser) {
       const { user, errors } = await agent.Auth.save(newUser);

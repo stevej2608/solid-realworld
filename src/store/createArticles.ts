@@ -77,15 +77,23 @@ export function createArticles(agent, actions, state, setState) {
 
   Object.assign(actions, {
 
+    // TODO: used
+
     setPage: (page) => setState({ page }),
+
+    // TODO: used
 
     loadArticles(predicate) {
       setArticleSource(["articles", predicate]);
     },
 
+    // TODO: used
+
     loadArticle(slug) {
       setArticleSource(["article", slug]);
     },
+
+    // TODO: used
 
     async makeFavorite(slug: string) {
       const article = state.articles[slug];
@@ -106,6 +114,8 @@ export function createArticles(agent, actions, state, setState) {
       }
     },
 
+    // TODO: used
+
     async unmakeFavorite(slug: string) {
       const article = state.articles[slug];
       if (article && article.favorited) {
@@ -125,12 +135,16 @@ export function createArticles(agent, actions, state, setState) {
       }
     },
 
+    // TODO: used
+
     async createArticle(newArticle: INewArticle): IArticlesResponse {
       const { article, errors } = await agent.Articles.create(newArticle);
       if (errors) throw errors;
       setState("articles", { [article.slug]: article });
       return article;
     },
+
+    // TODO: used
 
     async updateArticle(data: IArticle) {
       const { article, errors } = await agent.Articles.update(data);

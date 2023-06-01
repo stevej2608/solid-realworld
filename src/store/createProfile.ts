@@ -4,7 +4,13 @@ export function createProfile(agent, actions, state, setState) {
   const [username, setUsername] = createSignal();
   const [profile] = createResource(username, agent.Profile.get);
   Object.assign(actions, {
+
+    // TODO: used
+
     loadProfile: setUsername,
+
+    // TODO: used
+
     async follow() {
       if (state.profile && !state.profile.following) {
         setState("profile", "following", true);
@@ -15,6 +21,9 @@ export function createProfile(agent, actions, state, setState) {
         }
       }
     },
+
+    // TODO: used
+
     async unfollow() {
       if (state.profile && state.profile.following) {
         setState("profile", "following", false);
@@ -25,6 +34,7 @@ export function createProfile(agent, actions, state, setState) {
         }
       }
     }
+
   });
   return profile;
 }

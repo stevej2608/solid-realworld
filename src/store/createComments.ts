@@ -6,15 +6,23 @@ export function createComments(agent, actions, state, setState) {
     agent.Comments.forArticle,
     { initialValue: [] }
   );
+
   Object.assign(actions, {
+
+    // TODO: Used
+
     loadComments(articleSlug, reload) {
       if (reload) return refetch()
       setState({ articleSlug });
     },
+
     async createComment(comment) {
       const { errors } = await agent.Comments.create(state.articleSlug, comment);
       if (errors) throw errors;
     },
+
+    // TODO: Used
+
     async deleteComment(id) {
       mutate(comments().filter((c) => c.id !== id));
       try {
@@ -24,6 +32,7 @@ export function createComments(agent, actions, state, setState) {
         throw err;
       }
     }
+
   });
   return comments;
 }
