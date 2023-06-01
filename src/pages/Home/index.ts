@@ -1,5 +1,6 @@
 import { createComputed, createMemo, useTransition, lazy } from "solid-js";
-import { useStore, useRouter } from "../../store";
+import { useRouter } from "../../store/routeContext";
+import { useStore } from "../../store/storeContext";
 
 const Home = lazy(() => import("./Home"));
 

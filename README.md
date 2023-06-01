@@ -1,26 +1,13 @@
 # ![RealWorld Example App](logo.png)
 
-> ### Solid.js codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
+This project is a clone of [solid-realworld].
+
+The following changes have be made:
+
+- [X] Builds & runs with yarn/vite
+- [X] Converted source to typescript
+- [X] Rationalised code and added extensive comments
 
 
-### [Demo](https://solidjs.github.io/solid-realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/solidjs/solid-realworld)
-
-
-This codebase was created to demonstrate a fully fledged fullstack application built with Solid.js including CRUD operations, authentication, routing, pagination, and more.
-
-We've gone to great lengths to adhere to the Solid.js community styleguides & best practices.
-
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
-
-# Getting started
-
-To run locally during development:
-
-- `npm install` to install all dependencies
-- `npm start` to build and serve app locally
-- browse to http://localhost:5000/
-
-To create a production build:
-
-- `npm run build` creates a development build, with all source compiled into ./public/ folder
+[solid-realworld]: https://github.com/solidjs/solid-realworld
 

@@ -1,6 +1,7 @@
 import { createComputed } from "solid-js"
 import { createStore } from "solid-js/store";
-import { useStore } from "../../store";
+import { useStore } from "../../store/storeContext";
+
 import ListErrors from "../../components/ListErrors";
 
 export default ({ slug }) => {

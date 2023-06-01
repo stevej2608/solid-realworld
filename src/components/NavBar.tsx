@@ -1,4 +1,4 @@
-import { useStore } from "../store";
+import { useStore } from "../store/storeContext";
 import NavLink from "./NavLink";
 
 export default () => {

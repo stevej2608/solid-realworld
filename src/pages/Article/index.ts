@@ -1,5 +1,5 @@
 import { lazy } from "solid-js";
-import { useStore } from "../../store";
+import { useStore } from "../../store/storeContext";
 const Article = lazy(() => import("./Article"));
 
 export default function(props) {

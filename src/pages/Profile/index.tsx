@@ -1,5 +1,7 @@
 import { createComputed, lazy } from "solid-js";
-import { useStore, useRouter } from "../../store";
+import { useRouter } from "../../store/routeContext";
+import { useStore } from "../../store/storeContext";
+
 const Profile = lazy(() => import("./Profile"));
 
 export default function (props) {

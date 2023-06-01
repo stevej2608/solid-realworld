@@ -1,5 +1,6 @@
 import { lazy } from "solid-js";
-import { useStore } from "../../store";
+import { useStore } from "../../store/storeContext";
+
 const Editor = lazy(() => import("./Editor"));
 
 export default function(props) {

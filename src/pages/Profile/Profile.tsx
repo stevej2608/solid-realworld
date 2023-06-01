@@ -1,4 +1,6 @@
-import { useStore, useRouter } from "../../store";
+import { useRouter } from "../../store/routeContext";
+import { useStore } from "../../store/storeContext";
+
 import NavLink from "../../components/NavLink";
 import ArticleList from "../../components/ArticleList";
 
