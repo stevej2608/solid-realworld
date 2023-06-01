@@ -1,4 +1,4 @@
-import { useRouter } from "../store/routeContext";
+import { useRouter } from "../routeContext";
 
 export default props => {
   const { getParams } = useRouter();

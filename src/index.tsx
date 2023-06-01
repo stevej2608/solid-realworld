@@ -1,6 +1,6 @@
 import { render } from 'solid-js/web';
 import { App } from './App';
-import { RouterContext, createRouteHandler} from './store/routeContext'
+import { RouterContext, createRouteHandler} from './routeContext'
 import {  StoreContext, createApplicationStore } from "./store/storeContext"
 
 function ContextProvider(props) {

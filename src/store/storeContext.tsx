@@ -25,7 +25,6 @@ export interface IStoreContext {
   actions: IAuthorActions & IArticleActions;
 }
 
-export const StoreContext = createContext<IStoreContext>();
 
 export function createApplicationStore() {
   let articles, comments, tags, profile, currentUser;
@@ -57,22 +56,24 @@ export function createApplicationStore() {
       appName: "conduit"
     }),
 
-    // Holder for the setters
+    // Holder for ALL the store's actions
 
     actions = {},
 
     store = [state, actions],
     agent = createAgent(store);
 
-  articles = createArticles(agent, actions, state, setState);
-  comments = createComments(agent, actions, state, setState);
-  tags = createCommon(agent, actions, state, setState);
-  profile = createProfile(agent, actions, state, setState);
-  currentUser = createAuth(agent, actions, setState);
+    articles = createArticles(agent, actions, state, setState);
+    comments = createComments(agent, actions, state, setState);
+    tags = createCommon(agent, actions, state, setState);
+    profile = createProfile(agent, actions, state, setState);
+    currentUser = createAuth(agent, actions, setState);
 
-  return store
-}
+    return store
+  }
 
-export function useStore() {
-  return useContext<IStoreContext>(StoreContext);
-}
+  export const StoreContext = createContext<IStoreContext>();
+
+  export function useStore() {
+    return useContext<IStoreContext>(StoreContext);
+  }

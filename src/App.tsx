@@ -1,6 +1,6 @@
 import { lazy, createSignal, createComputed } from "solid-js";
 
-import { useRouter } from "./store/routeContext";
+import { useRouter } from "./routeContext";
 import { useStore } from "./store/storeContext";
 
 import NavBar from "./components/NavBar";
