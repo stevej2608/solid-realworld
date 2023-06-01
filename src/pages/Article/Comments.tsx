@@ -1,7 +1,7 @@
 import { createStore } from "solid-js/store";
 import NavLink from "../../components/NavLink";
 import ListErrors from "../../components/ListErrors";
-import { useStore } from "../../store";
+import { useStore } from "../../store/storeContext";
 
 const Comment = ({ comment, currentUser, onDelete }) => {
   const show = currentUser && currentUser.username === comment.author.username,

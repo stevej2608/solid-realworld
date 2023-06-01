@@ -1,4 +1,4 @@
-import { useStore } from "../store";
+import { useStore } from "../store/storeContext";
 import ListErrors from "../components/ListErrors";
 import { createStore } from "solid-js/store";
 

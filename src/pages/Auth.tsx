@@ -1,7 +1,7 @@
 import { createStore } from "solid-js/store";
 import NavLink from "../components/NavLink";
 import ListErrors from "../components/ListErrors";
-import { useStore } from "../store";
+import { useStore } from "../store/storeContext";
 
 export default () => {
   const [state, setState] = createStore({ username: "", inProgress: false }),

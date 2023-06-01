@@ -1,6 +1,6 @@
 import marked from "marked";
 import NavLink from "../../components/NavLink";
-import { useStore } from "../../store";
+import { useStore } from "../../store/storeContext";
 
 import Comments from "./Comments";
 
