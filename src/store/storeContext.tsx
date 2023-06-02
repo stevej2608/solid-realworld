@@ -1,6 +1,8 @@
 import { createContext, useContext } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
+import { IArticle, IComment, IProfile, IUser } from '../api/Api'
+
 import { createAgent } from './createAgent'
 
 import { createArticles, IArticleActions } from './createArticles'
@@ -10,12 +12,13 @@ import { createComments } from './createComments'
 import { createProfile } from './createProfile'
 
 export interface IStoreContext {
+
   state: {
-    readonly articles: any
-    readonly comments: any
-    readonly tags: any
-    readonly profile: any
-    readonly currentUser: any
+    readonly articles: IArticle[]
+    readonly comments: IComment[]
+    readonly tags: string[]
+    readonly profile: IProfile
+    readonly currentUser: IUser
 
     page: number
     totalPagesCount: number
@@ -26,27 +29,36 @@ export interface IStoreContext {
   actions: IAuthorActions & IArticleActions & ICommonActions
 }
 
-export function createApplicationStore() {
-  let articles, comments, tags, profile, currentUser
+export function createApplicationStore(): IStoreContext {
+
+  // Resource accessors - see solidjs createResource()
+  // https://www.solidjs.com/docs/latest/api#createresource
+
+  let articles: Resource<IArticle[]>
+  let comments: Resource<IComment[]>
+  let tags: Resource<string[]>
+  let profile: Resource<IProfile>
+  let currentUser: Resource<IUser>
 
   const [state, setState] = createStore<IStoreContext>({
-    get articles() {
+
+    get articles(): IArticle[] {
       return articles()
     },
 
-    get comments() {
+    get comments(): Comment[] {
       return comments()
     },
 
-    get tags() {
+    get tags(): string[] {
       return tags()
     },
 
-    get profile() {
+    get profile(): IProfile {
       return profile()
     },
 
-    get currentUser() {
+    get currentUser(): IUser {
       return currentUser()
     },
 
@@ -62,6 +74,8 @@ export function createApplicationStore() {
 
   const store = [state, actions]
   const agent = createAgent(store)
+
+  // Instantiate all the resource accessors
 
   articles = createArticles(agent, actions, state, setState)
   comments = createComments(agent, actions, state, setState)
