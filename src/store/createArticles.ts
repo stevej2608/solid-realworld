@@ -11,8 +11,8 @@ export interface IArticleActions {
   updateArticle(data: IArticle): Promise<void>
 
   createArticle(newArticle: INewArticle): IArticlesResponse
-  loadArticle(slug: any): void
-  loadArticles(predicate: any): void
+  loadArticle(slug: string): void
+  loadArticles(predicate: string): void
   setPage: (page: any) => any
 }
 
@@ -29,7 +29,15 @@ export interface IArticleActions {
  */
 
 export function createArticles(agent: IApiAgent, actions: IArticleActions, state, setState): Resource<IArticle[]> {
-  function $req(predicate) {
+
+  interface IPredicate {
+    myFeed?: string
+    favoritedBy?: string
+    tag?: string
+    author?: string
+  }
+
+  function $req(predicate: IPredicate) {
     if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
     if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
     if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
@@ -37,56 +45,67 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     return agent.Articles.all(state.page, LIMIT, predicate)
   }
 
-  const fetchArticles = (args, { value }) => {
-    console.log('fetchArticles args=[%s]', args[0])
+
+  function fetchArticles(args: any[], value: any): IArticle[] {
+    console.log('fetchArticles args=%s', args[0])
 
     if (args[0] === 'articles') {
-      return $req(args[1]).then(({ articles, articlesCount }) => {
-        queueMicrotask(() => setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) }))
 
-        return articles.reduce((memo, article) => {
-          memo[article.slug] = article
-          return memo
-        }, {})
+      return $req(args[1]).then(response => {
+        const { articles, articlesCount } = response
+        queueMicrotask(() => {
+          setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
+        })
+
+        const articlesMap = {}
+        for (const article of articles) {
+          articlesMap[article.slug] = article
+        }
+        return articlesMap
       })
     }
 
     const article = state.articles[args[1]]
-
     if (article) return value
-    return agent.Articles.get(args[1]).then(article => ({ ...value, [args[1]]: article }))
+
+    return agent.Articles.get(args[1]).then(article => {
+      return { ...value, [args[1]]: article }
+    })
+
   }
 
   const [articleSource, setArticleSource] = createSignal()
   const [articles] = createResource<IArticle[]>(articleSource, fetchArticles, { initialValue: {} })
 
-  // Populate the provided actions container our actions
+  const addFavorite = (slug:string) => {
+    setState('articles', slug, s => ({ favorited: true, favoritesCount: s.favoritesCount + 1}))
+  }
+
+  const removeFavorite = (slug:string) => {
+    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount - 1}))
+  }
+
+  // Add our actions the provided actions container
 
   Object.assign(actions, {
     setPage: page => setState({ page }),
 
-    loadArticles(predicate) {
+    loadArticles(predicate: string) {
       setArticleSource(['articles', predicate])
     },
 
-    loadArticle(slug) {
+    loadArticle(slug: string) {
       setArticleSource(['article', slug])
     },
 
     async makeFavorite(slug: string) {
       const article = state.articles[slug]
       if (article && !article.favorited) {
-        setState('articles', slug, s => ({
-          favorited: true,
-          favoritesCount: s.favoritesCount + 1
-        }))
+        addFavorite(slug)
         try {
           await agent.Articles.favorite(slug)
         } catch (err) {
-          setState('articles', slug, s => ({
-            favorited: false,
-            favoritesCount: s.favoritesCount - 1
-          }))
+          removeFavorite(slug)
           throw err
         }
       }
@@ -95,17 +114,11 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     async unmakeFavorite(slug: string) {
       const article = state.articles[slug]
       if (article && article.favorited) {
-        setState('articles', slug, s => ({
-          favorited: false,
-          favoritesCount: s.favoritesCount - 1
-        }))
+        removeFavorite(slug)
         try {
           await agent.Articles.unfavorite(slug)
         } catch (err) {
-          setState('articles', slug, s => ({
-            favorited: true,
-            favoritesCount: s.favoritesCount + 1
-          }))
+          addFavorite(slug)
           throw err
         }
       }

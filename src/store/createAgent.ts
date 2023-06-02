@@ -1,3 +1,5 @@
+import { IProfile, IArticle } from '../api/Api'
+
 const API_ROOT = 'https://api.realworld.io/api'
 
 const encode = encodeURIComponent
@@ -14,28 +16,33 @@ interface ITagsAgent {
 }
 
 interface IArticlesAgent {
-  all: (page: any, lim?: number) => Promise<any>;
-  byAuthor: (author: any, page: any) => Promise<any>;
-  byTag: (tag: any, page: any, lim?: number) => Promise<any>;
-  del: (slug: any) => Promise<any>;
-  favorite: (slug: any) => Promise<any>;
-  favoritedBy: (author: any, page: any) => Promise<any>;
+
+  all: (page: any, lim?: number) => Promise<IArticle[]>;
+  byAuthor: (author: string, page: number) => Promise<IArticle[]>;
+  byTag: (tag: string, page: number, lim?: number) => Promise<IArticle[]>;
+
+  del: (slug: string) => Promise<any>;
+
+  favorite: (slug: string) => Promise<any>;
+  unfavorite: (slug: string) => Promise<any>
+
+  favoritedBy: (author: string, page: any) => Promise<any>;
   feed: () => Promise<any>;
-  get: (slug: any) => Promise<any>
-  unfavorite: (slug: any) => Promise<any>
-  update: (article: any) => Promise<any>
-  create: (article: any) => Promise<any>
+  get: (slug: string) => Promise<any>
+
+  update: (article: IArticle) => Promise<any>
+  create: (article: IArticle) => Promise<any>
 }
 
 interface ICommentsAgent {
-  create: (slug: any, comment: any) => Promise<any>;
-  delete: (slug: any, commentId: any) => Promise<any>;
-  forArticle: (slug: any) => Promise<any>;
+  create: (slug: string, comment: string) => Promise<any>;
+  delete: (slug: string, commentId: string) => Promise<any>;
+  forArticle: (slug: string) => Promise<any>;
 }
 
 interface IProfileAgent {
   follow: (username: any) => Promise<any>;
-  get: (username: any) => Promise<any>;
+  get: (username: string) => Promise<IProfile>;
   unfollow: (username: any) => Promise<any>
 }
 
@@ -79,21 +86,21 @@ export function createAgent([state, actions]): IApiAgent {
     }
   }
 
-  const Auth = {
+  const Auth: IAuthAgent = {
     current: () => send('get', '/user', undefined, 'user'),
     login: (email, password) => send('post', '/users/login', { user: { email, password } }),
     register: (username, email, password) => send('post', '/users', { user: { username, email, password } }),
     save: user => send('put', '/user', { user })
   }
 
-  const Tags = {
+  const Tags: ITagsAgent = {
     getAll: (): Promise<string[]> => send('get', '/tags', undefined, 'tags')
   }
 
-  const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`
+  const limit = (count:number, p:number) => `limit=${count}&offset=${p ? p * count : 0}`
   const omitSlug = article => Object.assign({}, article, { slug: undefined })
 
-  const Articles = {
+  const Articles: IArticlesAgent = {
     all: (page, lim = 10) => send('get', `/articles?${limit(lim, page)}`),
     byAuthor: (author, page) => send('get', `/articles?author=${encode(author)}&${limit(5, page)}`),
     byTag: (tag, page, lim = 10) => send('get', `/articles?tag=${encode(tag)}&${limit(lim, page)}`),
@@ -107,13 +114,13 @@ export function createAgent([state, actions]): IApiAgent {
     create: article => send('post', '/articles', { article })
   }
 
-  const Comments = {
+  const Comments : ICommentsAgent = {
     create: (slug, comment) => send('post', `/articles/${slug}/comments`, { comment }),
     delete: (slug, commentId) => send('delete', `/articles/${slug}/comments/${commentId}`),
     forArticle: slug => send('get', `/articles/${slug}/comments`, undefined, 'comments')
   }
 
-  const Profile = {
+  const Profile : IProfileAgent = {
     follow: username => send('post', `/profiles/${username}/follow`),
     get: username => send('get', `/profiles/${username}`, undefined, 'profile'),
     unfollow: username => send('delete', `/profiles/${username}/follow`)

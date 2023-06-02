@@ -1,4 +1,5 @@
-import { createSignal, createResource } from 'solid-js'
+import { createSignal, createResource, Resource } from 'solid-js'
+import { IProfile } from '../api/Api'
 import { IApiAgent } from './createAgent'
 
 export interface IProfileActions {
@@ -19,9 +20,11 @@ export interface IProfileActions {
  * @returns
  */
 
-export function createProfile(agent: IApiAgent, actions:IProfileActions, state, setState) {
+export function createProfile(agent: IApiAgent, actions:IProfileActions, state, setState) : Resource<IProfile> {
   const [username, setUsername] = createSignal()
   const [profile] = createResource(username, agent.Profile.get)
+
+  // Add our actions the provided actions container
 
   Object.assign(actions, {
 

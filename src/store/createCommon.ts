@@ -5,6 +5,15 @@ export interface ICommonActions {
   setToken(token: string | undefined): void
 }
 
+/**
+ *
+ * @param agent
+ * @param actions
+ * @param state
+ * @param setState
+ * @returns
+ */
+
 export function createCommon(agent: IApiAgent, actions: ICommonActions, state, setState): Resource<string[]> {
 
   const getTags = async () => {

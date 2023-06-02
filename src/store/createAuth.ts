@@ -27,7 +27,7 @@ export function createAuth(agent:IApiAgent, actions: IAuthorActions, setState): 
   const [loggedIn, setLoggedIn] = createSignal(false)
   const [currentUser, { mutate }] = createResource(loggedIn, agent.Auth.current)
 
-  // Populate the provided actions container our actions
+  // Add our actions the provided actions container
 
   Object.assign(actions, {
 

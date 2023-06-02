@@ -21,7 +21,7 @@ export interface ICommentsActions {
 
 export function createComments(agent:IApiAgent, actions:ICommentsActions, state, setState): Resource<IComment[]> {
 
-  function getArticleComments() {
+  function getArticleComments(): IComment[] {
     const articleSlug = state.articleSlug
     const comments = agent.Comments.forArticle(articleSlug)
     return comments
@@ -29,7 +29,7 @@ export function createComments(agent:IApiAgent, actions:ICommentsActions, state,
 
   const [comments, { mutate, refetch }] = createResource(getArticleComments, { initialValue: [] })
 
-  // Populate the provided actions container our actions
+  // Add our actions the provided actions container
 
   Object.assign(actions, {
 
