@@ -1,13 +1,22 @@
 import { createEffect, createResource } from "solid-js";
+import { APIAgent } from './createAgent'
 
-export function createCommon(agent, actions, state, setState) {
+export interface ICommonActions {
+  setToken(token:string | undefined): void
+}
 
-  const getTags = () => {
+export function createCommon(agent: APIAgent, actions, state, setState): Array<string> {
+
+  const getTags = async () => {
     console.log('getTags')
-    return agent.Tags.getAll().then((tags) => tags.map((t) => t.toLowerCase()))
+    const tags = await agent.Tags.getAll()
+    return tags.map((t) => t.toLowerCase())
   }
 
   const [tags] = createResource("tags", getTags, { initialValue: [] } );
+
+  // Triggered by change in the store.token state. Save the new
+  // token state to the local store.
 
   createEffect(() => {
 
@@ -22,7 +31,14 @@ export function createCommon(agent, actions, state, setState) {
 
   });
 
-  actions.setToken = (token) => setState({ token });
+  // login/logout actions call setToken() which updates the
+  // token state in the store. This, in turn, triggers
+  // the above createEffect()
+
+  actions.setToken = (token:string | undefined) => {
+    console.log('setToken tok=%s', token)
+    setState({ token });
+  }
 
   return tags;
 }

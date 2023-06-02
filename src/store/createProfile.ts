@@ -1,10 +1,9 @@
-import { createSignal, createResource } from "solid-js";
+import { createSignal, createResource } from 'solid-js'
 
 export function createProfile(agent, actions, state, setState) {
-  const [username, setUsername] = createSignal();
-  const [profile] = createResource(username, agent.Profile.get);
+  const [username, setUsername] = createSignal()
+  const [profile] = createResource(username, agent.Profile.get)
   Object.assign(actions, {
-
     // TODO: used
 
     loadProfile: setUsername,
@@ -13,11 +12,11 @@ export function createProfile(agent, actions, state, setState) {
 
     async follow() {
       if (state.profile && !state.profile.following) {
-        setState("profile", "following", true);
+        setState('profile', 'following', true)
         try {
-          await agent.Profile.follow(state.profile.username);
+          await agent.Profile.follow(state.profile.username)
         } catch (err) {
-          setState("profile", "following", false);
+          setState('profile', 'following', false)
         }
       }
     },
@@ -26,15 +25,14 @@ export function createProfile(agent, actions, state, setState) {
 
     async unfollow() {
       if (state.profile && state.profile.following) {
-        setState("profile", "following", false);
+        setState('profile', 'following', false)
         try {
-          await agent.Profile.unfollow(state.profile.username);
+          await agent.Profile.unfollow(state.profile.username)
         } catch (err) {
-          setState("profile", "following", true);
+          setState('profile', 'following', true)
         }
       }
     }
-
-  });
-  return profile;
+  })
+  return profile
 }
