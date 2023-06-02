@@ -1,5 +1,5 @@
 import NavLink from '../../components/NavLink'
-import ArticleList from '../../components/ArticleList'
+import { ArticleList } from '../../components/ArticleList'
 
 /**
  * This is the conduit home page. Display navbar, banner

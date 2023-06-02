@@ -1,17 +1,27 @@
 import { useStore } from '../store/storeContext'
 import ArticlePreview from './ArticlePreview'
+import { IArticle } from '../api/Api'
+interface IProps {
+  articles: IArticle[]
+  currentPage: number
+  onSetPage(page:number)
+  totalPagesCount: number
+}
 
-export default props => {
-  const [{ token }, { unmakeFavorite, makeFavorite }] = useStore(),
-    handleClickFavorite = (article, e) => {
-      e.preventDefault()
-      article.favorited ? unmakeFavorite(slug) : makeFavorite(slug)
-    },
-    handlePage = (v, e) => {
-      e.preventDefault()
-      props.onSetPage(v)
-      setTimeout(() => window.scrollTo(0, 0), 200)
-    }
+export const ArticleList = (props:IProps) => {
+  const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
+
+  const handleClickFavorite = (article: IArticle, e) => {
+    e.preventDefault()
+    article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
+  }
+
+  const handlePage = (v, e) => {
+    e.preventDefault()
+    props.onSetPage(v)
+    setTimeout(() => window.scrollTo(0, 0), 200)
+  }
+
   return (
     <Suspense fallback={<div class="article-preview">Loading articles...</div>}>
       <For each={props.articles} fallback={<div class="article-preview">No articles are here... yet.</div>}>

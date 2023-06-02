@@ -29,7 +29,6 @@ export interface IArticleActions {
  */
 
 export function createArticles(agent: IApiAgent, actions: IArticleActions, state, setState): Resource<IArticle[]> {
-
   interface IPredicate {
     myFeed?: string
     favoritedBy?: string
@@ -45,14 +44,15 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     return agent.Articles.all(state.page, LIMIT, predicate)
   }
 
+  const fetchArticles: IArticle | IArticle[] = (args, { value }) => {
 
-  function fetchArticles(args: any[], value: any): IArticle[] {
-    console.log('fetchArticles args=%s', args[0])
+    console.log('fetchArticles args=[%s]', args[0])
 
     if (args[0] === 'articles') {
 
-      return $req(args[1]).then(response => {
+      return $req(args[1]).then( response => {
         const { articles, articlesCount } = response
+
         queueMicrotask(() => {
           setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
         })
@@ -63,6 +63,7 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
         }
         return articlesMap
       })
+
     }
 
     const article = state.articles[args[1]]
@@ -77,12 +78,12 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
   const [articleSource, setArticleSource] = createSignal()
   const [articles] = createResource<IArticle[]>(articleSource, fetchArticles, { initialValue: {} })
 
-  const addFavorite = (slug:string) => {
-    setState('articles', slug, s => ({ favorited: true, favoritesCount: s.favoritesCount + 1}))
+  const addFavorite = (slug: string) => {
+    setState('articles', slug, s => ({ favorited: true, favoritesCount: s.favoritesCount + 1 }))
   }
 
-  const removeFavorite = (slug:string) => {
-    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount - 1}))
+  const removeFavorite = (slug: string) => {
+    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount - 1 }))
   }
 
   // Add our actions the provided actions container

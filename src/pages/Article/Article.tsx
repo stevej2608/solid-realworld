@@ -30,11 +30,13 @@ const ArticleMeta = props => (
   </div>
 )
 
-export default ({ slug }) => {
-  const [store, { deleteArticle }] = useStore(),
-    article = () => store.articles[slug],
-    canModify = () => store.currentUser && store.currentUser.username === article()?.author.username,
-    handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
+export default ({slug}) => {
+
+  const [store, { deleteArticle }] = useStore()
+
+  const article = () => store.articles[slug]
+  const canModify = () => store.currentUser && store.currentUser.username === article()?.author.username
+  const handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
 
   return (
     <div class="article-page">
