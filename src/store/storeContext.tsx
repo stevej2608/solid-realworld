@@ -59,7 +59,7 @@ export function createApplicationStore() {
   // Holder for ALL the store's actions
 
   const actions = {}
-  
+
   const store = [state, actions]
   const agent = createAgent(store)
 

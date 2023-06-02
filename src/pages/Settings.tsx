@@ -1,28 +1,28 @@
-import { useStore } from "../store/storeContext";
-import ListErrors from "../components/ListErrors";
-import { createStore } from "solid-js/store";
+import { useStore } from '../store/storeContext'
+import ListErrors from '../components/ListErrors'
+import { createStore } from 'solid-js/store'
 
 export default () => {
   const [store, { logout, updateUser }] = useStore(),
     [state, setState] = createStore({
-      image: store.currentUser.image || "",
+      image: store.currentUser.image || '',
       username: store.currentUser.username,
-      bio: store.currentUser.bio || "",
+      bio: store.currentUser.bio || '',
       email: store.currentUser.email,
-      password: ""
+      password: ''
     }),
     updateState = field => ev => setState(field, ev.target.value),
     submitForm = ev => {
-      ev.preventDefault();
-      const user = Object.assign({}, state);
-      if (!user.password) delete user.password;
-      if (!user.image) delete user.image;
-      setState({ updatingUser: true });
+      ev.preventDefault()
+      const user = Object.assign({}, state)
+      if (!user.password) delete user.password
+      if (!user.image) delete user.image
+      setState({ updatingUser: true })
       updateUser(user)
         .then(() => (location.hash = `/@${user.username}`))
         .catch(errors => setState({ errors }))
-        .finally(() => setState({ updatingUser: false }));
-    };
+        .finally(() => setState({ updatingUser: false }))
+    }
 
   return (
     <div class="settings-page">
@@ -38,8 +38,8 @@ export default () => {
                     class="form-control"
                     type="text"
                     placeholder="URL of profile picture"
-                    value={state.image || ""}
-                    onChange={updateState("image")}
+                    value={state.image || ''}
+                    onChange={updateState('image')}
                     disabled={state.updatingUser}
                   />
                 </fieldset>
@@ -48,8 +48,8 @@ export default () => {
                     class="form-control form-control-lg"
                     type="text"
                     placeholder="Your Name"
-                    value={state.username || ""}
-                    onChange={updateState("username")}
+                    value={state.username || ''}
+                    onChange={updateState('username')}
                     disabled={state.updatingUser}
                   />
                 </fieldset>
@@ -58,8 +58,8 @@ export default () => {
                     class="form-control form-control-lg"
                     rows="8"
                     placeholder="Short bio about you"
-                    value={state.bio || ""}
-                    onChange={updateState("bio")}
+                    value={state.bio || ''}
+                    onChange={updateState('bio')}
                     disabled={state.updatingUser}
                   ></textarea>
                 </fieldset>
@@ -68,8 +68,8 @@ export default () => {
                     class="form-control form-control-lg"
                     type="text"
                     placeholder="Email"
-                    value={state.email || ""}
-                    onChange={updateState("email")}
+                    value={state.email || ''}
+                    onChange={updateState('email')}
                     disabled={state.updatingUser}
                   />
                 </fieldset>
@@ -78,30 +78,23 @@ export default () => {
                     class="form-control form-control-lg"
                     type="password"
                     placeholder="Password"
-                    value={state.password || ""}
-                    onChange={updateState("password")}
+                    value={state.password || ''}
+                    onChange={updateState('password')}
                     disabled={state.updatingUser}
                   />
                 </fieldset>
-                <button
-                  class="btn btn-lg btn-primary pull-xs-right"
-                  type="submit"
-                  disabled={state.updatingUser}
-                >
+                <button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled={state.updatingUser}>
                   Update Settings
                 </button>
               </fieldset>
             </form>
             <hr />
-            <button
-              class="btn btn-outline-danger"
-              onClick={() => (logout(), (location.hash = "/"))}
-            >
+            <button class="btn btn-outline-danger" onClick={() => (logout(), (location.hash = '/'))}>
               Or click here to logout.
             </button>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

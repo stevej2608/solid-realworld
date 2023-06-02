@@ -1,21 +1,21 @@
-import { useRouter } from "../../routeContext";
-import { useStore } from "../../store/storeContext";
+import { useRouter } from '../../routeContext'
+import { useStore } from '../../store/storeContext'
 
-import NavLink from "../../components/NavLink";
-import ArticleList from "../../components/ArticleList";
+import NavLink from '../../components/NavLink'
+import ArticleList from '../../components/ArticleList'
 
 export default props => {
   const [store, { setPage, loadArticles, unfollow, follow }] = useStore(),
     { location } = useRouter(),
     handleClick = ev => {
-      ev.preventDefault();
-      store.profile.following ? unfollow() : follow();
+      ev.preventDefault()
+      store.profile.following ? unfollow() : follow()
     },
     handleSetPage = page => {
-      setPage(page);
-      loadArticles();
+      setPage(page)
+      loadArticles()
     },
-    isUser = () => store.currentUser && props.username === store.currentUser.username;
+    isUser = () => store.currentUser && props.username === store.currentUser.username
 
   return (
     <div class="profile-page">
@@ -35,13 +35,12 @@ export default props => {
                 <button
                   class="btn btn-sm action-btn"
                   classList={{
-                    "btn-secondary": store.profile?.following,
-                    "btn-outline-secondary": !store.profile?.following
+                    'btn-secondary': store.profile?.following,
+                    'btn-outline-secondary': !store.profile?.following
                   }}
                   onClick={handleClick}
                 >
-                  <i class="ion-plus-round" /> {store.profile?.following ? "Unfollow" : "Follow"}{" "}
-                  {store.profile?.username}
+                  <i class="ion-plus-round" /> {store.profile?.following ? 'Unfollow' : 'Follow'} {store.profile?.username}
                 </button>
               )}
             </div>
@@ -55,35 +54,23 @@ export default props => {
             <div class="articles-toggle">
               <ul class="nav nav-pills outline-active">
                 <li class="nav-item">
-                  <NavLink
-                    class="nav-link"
-                    active={location().includes("/favorites") ? 0 : 1}
-                    href={`@${props.username}`}
-                  >
+                  <NavLink class="nav-link" active={location().includes('/favorites') ? 0 : 1} href={`@${props.username}`}>
                     My Articles
                   </NavLink>
                 </li>
 
                 <li class="nav-item">
-                  <NavLink
-                    class="nav-link"
-                    active={location().includes("/favorites")}
-                    href={`@${props.username}/favorites`}
-                  >
+                  <NavLink class="nav-link" active={location().includes('/favorites')} href={`@${props.username}/favorites`}>
                     Favorited Articles
                   </NavLink>
                 </li>
               </ul>
             </div>
 
-            <ArticleList
-              articles={Object.values(store.articles)}
-              totalPagesCount={store.totalPagesCount}
-              onSetPage={handleSetPage}
-            />
+            <ArticleList articles={Object.values(store.articles)} totalPagesCount={store.totalPagesCount} onSetPage={handleSetPage} />
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

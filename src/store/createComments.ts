@@ -1,38 +1,32 @@
-import { createResource } from "solid-js";
+import { createResource } from 'solid-js'
 
 export function createComments(agent, actions, state, setState) {
-  const [comments, { mutate, refetch }] = createResource(
-    () => state.articleSlug,
-    agent.Comments.forArticle,
-    { initialValue: [] }
-  );
+  const [comments, { mutate, refetch }] = createResource(() => state.articleSlug, agent.Comments.forArticle, { initialValue: [] })
 
   Object.assign(actions, {
-
     // TODO: Used
 
     loadComments(articleSlug, reload) {
       if (reload) return refetch()
-      setState({ articleSlug });
+      setState({ articleSlug })
     },
 
     async createComment(comment) {
-      const { errors } = await agent.Comments.create(state.articleSlug, comment);
-      if (errors) throw errors;
+      const { errors } = await agent.Comments.create(state.articleSlug, comment)
+      if (errors) throw errors
     },
 
     // TODO: Used
 
     async deleteComment(id) {
-      mutate(comments().filter((c) => c.id !== id));
+      mutate(comments().filter(c => c.id !== id))
       try {
-        await agent.Comments.delete(state.articleSlug, id);
+        await agent.Comments.delete(state.articleSlug, id)
       } catch (err) {
-        actions.loadComments(state.articleSlug);
-        throw err;
+        actions.loadComments(state.articleSlug)
+        throw err
       }
     }
-
-  });
-  return comments;
+  })
+  return comments
 }

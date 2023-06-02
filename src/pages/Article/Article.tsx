@@ -1,8 +1,8 @@
-import marked from "marked";
-import NavLink from "../../components/NavLink";
-import { useStore } from "../../store/storeContext";
+import marked from 'marked'
+import NavLink from '../../components/NavLink'
+import { useStore } from '../../store/storeContext'
 
-import Comments from "./Comments";
+import Comments from './Comments'
 
 const ArticleMeta = props => (
   <div class="article-meta">
@@ -19,11 +19,7 @@ const ArticleMeta = props => (
 
     <Show when={props.canModify} fallback={<span />}>
       <span>
-        <NavLink
-          href={`editor/${props.article.slug}`}
-          route="editor"
-          class="btn btn-outline-secondary btn-sm"
-        >
+        <NavLink href={`editor/${props.article.slug}`} route="editor" class="btn btn-outline-secondary btn-sm">
           <i class="ion-edit" /> Edit Article
         </NavLink>
         <button class="btn btn-outline-danger btn-sm" onClick={props.onDelete}>
@@ -32,14 +28,13 @@ const ArticleMeta = props => (
       </span>
     </Show>
   </div>
-);
+)
 
 export default ({ slug }) => {
   const [store, { deleteArticle }] = useStore(),
     article = () => store.articles[slug],
-    canModify = () =>
-      store.currentUser && store.currentUser.username === article()?.author.username,
-    handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = "/"));
+    canModify = () => store.currentUser && store.currentUser.username === article()?.author.username,
+    handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
 
   return (
     <div class="article-page">
@@ -72,5 +67,5 @@ export default ({ slug }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

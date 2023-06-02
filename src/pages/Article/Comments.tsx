@@ -1,7 +1,7 @@
-import { createStore } from "solid-js/store";
-import NavLink from "../../components/NavLink";
-import ListErrors from "../../components/ListErrors";
-import { useStore } from "../../store/storeContext";
+import { createStore } from 'solid-js/store'
+import NavLink from '../../components/NavLink'
+import ListErrors from '../../components/ListErrors'
+import { useStore } from '../../store/storeContext'
 
 const Comment = ({ comment, currentUser, onDelete }) => {
   const show = currentUser && currentUser.username === comment.author.username,
@@ -10,7 +10,7 @@ const Comment = ({ comment, currentUser, onDelete }) => {
       body,
       author: { username, image },
       createdAt
-    } = comment;
+    } = comment
   return (
     <div class="card">
       <div class="card-block">
@@ -32,23 +32,23 @@ const Comment = ({ comment, currentUser, onDelete }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const CommentInput = ({ slug, createComment, loadComments, currentUser }) => {
-  const [state, setState] = createStore({ body: "" }),
+  const [state, setState] = createStore({ body: '' }),
     handleBodyChange = ev => setState({ body: ev.target.value }),
     createCommentHandler = ev => {
-      ev.preventDefault();
-      setState({ isCreatingComment: true });
+      ev.preventDefault()
+      setState({ isCreatingComment: true })
       createComment({ body: state.body })
         .then(() => {
-          setState({ body: "" });
-          loadComments(slug, true);
+          setState({ body: '' })
+          loadComments(slug, true)
         })
         .catch(errors => setState({ errors }))
-        .finally(() => setState({ isCreatingComment: false }));
-    };
+        .finally(() => setState({ isCreatingComment: false }))
+    }
   return (
     <>
       <ListErrors errors={state.errors} />
@@ -71,22 +71,17 @@ const CommentInput = ({ slug, createComment, loadComments, currentUser }) => {
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
 export default () => {
   const [store, { createComment, deleteComment, loadComments }] = useStore(),
     { currentUser, articleSlug } = store,
-    handleDeleteComment = commentId => deleteComment(commentId);
+    handleDeleteComment = commentId => deleteComment(commentId)
   return (
     <div class="col-xs-12 col-md-8 offset-md-2">
       {currentUser ? (
-        <CommentInput
-          slug={articleSlug}
-          currentUser={currentUser}
-          createComment={createComment}
-          loadComments={loadComments}
-        />
+        <CommentInput slug={articleSlug} currentUser={currentUser} createComment={createComment} loadComments={loadComments} />
       ) : (
         <p>
           <NavLink route="login">Sign in</NavLink>
@@ -96,12 +91,8 @@ export default () => {
         </p>
       )}
       <Suspense fallback="Loading comments">
-        <For each={store.comments}>
-          {comment => (
-            <Comment comment={comment} currentUser={currentUser} onDelete={handleDeleteComment} />
-          )}
-        </For>
+        <For each={store.comments}>{comment => <Comment comment={comment} currentUser={currentUser} onDelete={handleDeleteComment} />}</For>
       </Suspense>
     </div>
-  );
-};
+  )
+}

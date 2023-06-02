@@ -1,8 +1,8 @@
-import { useStore } from "../store/storeContext";
-import NavLink from "./NavLink";
+import { useStore } from '../store/storeContext'
+import NavLink from './NavLink'
 
 export default () => {
-  const [store] = useStore();
+  const [store] = useStore()
 
   return (
     <nav class="navbar navbar-light">
@@ -52,5 +52,5 @@ export default () => {
         </ul>
       </div>
     </nav>
-  );
-};
+  )
+}

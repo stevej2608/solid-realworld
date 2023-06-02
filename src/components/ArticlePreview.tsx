@@ -1,7 +1,7 @@
-import NavLink from "./NavLink";
+import NavLink from './NavLink'
 
-const FAVORITED_CLASS = "btn btn-sm btn-primary";
-const NOT_FAVORITED_CLASS = "btn btn-sm btn-outline-primary";
+const FAVORITED_CLASS = 'btn btn-sm btn-primary'
+const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
 
 export default ({ article, token, onClickFavorite }) => {
   const {
@@ -11,7 +11,7 @@ export default ({ article, token, onClickFavorite }) => {
     createdAt,
     tagList,
     author: { username, image }
-  } = article;
+  } = article
 
   return (
     <div class="article-preview">
@@ -29,10 +29,7 @@ export default ({ article, token, onClickFavorite }) => {
 
         {token && (
           <div class="pull-xs-right">
-            <button
-              class={article.favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS}
-              onClick={[onClickFavorite, article]}
-            >
+            <button class={article.favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS} onClick={[onClickFavorite, article]}>
               <i class="ion-heart" /> {article.favoritesCount}
             </button>
           </div>
@@ -44,12 +41,14 @@ export default ({ article, token, onClickFavorite }) => {
         <p>{description}</p>
         <span>Read more...</span>
         <ul class="tag-list">
-          {/*@once*/
-          tagList.map(tag => (
-            <li class="tag-default tag-pill tag-outline" textContent={tag} />
-          ))}
+          {
+            /*@once*/
+            tagList.map(tag => (
+              <li class="tag-default tag-pill tag-outline" textContent={tag} />
+            ))
+          }
         </ul>
       </NavLink>
     </div>
-  );
-};
+  )
+}

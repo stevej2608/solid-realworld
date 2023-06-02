@@ -1,12 +1,12 @@
-import { createComputed } from "solid-js"
-import { createStore } from "solid-js/store";
-import { useStore } from "../../store/storeContext";
+import { createComputed } from 'solid-js'
+import { createStore } from 'solid-js/store'
+import { useStore } from '../../store/storeContext'
 
-import ListErrors from "../../components/ListErrors";
+import ListErrors from '../../components/ListErrors'
 
 export default ({ slug }) => {
   const [store, { createArticle, updateArticle }] = useStore()
-  const [state, setState] = createStore({ tagInput: "", tagList: [] })
+  const [state, setState] = createStore({ tagInput: '', tagList: [] })
 
   const updateState = field => ev => {
     setState(field, ev.target.value)
@@ -15,14 +15,14 @@ export default ({ slug }) => {
   const handleAddTag = () => {
     if (state.tagInput) {
       setState(s => {
-        s.tagList.push(s.tagInput.trim());
-        s.tagInput = "";
-      });
+        s.tagList.push(s.tagInput.trim())
+        s.tagInput = ''
+      })
     }
   }
 
   const handleRemoveTag = tag => {
-    !state.inProgress && setState("tagList", tags => tags.filter(t => t !== tag));
+    !state.inProgress && setState('tagList', tags => tags.filter(t => t !== tag))
   }
 
   const handleTagInputKeyDown = ev => {
@@ -30,28 +30,28 @@ export default ({ slug }) => {
       case 13: // Enter
       case 9: // Tab
       case 188: // ,
-        if (ev.keyCode !== 9) ev.preventDefault();
-        handleAddTag();
-        break;
+        if (ev.keyCode !== 9) ev.preventDefault()
+        handleAddTag()
+        break
       default:
-        break;
+        break
     }
   }
 
   const submitForm = ev => {
-    ev.preventDefault();
-    setState({ inProgress: true });
-    const { inProgress, tagsInput, ...article } = state;
-    (slug ? updateArticle : createArticle)(article)
+    ev.preventDefault()
+    setState({ inProgress: true })
+    const { inProgress, tagsInput, ...article } = state
+    ;(slug ? updateArticle : createArticle)(article)
       .then(article => (location.hash = `/article/${article.slug}`))
       .catch(errors => setState({ errors }))
-      .finally(() => setState({ inProgress: false }));
+      .finally(() => setState({ inProgress: false }))
   }
 
   createComputed(() => {
-    let article;
-    if (!slug || !(article = store.articles[slug])) return;
-    setState(article);
+    let article
+    if (!slug || !(article = store.articles[slug])) return
+    setState(article)
   })
 
   return (
@@ -67,8 +67,8 @@ export default ({ slug }) => {
                     type="text"
                     class="form-control form-control-lg"
                     placeholder="Article Title"
-                    value={state.title || ""}
-                    onChange={updateState("title")}
+                    value={state.title || ''}
+                    onChange={updateState('title')}
                     disabled={state.inProgress}
                   />
                 </fieldset>
@@ -77,8 +77,8 @@ export default ({ slug }) => {
                     type="text"
                     class="form-control"
                     placeholder="What's this article about?"
-                    value={state.description || ""}
-                    onChange={updateState("description")}
+                    value={state.description || ''}
+                    onChange={updateState('description')}
                     disabled={state.inProgress}
                   />
                 </fieldset>
@@ -87,8 +87,8 @@ export default ({ slug }) => {
                     class="form-control"
                     rows="8"
                     placeholder="Write your article (in markdown)"
-                    value={state.body || ""}
-                    onChange={updateState("body")}
+                    value={state.body || ''}
+                    onChange={updateState('body')}
                     disabled={state.inProgress}
                   ></textarea>
                 </fieldset>
@@ -98,7 +98,7 @@ export default ({ slug }) => {
                     class="form-control"
                     placeholder="Enter tags"
                     value={state.tagInput}
-                    onChange={updateState("tagInput")}
+                    onChange={updateState('tagInput')}
                     onBlur={handleAddTag}
                     onKeyup={handleTagInputKeyDown}
                     disabled={state.inProgress}
@@ -114,12 +114,7 @@ export default ({ slug }) => {
                     </For>
                   </div>
                 </fieldset>
-                <button
-                  class="btn btn-lg pull-xs-right btn-primary"
-                  type="button"
-                  disabled={state.inProgress}
-                  onClick={submitForm}
-                >
+                <button class="btn btn-lg pull-xs-right btn-primary" type="button" disabled={state.inProgress} onClick={submitForm}>
                   Publish Article
                 </button>
               </fieldset>
@@ -128,5 +123,5 @@ export default ({ slug }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

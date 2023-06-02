@@ -1,11 +1,11 @@
-import { lazy } from "solid-js";
-import { useStore } from "../../store/storeContext";
+import { lazy } from 'solid-js'
+import { useStore } from '../../store/storeContext'
 
-const Editor = lazy(() => import("./Editor"));
+const Editor = lazy(() => import('./Editor'))
 
-export default function(props) {
+export default function (props) {
   const [, { loadArticle }] = useStore(),
-    slug = props.params[0];
-  slug && loadArticle(slug);
-  return Editor({ slug });
+    slug = props.params[0]
+  slug && loadArticle(slug)
+  return Editor({ slug })
 }

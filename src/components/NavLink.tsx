@@ -1,7 +1,7 @@
-import { useRouter } from "../routeContext";
+import { useRouter } from '../routeContext'
 
 export default props => {
-  const { getParams } = useRouter();
+  const { getParams } = useRouter()
   return (
     <a
       class={props.class}
@@ -11,5 +11,5 @@ export default props => {
     >
       {props.children}
     </a>
-  );
-};
+  )
+}

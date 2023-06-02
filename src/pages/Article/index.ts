@@ -1,11 +1,11 @@
-import { lazy } from "solid-js";
-import { useStore } from "../../store/storeContext";
-const Article = lazy(() => import("./Article"));
+import { lazy } from 'solid-js'
+import { useStore } from '../../store/storeContext'
+const Article = lazy(() => import('./Article'))
 
-export default function(props) {
+export default function (props) {
   const [, { loadArticle, loadComments }] = useStore(),
-    slug = props.params[0];
-  loadArticle(slug);
-  loadComments(slug);
-  return Article({ slug });
+    slug = props.params[0]
+  loadArticle(slug)
+  loadComments(slug)
+  return Article({ slug })
 }

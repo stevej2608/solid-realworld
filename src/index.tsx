@@ -1,21 +1,24 @@
-import { render } from 'solid-js/web';
-import { App } from './App';
-import { RouterContext, createRouteHandler} from './routeContext'
-import {  StoreContext, createApplicationStore } from "./store/storeContext"
+import { render } from 'solid-js/web'
+import { App } from './App'
+import { RouterContext, createRouteHandler } from './routeContext'
+import { StoreContext, createApplicationStore } from './store/storeContext'
 
 function ContextProvider(props) {
-  const router = createRouteHandler("")
+  const router = createRouteHandler('')
   const store = createApplicationStore()
 
   return (
     <RouterContext.Provider value={router}>
       <StoreContext.Provider value={store}>{props.children}</StoreContext.Provider>
     </RouterContext.Provider>
-  );
+  )
 }
 
-render(() => (
-  <ContextProvider>
-    <App />
-  </ContextProvider>
-), document.body);
+render(
+  () => (
+    <ContextProvider>
+      <App />
+    </ContextProvider>
+  ),
+  document.body
+)

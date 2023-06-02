@@ -1,5 +1,5 @@
-import NavLink from "../../components/NavLink";
-import ArticleList from "../../components/ArticleList";
+import NavLink from '../../components/NavLink'
+import ArticleList from '../../components/ArticleList'
 
 /**
  * This is the conduit home page. Display navbar, banner
@@ -21,17 +21,15 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
       <div class="container page">
         <div class="row">
           <div class="col-md-9">
-
             {/* Display feed tabs */}
 
             <div class="feed-toggle">
               <ul class="nav nav-pills outline-active">
-
                 {/* Users feed - only if a user is logged in */}
 
                 {token && (
                   <li class="nav-item">
-                    <NavLink class="nav-link" href="?tab=feed" active={tab() === "feed"}>
+                    <NavLink class="nav-link" href="?tab=feed" active={tab() === 'feed'}>
                       Your Feed
                     </NavLink>
                   </li>
@@ -40,33 +38,26 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
                 {/* Global feed - always */}
 
                 <li class="nav-item">
-                  <NavLink class="nav-link" href="?tab=all" active={tab() === "all"}>
+                  <NavLink class="nav-link" href="?tab=all" active={tab() === 'all'}>
                     Global Feed
                   </NavLink>
                 </li>
 
                 {/* Show popular tag feed - if one is selected */}
 
-                <Show when={tab() !== "all" && tab() !== "feed"}>
+                <Show when={tab() !== 'all' && tab() !== 'feed'}>
                   <li class="nav-item">
                     <a href="" class="nav-link active">
                       <i class="ion-pound" /> {tab()}
                     </a>
                   </li>
                 </Show>
-
-
               </ul>
             </div>
 
             {/* Display articles for selected feed */}
 
-            <ArticleList
-              articles={Object.values(store.articles)}
-              totalPagesCount={store.totalPagesCount}
-              currentPage={store.page}
-              onSetPage={handleSetPage}
-            />
+            <ArticleList articles={Object.values(store.articles)} totalPagesCount={store.totalPagesCount} currentPage={store.page} onSetPage={handleSetPage} />
           </div>
 
           {/* Popular tags panel */}
@@ -87,9 +78,8 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
               </Suspense>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
