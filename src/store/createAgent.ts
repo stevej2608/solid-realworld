@@ -2,13 +2,58 @@ const API_ROOT = 'https://api.realworld.io/api'
 
 const encode = encodeURIComponent
 
-export interface APIAgent {
-  Tags: {
-    getAll(): Promise<string[]>
-  }
+interface IAuthAgent {
+  current: () => Promise<any>;
+  login: (email: any, password: any) => Promise<any>;
+  register: (username: any, email: any, password: any) => Promise<any>;
+  save: (user: any) => Promise<any>
 }
 
-export function createAgent([state, actions]): APIAgent {
+interface ITagsAgent {
+  getAll: () => Promise<string[]>;
+}
+
+interface IArticlesAgent {
+  all: (page: any, lim?: number) => Promise<any>;
+  byAuthor: (author: any, page: any) => Promise<any>;
+  byTag: (tag: any, page: any, lim?: number) => Promise<any>;
+  del: (slug: any) => Promise<any>;
+  favorite: (slug: any) => Promise<any>;
+  favoritedBy: (author: any, page: any) => Promise<any>;
+  feed: () => Promise<any>;
+  get: (slug: any) => Promise<any>
+  unfavorite: (slug: any) => Promise<any>
+  update: (article: any) => Promise<any>
+  create: (article: any) => Promise<any>
+}
+
+interface ICommentsAgent {
+  create: (slug: any, comment: any) => Promise<any>;
+  delete: (slug: any, commentId: any) => Promise<any>;
+  forArticle: (slug: any) => Promise<any>;
+}
+
+interface IProfileAgent {
+  follow: (username: any) => Promise<any>;
+  get: (username: any) => Promise<any>;
+  unfollow: (username: any) => Promise<any>
+}
+
+export interface IApiAgent {
+  Auth: IAuthAgent
+  Tags: ITagsAgent
+  Articles: IArticlesAgent
+  Comments: ICommentsAgent
+  Profile: IProfileAgent
+
+  limit: (count: any, p: any) => string
+  omitSlug: (article: any) => any
+
+}
+
+
+export function createAgent([state, actions]): IApiAgent {
+
   async function send(method, url, data, resKey) {
     const headers = {}
     const opts = { method, headers }
@@ -74,11 +119,7 @@ export function createAgent([state, actions]): APIAgent {
     unfollow: username => send('delete', `/profiles/${username}/follow`)
   }
 
-  return {
-    Articles,
-    Auth,
-    Comments,
-    Profile,
-    Tags
-  }
+  const api = {Articles, Auth, Comments, Profile, Tags }
+
+  return api
 }

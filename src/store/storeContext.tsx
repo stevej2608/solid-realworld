@@ -3,13 +3,13 @@ import { createStore } from 'solid-js/store'
 
 import { IArticle, IComment, IProfile, IUser } from '../api/Api'
 
-import { createAgent } from './createAgent'
+import { createAgent } from './createAgent';
 
 import { createArticles, IArticleActions } from './createArticles'
 import { createAuth, IAuthorActions } from './createAuth'
 import { createCommon, ICommonActions } from './createCommon'
-import { createComments } from './createComments'
-import { createProfile } from './createProfile'
+import { createComments, ICommentsActions } from './createComments'
+import { createProfile, IProfileActions } from './createProfile'
 
 export interface IStoreContext {
 
@@ -26,7 +26,7 @@ export interface IStoreContext {
     appName: string
   }
 
-  actions: IAuthorActions & IArticleActions & ICommonActions
+  actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
 }
 
 export function createApplicationStore(): IStoreContext {
@@ -34,32 +34,32 @@ export function createApplicationStore(): IStoreContext {
   // Resource accessors - see solidjs createResource()
   // https://www.solidjs.com/docs/latest/api#createresource
 
-  let articles: Resource<IArticle[]>
-  let comments: Resource<IComment[]>
-  let tags: Resource<string[]>
-  let profile: Resource<IProfile>
-  let currentUser: Resource<IUser>
+  let articlesAccessor: Resource<IArticle[]>
+  let commentsAccessor: Resource<IComment[]>
+  let tagsAccessor: Resource<string[]>
+  let profileAccessor: Resource<IProfile>
+  let currentUserAccessor: Resource<IUser>
 
   const [state, setState] = createStore<IStoreContext>({
 
     get articles(): IArticle[] {
-      return articles()
+      return articlesAccessor()
     },
 
     get comments(): Comment[] {
-      return comments()
+      return commentsAccessor()
     },
 
     get tags(): string[] {
-      return tags()
+      return tagsAccessor()
     },
 
     get profile(): IProfile {
-      return profile()
+      return profileAccessor()
     },
 
     get currentUser(): IUser {
-      return currentUser()
+      return currentUserAccessor()
     },
 
     page: 0,
@@ -77,11 +77,11 @@ export function createApplicationStore(): IStoreContext {
 
   // Instantiate all the resource accessors
 
-  articles = createArticles(agent, actions, state, setState)
-  comments = createComments(agent, actions, state, setState)
-  tags = createCommon(agent, actions, state, setState)
-  profile = createProfile(agent, actions, state, setState)
-  currentUser = createAuth(agent, actions, setState)
+  articlesAccessor = createArticles(agent, actions, state, setState)
+  commentsAccessor = createComments(agent, actions, state, setState)
+  tagsAccessor = createCommon(agent, actions, state, setState)
+  profileAccessor = createProfile(agent, actions, state, setState)
+  currentUserAccessor = createAuth(agent, actions, setState)
 
   return store
 }

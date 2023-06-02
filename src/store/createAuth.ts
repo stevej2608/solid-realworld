@@ -1,4 +1,6 @@
-import { createSignal, createResource, batch } from 'solid-js'
+import { createSignal, createResource, batch, Resource } from 'solid-js'
+import { IUser } from '../api/Api'
+import { IApiAgent } from './createAgent'
 
 export interface IAuthorActions {
   pullUser: () => true
@@ -8,16 +10,28 @@ export interface IAuthorActions {
   updateUser(newUser: any): Promise<void>
 }
 
-export function createAuth(agent, actions, setState): InitializedResource<boolean> {
+/**
+ * Create interface to the author API endpoint. We populate the supplied
+ * actions object with methods that wrap the low-level
+ * server agent
+ *
+ * @param agent Used for communication with the sever API
+ * @param actions The actions object to be populated
+ * @param state
+ * @param setState
+ * @returns
+ */
+
+export function createAuth(agent:IApiAgent, actions: IAuthorActions, setState): Resource<IUser> {
+
   const [loggedIn, setLoggedIn] = createSignal(false)
   const [currentUser, { mutate }] = createResource(loggedIn, agent.Auth.current)
 
   // Populate the provided actions container our actions
 
   Object.assign(actions, {
-    pullUser: () => setLoggedIn(true),
 
-    // TODO: Used
+    pullUser: () => setLoggedIn(true),
 
     async login(email, password) {
       const { user, errors } = await agent.Auth.login(email, password)
@@ -26,16 +40,12 @@ export function createAuth(agent, actions, setState): InitializedResource<boolea
       setLoggedIn(true)
     },
 
-    // TODO: Used
-
     async register(username, email, password) {
       const { user, errors } = await agent.Auth.register(username, email, password)
       if (errors) throw errors
       actions.setToken(user.token)
       setLoggedIn(true)
     },
-
-    // TODO: used
 
     logout() {
       batch(() => {
@@ -44,13 +54,12 @@ export function createAuth(agent, actions, setState): InitializedResource<boolea
       })
     },
 
-    // TODO: used
-
     async updateUser(newUser) {
       const { user, errors } = await agent.Auth.save(newUser)
       if (errors) throw errors
       mutate(user)
     }
+
   })
 
   return currentUser

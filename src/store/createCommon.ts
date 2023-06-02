@@ -1,11 +1,12 @@
-import { createEffect, createResource } from 'solid-js'
-import { APIAgent } from './createAgent'
+import { createEffect, createResource, Resource } from 'solid-js'
+import { IApiAgent } from './createAgent'
 
 export interface ICommonActions {
   setToken(token: string | undefined): void
 }
 
-export function createCommon(agent: APIAgent, actions, state, setState): Array<string> {
+export function createCommon(agent: IApiAgent, actions: ICommonActions, state, setState): Resource<string[]> {
+
   const getTags = async () => {
     console.log('getTags')
     const tags = await agent.Tags.getAll()

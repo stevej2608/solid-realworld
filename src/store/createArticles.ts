@@ -1,5 +1,7 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { IArticle } from '../api/Api'
+import { IApiAgent } from './createAgent'
+
 const LIMIT = 10
 
 export interface IArticleActions {
@@ -26,7 +28,7 @@ export interface IArticleActions {
  * @returns
  */
 
-export function createArticles(agent, actions: IArticleActions, state, setState): Resource<IArticle[]> {
+export function createArticles(agent: IApiAgent, actions: IArticleActions, state, setState): Resource<IArticle[]> {
   function $req(predicate) {
     if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
     if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
