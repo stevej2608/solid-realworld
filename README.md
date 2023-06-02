@@ -7,6 +7,7 @@ The following changes have be made:
 - [X] Builds & runs with yarn/vite
 - [X] Converted source to typescript
 - [X] Rationalised code and added extensive comments
+- [ ] Add Follow & Favorite to Article
 
 
 The canonical [realworld] project links.
