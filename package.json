@@ -9,7 +9,8 @@
     "eslint": "eslint src",
     "eslint:fix": "eslint src --fix",
     "clean": "rm -rf ./public/*",
-    "prettier": "prettier --write src"
+    "prettier": "prettier --write src",
+    "genapi": "swagger-typescript-api --type-prefix 'I' -o src/api -p https://raw.githubusercontent.com/gothinkster/realworld/db2aef2c70e1be92524572d63269c3fc4d6d8a16/api/openapi.yml"
   },
   "license": "MIT",
   "devDependencies": {
@@ -30,6 +31,7 @@
     "gulp-replace": "^1.1.4",
     "postcss": "8.4.23",
     "prettier": "^2.8.8",
+    "swagger-typescript-api": "^12.0.4",
     "typescript": "5.0.4",
     "vite": "4.3.1",
     "vite-plugin-solid": "2.7.0",
