@@ -1,8 +1,10 @@
 import { useStore } from '../store/storeContext'
 import { ArticlePreview } from './ArticlePreview'
 import { IArticle } from '../api/Api'
+
+
 interface IProps {
-  articles: IArticle[]
+  articles: Proxy<IArticle>[]
   currentPage: number
   onSetPage(page:number)
   totalPagesCount: number

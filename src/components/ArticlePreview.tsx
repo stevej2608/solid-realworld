@@ -1,14 +1,21 @@
 import NavLink from './NavLink'
+import { IArticle } from '../api/Api'
 
 const FAVORITED_CLASS = 'btn btn-sm btn-primary'
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
+
+interface IArticlePreview {
+  article: Proxy<IArticle>
+  token: string
+  onClickFavorite: (article: IArticle, e: any) => void
+}
 
 /**
  * Provides preview of an article, used when listing pages
  * of articles on the home page
  */
 
-export const ArticlePreview = ({ article, token, onClickFavorite }) => {
+export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePreview) => {
   const {
     title,
     description,
