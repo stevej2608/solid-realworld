@@ -1,5 +1,5 @@
 import { useStore } from '../store/storeContext'
-import ArticlePreview from './ArticlePreview'
+import { ArticlePreview } from './ArticlePreview'
 import { IArticle } from '../api/Api'
 interface IProps {
   articles: IArticle[]
@@ -7,6 +7,13 @@ interface IProps {
   onSetPage(page:number)
   totalPagesCount: number
 }
+
+/**
+ * List of articles with paginator
+ *
+ * @param props
+ * @returns
+ */
 
 export const ArticleList = (props:IProps) => {
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()

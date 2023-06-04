@@ -4,40 +4,57 @@ import { useStore } from '../../store/storeContext'
 
 import Comments from './Comments'
 
-const ArticleMeta = props => (
-  <div class="article-meta">
-    <NavLink href={`@${props.article?.author.username}`} route="profile">
-      <img src={props.article?.author.image} alt="" />
-    </NavLink>
-    <div class="info">
-      <NavLink href={`@${props.article?.author.username}`} route="profile" class="author">
-        {props.article?.author.username}
+/**
+ * Article meta - author image & name, date, follow, favorite
+ *
+ * @param props
+ * @returns
+ */
+
+const ArticleMeta = props => {
+  const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
+  const article = props.article
+
+  const handleClickFavorite = e => {
+    e.preventDefault()
+    article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
+  }
+
+  return (
+    <div class="article-meta">
+      <NavLink href={`@${article?.author.username}`} route="profile">
+        <img src={article?.author.image} alt="" />
       </NavLink>
-      <span class="date">{new Date(props.article?.createdAt).toDateString()}</span>
-    </div>
-    <Show when={props.canModify} fallback={<span />}>
-      <span>
-        <NavLink href={`editor/${props.article.slug}`} route="editor" class="btn btn-outline-secondary btn-sm">
-          <i class="ion-edit" /> Edit Article
+      <div class="info">
+        <NavLink href={`@${article?.author.username}`} route="profile" class="author">
+          {article?.author.username}
         </NavLink>
-        <button class="btn btn-outline-danger btn-sm" onClick={props.onDelete}>
-          <i class="ion-trash-a" /> Delete Article
+        <span class="date">{new Date(article?.createdAt).toDateString()}</span>
+      </div>
+      <Show when={props.canModify} fallback={<span />}>
+        <span>
+          <NavLink href={`editor/${article.slug}`} route="editor" class="btn btn-outline-secondary btn-sm">
+            <i class="ion-edit" /> Edit Article
+          </NavLink>
+          <button class="btn btn-outline-danger btn-sm" onClick={props.onDelete}>
+            <i class="ion-trash-a" /> Delete Article
+          </button>
+        </span>
+      </Show>
+      <Show when={!props.canModify} fallback={<span />}>
+        <button class="btn btn-sm btn-outline-secondary">
+          <i class="ion-plus-round"></i>
+          &nbsp; Follow Brad Green
         </button>
-      </span>
-    </Show>
-    <Show when={!props.canModify} fallback={<span />}>
-      <button class="btn btn-sm btn-outline-secondary">
-        <i class="ion-plus-round"></i>
-        &nbsp; Follow Brad Green
-      </button>
-      &nbsp;
-      <button class="btn btn-sm btn-outline-primary">
-        <i class="ion-heart"></i>
-        &nbsp; Favorite Article <span class="counter">(29)</span>
-      </button>
-    </Show>
-  </div>
-)
+        &nbsp;
+        <button class="btn btn-sm btn-outline-primary">
+          <i class="ion-heart"></i>
+          &nbsp; Favorite Article <span class="counter">(xxx)</span>
+        </button>
+      </Show>
+    </div>
+  )
+}
 
 export default ({ slug }) => {
   const [store, { deleteArticle }] = useStore()
@@ -45,6 +62,14 @@ export default ({ slug }) => {
   const article = () => store.articles[slug]
   const canModify = () => store.currentUser && store.currentUser.username === article()?.author.username
   const handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
+
+  const {
+    title,
+    description,
+    createdAt,
+    tagList,
+    author: { username, image }
+  } = article()
 
   return (
     <div class="article-page">
@@ -70,13 +95,13 @@ export default ({ slug }) => {
         <div class="article-actions">
           <div class="article-meta">
             <a href="">
-              <img />
+              <img src={article()?.author.image}/>
             </a>
             <div class="info">
               <a href="" class="author">
-                Brad Green
+                {article()?.author.username}
               </a>
-              <span class="date">January 20th</span>
+              <span class="date" textContent={/*@once*/ new Date(article()?.createdAt).toDateString()} />
             </div>
             <button class="btn btn-sm btn-outline-secondary">
               <i class="ion-plus-round"></i>
@@ -93,8 +118,6 @@ export default ({ slug }) => {
         <div class="row">
           <Comments />
         </div>
-
-
       </div>
     </div>
   )

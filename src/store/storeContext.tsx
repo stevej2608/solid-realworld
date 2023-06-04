@@ -11,21 +11,22 @@ import { createCommon, ICommonActions } from './createCommon'
 import { createComments, ICommentsActions } from './createComments'
 import { createProfile, IProfileActions } from './createProfile'
 
+
+export interface IStoreState {
+
+  readonly articles: IArticle[]
+  readonly comments: IComment[]
+  readonly tags: string[]
+  readonly profile: IProfile
+  readonly currentUser: IUser
+
+  page: number
+  totalPagesCount: number
+  token: string
+  appName: string
+}
 export interface IStoreContext {
-
-  state: {
-    readonly articles: IArticle[]
-    readonly comments: IComment[]
-    readonly tags: string[]
-    readonly profile: IProfile
-    readonly currentUser: IUser
-
-    page: number
-    totalPagesCount: number
-    token: string
-    appName: string
-  }
-
+  state: IStoreState
   actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
 }
 
@@ -88,6 +89,12 @@ export function createApplicationStore(): IStoreContext {
 
 export const StoreContext = createContext<IStoreContext>()
 
-export function useStore() {
+/**
+ * Globally accessible application store
+ *
+ * @returns IStoreContext
+ */
+
+export function useStore(): IStoreContext {
   return useContext<IStoreContext>(StoreContext)
 }

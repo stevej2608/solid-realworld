@@ -3,7 +3,12 @@ import NavLink from './NavLink'
 const FAVORITED_CLASS = 'btn btn-sm btn-primary'
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
 
-export default ({ article, token, onClickFavorite }) => {
+/**
+ * Provides preview of an article, used when listing pages
+ * of articles on the home page
+ */
+
+export const ArticlePreview = ({ article, token, onClickFavorite }) => {
   const {
     title,
     description,

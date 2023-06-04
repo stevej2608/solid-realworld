@@ -1,5 +1,14 @@
 import NavLink from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'
+import { IStoreState } from '../../store/storeContext'
+
+interface IHomeProps {
+  appName: string
+  token: string
+  handleSetPage: (page: number) => void
+  tab: string
+  state: IStoreState
+}
 
 /**
  * This is the conduit home page. Display navbar, banner
@@ -8,7 +17,8 @@ import { ArticleList } from '../../components/ArticleList'
  * https://demo.realworld.io/#/
  */
 
-export default ({ appName, token, handleSetPage, tab, store }) => {
+export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
+
   return (
     <div class="home-page">
       <div class="banner">
@@ -57,7 +67,7 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
 
             {/* Display articles for selected feed */}
 
-            <ArticleList articles={Object.values(store.articles)} totalPagesCount={store.totalPagesCount} currentPage={store.page} onSetPage={handleSetPage} />
+            <ArticleList articles={Object.values(state.articles)} totalPagesCount={state.totalPagesCount} currentPage={state.page} onSetPage={handleSetPage} />
           </div>
 
           {/* Popular tags panel */}
@@ -67,7 +77,7 @@ export default ({ appName, token, handleSetPage, tab, store }) => {
               <p>Popular Tags</p>
               <Suspense fallback="Loading tags...">
                 <div class="tag-list">
-                  <For each={store.tags}>
+                  <For each={state.tags}>
                     {tag => (
                       <a href={`#/?tab=${tag}`} class="tag-pill tag-default">
                         {tag}

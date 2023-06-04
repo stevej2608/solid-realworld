@@ -5,8 +5,8 @@ import { useStore } from '../../store/storeContext'
 const Home = lazy(() => import('./Home'))
 
 export default function () {
-  const [store, { loadArticles, setPage }] = useStore()
-  const { token, appName } = store
+  const [state, { loadArticles, setPage }] = useStore()
+  const { token, appName } = state
   const { location } = useRouter()
 
   // https://www.solidjs.com/docs/latest/api#creatememo
@@ -36,7 +36,7 @@ export default function () {
     }
   }
 
-  const handleSetPage = page => {
+  const handleSetPage = (page: number) => {
     start(() => {
       setPage(page)
       loadArticles(getPredicate())
@@ -45,5 +45,5 @@ export default function () {
 
   createComputed(() => loadArticles(getPredicate()))
 
-  return Home({ handleSetPage, appName, token, tab, store })
+  return Home({ handleSetPage, appName, token, tab, state })
 }
