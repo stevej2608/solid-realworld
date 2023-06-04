@@ -3,7 +3,7 @@ import { createStore } from 'solid-js/store'
 
 import { IArticle, IComment, IProfile, IUser } from '../api/Api'
 
-import { createAgent } from './createAgent';
+import { createAgent } from './createAgent'
 
 import { createArticles, IArticleActions } from './createArticles'
 import { createAuth, IAuthorActions } from './createAuth'
@@ -11,38 +11,24 @@ import { createCommon, ICommonActions } from './createCommon'
 import { createComments, ICommentsActions } from './createComments'
 import { createProfile, IProfileActions } from './createProfile'
 
+import { IStoreState } from './storeState'
 
-export interface IStoreState {
-
-  readonly articles: IArticle[]
-  readonly comments: IComment[]
-  readonly tags: string[]
-  readonly profile: IProfile
-  readonly currentUser: IUser
-
-  page: number
-  totalPagesCount: number
-  token: string
-  appName: string
-}
 export interface IStoreContext {
   state: IStoreState
   actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
 }
 
 export function createApplicationStore(): IStoreContext {
-
   // Resource accessors - see solidjs createResource()
   // https://www.solidjs.com/docs/latest/api#createresource
 
-  let articlesAccessor: Resource<IArticle[]>
-  let commentsAccessor: Resource<IComment[]>
-  let tagsAccessor: Resource<string[]>
-  let profileAccessor: Resource<IProfile>
-  let currentUserAccessor: Resource<IUser>
+  let articlesAccessor: () => IArticle[] = undefined
+  let commentsAccessor: () => IComment[] = undefined
+  let tagsAccessor: () => string[] = undefined
+  let profileAccessor: () => IProfile = undefined
+  let currentUserAccessor: () => IUser = undefined
 
-  const [state, setState] = createStore<IStoreContext>({
-
+  const [state, setState] = createStore<IStoreState>({
     get articles(): IArticle[] {
       return articlesAccessor()
     },

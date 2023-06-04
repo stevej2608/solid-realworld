@@ -1,11 +1,14 @@
 import { createResource, createSignal, Resource } from 'solid-js'
-import { IArticle } from '../api/Api'
+import { SetStoreFunction } from 'solid-js/store'
+import { IArticle, IMultipleArticlesResponse } from '../api/Api'
 import { IApiAgent } from './createAgent'
+
+import { IStoreState } from './storeState'
 
 const LIMIT = 10
 
 export interface IArticleActions {
-  deleteArticle(slug: any): Promise<void>
+  deleteArticle(slug: string): Promise<void>
   makeFavorite(slug: string): Promise<void>
   unmakeFavorite(slug: string): Promise<void>
   updateArticle(data: IArticle): Promise<void>
@@ -13,7 +16,7 @@ export interface IArticleActions {
   createArticle(newArticle: INewArticle): IArticlesResponse
   loadArticle(slug: string): void
   loadArticles(predicate: string): void
-  setPage: (page: any) => any
+  setPage: (page: number) => void
 }
 
 /**
@@ -28,7 +31,7 @@ export interface IArticleActions {
  * @returns
  */
 
-export function createArticles(agent: IApiAgent, actions: IArticleActions, state, setState): Resource<IArticle[]> {
+export function createArticles(agent: IApiAgent, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
   interface IPredicate {
     myFeed?: string
     favoritedBy?: string
@@ -36,7 +39,7 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     author?: string
   }
 
-  function $req(predicate: IPredicate) {
+  function $req(predicate: IPredicate): Promise<IMultipleArticlesResponse> {
     if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
     if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
     if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
@@ -44,35 +47,31 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     return agent.Articles.all(state.page, LIMIT, predicate)
   }
 
-  const fetchArticles: IArticle | IArticle[] = (args, { value }) => {
-
+  const fetchArticles: IArticle | IArticle[] = (args: [string, number], { value }) => {
     console.log('fetchArticles args=[%s]', args[0])
 
     if (args[0] === 'articles') {
-
-      return $req(args[1]).then( response => {
+      return $req(args[1]).then(response => {
         const { articles, articlesCount } = response
 
         queueMicrotask(() => {
           setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
         })
 
-        const articlesMap = {}
+        const articlesMap: { [slug: string]: IArticle } = {}
         for (const article of articles) {
           articlesMap[article.slug] = article
         }
         return articlesMap
       })
-
     }
 
     const article = state.articles[args[1]]
-    if (article) return value
+    if (article) return value as IArticle
 
     return agent.Articles.get(args[1]).then(article => {
       return { ...value, [args[1]]: article }
     })
-
   }
 
   const [articleSource, setArticleSource] = createSignal()
@@ -83,13 +82,13 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
   }
 
   const removeFavorite = (slug: string) => {
-    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount - 1 }))
+    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount as number - 1 }))
   }
 
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-    setPage: page => setState({ page }),
+    setPage: (page: number) => setState({ page }),
 
     loadArticles(predicate: string) {
       setArticleSource(['articles', predicate])

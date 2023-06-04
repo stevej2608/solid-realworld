@@ -1,12 +1,13 @@
-import { useStore } from '../store/storeContext'
+import type { JSX } from 'solid-js'
+
+import { useStore, IStoreContext } from '../store/storeContext'
 import { ArticlePreview } from './ArticlePreview'
 import { IArticle } from '../api/Api'
-
 
 interface IProps {
   articles: Proxy<IArticle>[]
   currentPage: number
-  onSetPage(page:number)
+  onSetPage(page: number)
   totalPagesCount: number
 }
 
@@ -17,10 +18,10 @@ interface IProps {
  * @returns
  */
 
-export const ArticleList = (props:IProps) => {
+export const ArticleList = (props: IProps) => {
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
 
-  const handleClickFavorite = (article: IArticle, e) => {
+  const handleClickFavorite = (article: IArticle, e: InputEvent) => {
     e.preventDefault()
     article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
   }

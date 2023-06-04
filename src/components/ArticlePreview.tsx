@@ -1,13 +1,15 @@
+import type { JSX } from 'solid-js'
+
 import NavLink from './NavLink'
 import { IArticle } from '../api/Api'
 
 const FAVORITED_CLASS = 'btn btn-sm btn-primary'
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
 
-interface IArticlePreview {
+interface IArticlePreviewProps {
   article: Proxy<IArticle>
   token: string
-  onClickFavorite: (article: IArticle, e: any) => void
+  onClickFavorite: (article: IArticle, e: InputEvent) => void
 }
 
 /**
@@ -15,15 +17,17 @@ interface IArticlePreview {
  * of articles on the home page
  */
 
-export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePreview) => {
+export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePreviewProps) => {
   const {
     title,
     description,
     slug,
     createdAt,
     tagList,
+    favorited,
+    favoritesCount,
     author: { username, image }
-  } = article
+  } = article as IArticle
 
   return (
     <div class="article-preview">
@@ -41,8 +45,8 @@ export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePrev
 
         {token && (
           <div class="pull-xs-right">
-            <button class={article.favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS} onClick={[onClickFavorite, article]}>
-              <i class="ion-heart" /> {article.favoritesCount}
+            <button class={favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS} onClick={[onClickFavorite, article]}>
+              <i class="ion-heart" /> {favoritesCount}
             </button>
           </div>
         )}

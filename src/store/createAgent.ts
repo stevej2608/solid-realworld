@@ -5,44 +5,43 @@ const API_ROOT = 'https://api.realworld.io/api'
 const encode = encodeURIComponent
 
 interface IAuthAgent {
-  current: () => Promise<any>;
-  login: (email: any, password: any) => Promise<any>;
-  register: (username: any, email: any, password: any) => Promise<any>;
+  current: () => Promise<any>
+  login: (email: any, password: any) => Promise<any>
+  register: (username: any, email: any, password: any) => Promise<any>
   save: (user: any) => Promise<any>
 }
 
 interface ITagsAgent {
-  getAll: () => Promise<string[]>;
+  getAll: () => Promise<string[]>
 }
 
 interface IArticlesAgent {
+  all: (page: number, lim?: number) => Promise<IArticle[]>
+  byAuthor: (author: string, page: number) => Promise<IArticle[]>
+  byTag: (tag: string, page: number, lim?: number) => Promise<IArticle[]>
 
-  all: (page: any, lim?: number) => Promise<IArticle[]>;
-  byAuthor: (author: string, page: number) => Promise<IArticle[]>;
-  byTag: (tag: string, page: number, lim?: number) => Promise<IArticle[]>;
+  del: (slug: string) => Promise<any>
 
-  del: (slug: string) => Promise<any>;
-
-  favorite: (slug: string) => Promise<any>;
+  favorite: (slug: string) => Promise<any>
   unfavorite: (slug: string) => Promise<any>
 
-  favoritedBy: (author: string, page: any) => Promise<any>;
-  feed: () => Promise<any>;
-  get: (slug: string) => Promise<any>
+  favoritedBy: (author: string, page: number) => Promise<IArticle[]>
+  feed: () => Promise<IArticle[]>
+  get: (slug: string) => Promise<IArticle>
 
   update: (article: IArticle) => Promise<any>
   create: (article: IArticle) => Promise<any>
 }
 
 interface ICommentsAgent {
-  create: (slug: string, comment: string) => Promise<any>;
-  delete: (slug: string, commentId: string) => Promise<any>;
-  forArticle: (slug: string) => Promise<any>;
+  create: (slug: string, comment: string) => Promise<any>
+  delete: (slug: string, commentId: string) => Promise<any>
+  forArticle: (slug: string) => Promise<any>
 }
 
 interface IProfileAgent {
-  follow: (username: any) => Promise<any>;
-  get: (username: string) => Promise<IProfile>;
+  follow: (username: any) => Promise<any>
+  get: (username: string) => Promise<IProfile>
   unfollow: (username: any) => Promise<any>
 }
 
@@ -55,9 +54,7 @@ export interface IApiAgent {
 
   limit: (count: any, p: any) => string
   omitSlug: (article: any) => any
-
 }
-
 
 export function createAgent([state, actions]): IApiAgent {
 
@@ -97,7 +94,7 @@ export function createAgent([state, actions]): IApiAgent {
     getAll: (): Promise<string[]> => send('get', '/tags', undefined, 'tags')
   }
 
-  const limit = (count:number, p:number) => `limit=${count}&offset=${p ? p * count : 0}`
+  const limit = (count: number, p: number) => `limit=${count}&offset=${p ? p * count : 0}`
   const omitSlug = article => Object.assign({}, article, { slug: undefined })
 
   const Articles: IArticlesAgent = {
@@ -114,19 +111,19 @@ export function createAgent([state, actions]): IApiAgent {
     create: article => send('post', '/articles', { article })
   }
 
-  const Comments : ICommentsAgent = {
+  const Comments: ICommentsAgent = {
     create: (slug, comment) => send('post', `/articles/${slug}/comments`, { comment }),
     delete: (slug, commentId) => send('delete', `/articles/${slug}/comments/${commentId}`),
     forArticle: slug => send('get', `/articles/${slug}/comments`, undefined, 'comments')
   }
 
-  const Profile : IProfileAgent = {
+  const Profile: IProfileAgent = {
     follow: username => send('post', `/profiles/${username}/follow`),
     get: username => send('get', `/profiles/${username}`, undefined, 'profile'),
     unfollow: username => send('delete', `/profiles/${username}/follow`)
   }
 
-  const api = {Articles, Auth, Comments, Profile, Tags }
+  const api = { Articles, Auth, Comments, Profile, Tags }
 
   return api
 }
