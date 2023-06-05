@@ -1,22 +1,30 @@
+import { JSX } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import NavLink from '../components/NavLink'
-import { ListErrors } from '../components/ListErrors'
+import { NavLink } from '../components/NavLink'
+import { ListErrors, IErrors } from '../components/ListErrors'
 import { useStore } from '../store/storeContext'
+import { INewUser } from '../api/Api'
+
+interface IAuthStore extends INewUser {
+  errors: IErrors
+  inProgress: boolean
+}
 
 export default () => {
-  const [state, setState] = createStore({ username: '', inProgress: false }),
-    [, { register, login }] = useStore(),
-    isLogin = location.hash.includes('login'),
-    text = isLogin ? 'Sign in' : 'Sign up',
-    link = isLogin ? <NavLink route="register">Need an account?</NavLink> : <NavLink route="login">Have an account?</NavLink>,
-    handleSubmit = e => {
-      e.preventDefault()
-      setState({ inProgress: true })
-      const p = isLogin ? login(state.email, state.password) : register(state.username, state.email, state.password)
-      p.then(() => (location.hash = '/'))
-        .catch(errors => setState({ errors }))
-        .finally(() => setState({ inProgress: false }))
-    }
+  const [state, setState] = createStore<IAuthStore>({ username: '', inProgress: false })
+  const [, { register, login }] = useStore()
+  const isLogin = location.hash.includes('login')
+  const text = isLogin ? 'Sign in' : 'Sign up'
+  const link = isLogin ? <NavLink route="register">Need an account?</NavLink> : <NavLink route="login">Have an account?</NavLink>
+
+  const handleSubmit = (e: InputEvent) => {
+    e.preventDefault()
+    setState({ inProgress: true })
+    const p = isLogin ? login(state.email, state.password) : register(state.username, state.email, state.password)
+    p.then(() => (location.hash = '/'))
+      .catch(errors => setState({ errors }))
+      .finally(() => setState({ inProgress: false }))
+  }
 
   return (
     <div class="auth-page">

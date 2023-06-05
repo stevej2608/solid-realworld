@@ -2,7 +2,7 @@ import { createComputed, JSX } from 'solid-js'
 import { createStore, IStoreContext } from 'solid-js/store'
 import { useStore } from '../../store/storeContext'
 
-import { ListErrors } from '../components/ListErrors'
+import { ListErrors } from '../../components/ListErrors'
 import { IArticle } from '../../api/Api'
 
 interface IEditState extends IArticle {

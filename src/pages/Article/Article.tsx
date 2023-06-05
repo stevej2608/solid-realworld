@@ -1,7 +1,7 @@
 import { JSX } from 'solid-js'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import NavLink from '../../components/NavLink'
+import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
 
 import Comments from './Comments'

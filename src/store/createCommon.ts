@@ -1,9 +1,6 @@
 import { createEffect, createResource, Resource } from 'solid-js'
 import { IApiAgent } from './createAgent'
-
-export interface ICommonActions {
-  setToken(token: string | undefined): void
-}
+import { ICommonActions } from './storeState'
 
 /**
  *
@@ -15,7 +12,6 @@ export interface ICommonActions {
  */
 
 export function createCommon(agent: IApiAgent, actions: ICommonActions, state, setState): Resource<string[]> {
-
   const getTags = async () => {
     console.log('getTags')
     const tags = await agent.Tags.getAll()

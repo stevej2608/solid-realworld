@@ -8,8 +8,8 @@ import { IStoreState, IArticleMap } from './storeState'
 const LIMIT = 10
 
 export interface IArticleActions {
-  makeFavorite(slug: string): Promise<void>
-  unmakeFavorite(slug: string): Promise<void>
+  makeFavorite(slug: string): void
+  unmakeFavorite(slug: string): void
 
   createArticle(newArticle: INewArticle): Promise<IArticle>
   updateArticle(data: IArticle): Promise<IArticle>

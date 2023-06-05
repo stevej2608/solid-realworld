@@ -1,9 +1,14 @@
+import { JSX } from 'solid-js'
 import { render } from 'solid-js/web'
 import { App } from './App'
 import { RouterContext, createRouteHandler } from './routeContext'
 import { StoreContext, createApplicationStore } from './store/storeContext'
 
-function ContextProvider(props) {
+interface IProps {
+  children?: Element
+}
+
+function ContextProvider(props: IProps) {
   const router = createRouteHandler('')
   const store = createApplicationStore()
 

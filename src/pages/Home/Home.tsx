@@ -1,6 +1,6 @@
-import NavLink from '../../components/NavLink'
+import { NavLink } from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'
-import { IStoreState } from '../../store/storeContext'
+import { IStoreState } from '../../store/storeState'
 
 interface IHomeProps {
   appName: string
@@ -18,7 +18,6 @@ interface IHomeProps {
  */
 
 export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
-
   return (
     <div class="home-page">
       <div class="banner">
@@ -78,7 +77,7 @@ export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
               <Suspense fallback="Loading tags...">
                 <div class="tag-list">
                   <For each={state.tags}>
-                    {tag => (
+                    {(tag: string) => (
                       <a href={`#/?tab=${tag}`} class="tag-pill tag-default">
                         {tag}
                       </a>

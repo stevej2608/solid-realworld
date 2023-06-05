@@ -1,7 +1,7 @@
 import { useRouter } from '../../routeContext'
 import { useStore } from '../../store/storeContext'
 
-import NavLink from '../../components/NavLink'
+import { NavLink } from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'
 
 export default props => {

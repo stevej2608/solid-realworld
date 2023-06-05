@@ -1,11 +1,12 @@
 import { createSignal, createResource, Resource } from 'solid-js'
 import { IProfile } from '../api/Api'
 import { IApiAgent } from './createAgent'
+import { IStoreState } from './storeState'
 
 export interface IProfileActions {
-  loadProfile: Setter<unknown>;
-  follow(): Promise<void>;
-  unfollow(): Promise<void>;
+  loadProfile: Setter<unknown>
+  follow(): Promise<void>
+  unfollow(): Promise<void>
 }
 
 /**
@@ -20,14 +21,13 @@ export interface IProfileActions {
  * @returns
  */
 
-export function createProfile(agent: IApiAgent, actions:IProfileActions, state, setState) : Resource<IProfile> {
+export function createProfile(agent: IApiAgent, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
   const [username, setUsername] = createSignal()
   const [profile] = createResource(username, agent.Profile.get)
 
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-
     loadProfile: setUsername,
 
     async follow() {

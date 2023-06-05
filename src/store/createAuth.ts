@@ -1,13 +1,14 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
 import { IUser } from '../api/Api'
 import { IApiAgent } from './createAgent'
+import { IStoreState, ICommonActions } from './storeState'
 
-export interface IAuthorActions {
+export interface IAuthorActions extends ICommonActions {
   pullUser: () => true
-  login(email: any, password: any): Promise<void>
-  register(username: any, email: any, password: any): Promise<void>
+  login(email: string, password: string): Promise<void>
+  register(username: string, email: string, password: string): Promise<void>
   logout(): void
-  updateUser(newUser: any): Promise<void>
+  updateUser(newUser: IUser): Promise<void>
 }
 
 /**
@@ -22,25 +23,23 @@ export interface IAuthorActions {
  * @returns
  */
 
-export function createAuth(agent:IApiAgent, actions: IAuthorActions, setState): Resource<IUser> {
-
+export function createAuth(agent: IApiAgent, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
   const [loggedIn, setLoggedIn] = createSignal(false)
   const [currentUser, { mutate }] = createResource(loggedIn, agent.Auth.current)
 
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-
     pullUser: () => setLoggedIn(true),
 
-    async login(email, password) {
+    async login(email: string, password: string) {
       const { user, errors } = await agent.Auth.login(email, password)
       if (errors) throw errors
       actions.setToken(user.token)
       setLoggedIn(true)
     },
 
-    async register(username, email, password) {
+    async register(username: string, email: string, password: string) {
       const { user, errors } = await agent.Auth.register(username, email, password)
       if (errors) throw errors
       actions.setToken(user.token)
@@ -59,7 +58,6 @@ export function createAuth(agent:IApiAgent, actions: IAuthorActions, setState): 
       if (errors) throw errors
       mutate(user)
     }
-
   })
 
   return currentUser

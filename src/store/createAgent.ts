@@ -1,14 +1,18 @@
-import { IProfile, IArticle, INewArticle } from '../api/Api'
+import { IProfile, IArticle, INewArticle, IUserResponse } from '../api/Api'
 
 const API_ROOT = 'https://api.realworld.io/api'
 
 const encode = encodeURIComponent
 
+interface IAgentError {
+  errors: string[]
+}
+
 interface IAuthAgent {
   current: () => Promise<any>
-  login: (email: any, password: any) => Promise<any>
-  register: (username: any, email: any, password: any) => Promise<any>
-  save: (user: any) => Promise<any>
+  login: (email: string, password: string) => Promise<IUserResponse & IAgentError>
+  register: (username: string, email: string, password: string) => Promise<IUserResponse & IAgentError>
+  save: (user: IUser) => Promise<IUserResponse & IAgentError>
 }
 
 interface ITagsAgent {
@@ -56,7 +60,6 @@ export interface IApiAgent {
 }
 
 export function createAgent([state, actions]): IApiAgent {
-
   async function send(method, url, data, resKey) {
     const headers = {}
     const opts = { method, headers }

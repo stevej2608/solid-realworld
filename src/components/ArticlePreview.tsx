@@ -1,6 +1,6 @@
 import type { JSX } from 'solid-js'
 
-import NavLink from './NavLink'
+import { NavLink } from './NavLink'
 import { IArticle } from '../api/Api'
 
 const FAVORITED_CLASS = 'btn btn-sm btn-primary'

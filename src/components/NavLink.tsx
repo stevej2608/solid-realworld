@@ -1,6 +1,13 @@
 import { useRouter } from '../routeContext'
 
-export default props => {
+interface NavLinkProps {
+  class: string
+  active: boolean
+  href: string
+  route: string
+}
+
+export const NavLink = (props: NavLinkProps) => {
   const { getParams } = useRouter()
   return (
     <a

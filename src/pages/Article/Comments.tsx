@@ -1,6 +1,6 @@
 import { JSX } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import NavLink from '../../components/NavLink'
+import { NavLink } from '../../components/NavLink'
 import { ListErrors, IErrors } from '../../components/ListErrors'
 import { useStore } from '../../store/storeContext'
 import { ICommentsActions } from '../../store/createComments'
@@ -62,24 +62,14 @@ const CommentInput = ({ slug, createComment, loadComments, currentUser }: IComme
   const createCommentHandler = (ev: InputEvent) => {
     ev.preventDefault()
 
-    const reloadComments = () => {
-      loadComments(slug, true)
-        .then(() => {
-          // NO ACTION
-        })
-        .catch(errors => {
-          throw errors
-        })
-    }
-
     setState({ isCreatingComment: true })
 
     createComment({ body: state.body })
       .then(() => {
         setState({ body: '' })
-        reloadComments()
+        loadComments(slug, true)
       })
-      .catch(errors => setState({ errors }))
+      .catch((errors: Exception) => setState({ errors }))
       .finally(() => setState({ isCreatingComment: false }))
   }
 
@@ -112,7 +102,9 @@ export default () => {
   const [store, { createComment, deleteComment, loadComments }] = useStore()
   const { currentUser, articleSlug } = store
 
-  const handleDeleteComment = (commentId: string) => deleteComment(commentId)
+  const handleDeleteComment = (commentId: string) => {
+    deleteComment(commentId)
+  }
 
   return (
     <div class="col-xs-12 col-md-8 offset-md-2">

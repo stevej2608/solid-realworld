@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'solid-js'
+import { createContext, useContext, Accessor } from 'solid-js'
 import { createSignal, onCleanup, useTransition } from 'solid-js'
 
 /**
@@ -25,7 +25,7 @@ export interface IRouteContext {
    * Returns any params associated with the match
    */
 
-  getParams: () => any
+  getParams: () => string[]
 }
 
 /**

@@ -15,3 +15,8 @@ export interface IStoreState {
   appName: string
   articleSlug: string
 }
+
+export interface ICommonActions {
+  setToken(token: string | undefined): void
+}
+

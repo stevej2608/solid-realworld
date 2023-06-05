@@ -5,7 +5,7 @@ import { IApiAgent } from './createAgent'
 import { IStoreState } from './storeState'
 
 export interface ICommentsActions {
-  loadComments(articleSlug: string, reload: boolean): Promise<IComment[]>
+  loadComments(articleSlug: string, reload: boolean): void
   createComment(comment: string): Promise<IComment>
   deleteComment(id: string)
 }
@@ -48,7 +48,7 @@ export function createComments(agent: IApiAgent, actions: ICommentsActions, stat
       try {
         await agent.Comments.delete(state.articleSlug, id)
       } catch (err) {
-        await actions.loadComments(state.articleSlug)
+        actions.loadComments(state.articleSlug)
         throw err
       }
     }

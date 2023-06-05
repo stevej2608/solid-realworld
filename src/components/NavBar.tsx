@@ -1,5 +1,5 @@
 import { useStore } from '../store/storeContext'
-import NavLink from './NavLink'
+import { NavLink } from './NavLink'
 
 export default () => {
   const [store] = useStore()
