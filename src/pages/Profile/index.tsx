@@ -1,13 +1,20 @@
 import { createComputed, lazy } from 'solid-js'
 import { useRouter } from '../../routeContext'
-import { useStore } from '../../store/storeContext'
+import { useStore, IStoreContext } from '../../store/storeContext'
 
 const Profile = lazy(() => import('./Profile'))
 
-export default function (props) {
-  const [, { loadProfile, loadArticles }] = useStore(),
-    { location } = useRouter()
+interface IProps {
+  routeName: string
+  params: string[]
+}
+
+export default function (props: IProps) {
+  const [, { loadProfile, loadArticles }] = useStore()
+  const { location } = useRouter()
+
   createComputed(() => props.routeName === 'profile' && loadProfile(props.params[0]))
+
   createComputed(
     () =>
       props.routeName === 'profile' &&

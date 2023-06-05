@@ -1,28 +1,38 @@
-import { useStore } from '../store/storeContext'
-import { ListErrors } from '../components/ListErrors'
+import { JSX } from 'solid-js'
+import { ListErrors, IErrors } from '../components/ListErrors'
 import { createStore } from 'solid-js/store'
+import { useStore, IStoreContext } from '../store/storeContext'
+import { IUser } from '../api/Api'
+
+interface IUserState extends IUser {
+  password: string
+  errors: IErrors
+  updatingUser: boolean
+}
 
 export default () => {
-  const [store, { logout, updateUser }] = useStore(),
-    [state, setState] = createStore({
-      image: store.currentUser.image || '',
-      username: store.currentUser.username,
-      bio: store.currentUser.bio || '',
-      email: store.currentUser.email,
-      password: ''
-    }),
-    updateState = field => ev => setState(field, ev.target.value),
-    submitForm = ev => {
-      ev.preventDefault()
-      const user = Object.assign({}, state)
-      if (!user.password) delete user.password
-      if (!user.image) delete user.image
-      setState({ updatingUser: true })
-      updateUser(user)
-        .then(() => (location.hash = `/@${user.username}`))
-        .catch(errors => setState({ errors }))
-        .finally(() => setState({ updatingUser: false }))
-    }
+  const [store, { logout, updateUser }] = useStore()
+  const [state, setState] = createStore<IUserState>({
+    image: store.currentUser.image || '',
+    username: store.currentUser.username,
+    bio: store.currentUser.bio || '',
+    email: store.currentUser.email,
+    password: ''
+  })
+
+  const updateState = field => (ev: InputEvent) => setState(field, ev.target.value)
+
+  const submitForm = (ev: InputEvent) => {
+    ev.preventDefault()
+    const user = Object.assign({}, state)
+    if (!user.password) delete user.password
+    if (!user.image) delete user.image
+    setState({ updatingUser: true })
+    updateUser(user)
+      .then(() => (location.hash = `/@${user.username}`))
+      .catch(errors => setState({ errors }))
+      .finally(() => setState({ updatingUser: false }))
+  }
 
   return (
     <div class="settings-page">

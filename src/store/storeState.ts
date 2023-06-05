@@ -17,6 +17,5 @@ export interface IStoreState {
 }
 
 export interface ICommonActions {
-  setToken(token: string | undefined): void
+  setToken: (token: string | undefined) => void
 }
-

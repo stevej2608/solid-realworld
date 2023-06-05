@@ -11,14 +11,14 @@ import { createCommon, ICommonActions } from './createCommon'
 import { createComments, ICommentsActions } from './createComments'
 import { createProfile, IProfileActions } from './createProfile'
 
-import { IStoreState } from './storeState'
+import { IStoreState, ICommonActions } from './storeState'
 
 // export interface IStoreContext {
 //   state: IStoreState
 //   actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
 // }
 
-export type IActions = IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
+export interface IActions extends IAuthorActions, IArticleActions, ICommentsActions, IProfileActions, ICommonActions {}
 
 export type IStoreContext = [state: IStoreState, actions: IActions]
 

@@ -4,7 +4,7 @@ import { IApiAgent } from './createAgent'
 import { IStoreState } from './storeState'
 
 export interface IProfileActions {
-  loadProfile: Setter<unknown>
+  loadProfile(name: string): void
   follow(): Promise<void>
   unfollow(): Promise<void>
 }
@@ -28,7 +28,10 @@ export function createProfile(agent: IApiAgent, actions: IProfileActions, state:
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-    loadProfile: setUsername,
+
+    loadProfile(name: string) {
+      setUsername(name)
+    },
 
     async follow() {
       if (state.profile && !state.profile.following) {
