@@ -38,7 +38,8 @@
     "yargs": "^17.7.2"
   },
   "dependencies": {
-    "marked": "^0.8.0",
+    "@types/marked": "^5.0.0",
+    "marked": "^5.0.4",
     "solid-js": "1.7.3"
   }
 }

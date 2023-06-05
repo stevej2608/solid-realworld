@@ -1,8 +1,16 @@
-import marked from 'marked'
+import { JSX } from 'solid-js'
+import { marked } from 'marked'
 import NavLink from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
 
 import Comments from './Comments'
+import { IArticle } from '../../api/Api'
+
+interface IArticleMetaProps {
+  article: IArticle
+  canModify: boolean
+  onDelete: () => void | object
+}
 
 /**
  * Article meta - author image & name, date, follow, favorite
@@ -11,13 +19,13 @@ import Comments from './Comments'
  * @returns
  */
 
-const ArticleMeta = props => {
+const ArticleMeta = (props: IArticleMetaProps) => {
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
   const article = props.article
 
-  const handleClickFavorite = e => {
+  const handleClickFavorite = (e: InputEvent) => {
     e.preventDefault()
-    article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
+    const promise = article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
   }
 
   return (
@@ -56,7 +64,11 @@ const ArticleMeta = props => {
   )
 }
 
-export default ({ slug }) => {
+interface IArticleProps {
+  slug: string
+}
+
+export default ({ slug }: IArticleProps) => {
   const [store, { deleteArticle }] = useStore()
 
   const article = () => store.articles[slug]
@@ -83,7 +95,6 @@ export default ({ slug }) => {
         <div class="row article-content">
           <div class="col-xs-12">
             <div innerHTML={article() && marked(article()?.body, { sanitize: true })} />
-
             <ul class="tag-list">
               {article()?.tagList.map(tag => (
                 <li class="tag-default tag-pill tag-outline">{tag}</li>
@@ -95,7 +106,7 @@ export default ({ slug }) => {
         <div class="article-actions">
           <div class="article-meta">
             <a href="">
-              <img src={article()?.author.image}/>
+              <img src={article()?.author.image} />
             </a>
             <div class="info">
               <a href="" class="author">
