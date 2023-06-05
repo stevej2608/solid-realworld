@@ -39,7 +39,13 @@ export function createRouteHandler(init: string): IRouteContext {
   const [location, setLocation] = createSignal<string>(window.location.hash.slice(2) || init)
   const [read, triggerParams] = createSignal()
   const [, start] = useTransition()
-  const locationHandler = () => start(() => setLocation(window.location.hash.slice(2)))
+
+  const locationHandler = () => {
+    const promise = start(() => {
+      const location = window.location.hash.slice(2)
+      setLocation(location)
+    })
+  }
 
   let params
 
@@ -60,7 +66,10 @@ export function createRouteHandler(init: string): IRouteContext {
       return !!match
     },
 
-    getParams: () => (read(), params)
+    getParams: (): string[] => {
+      const params = read()
+      return params
+    }
   }
 }
 

@@ -1,21 +1,29 @@
+import { JSX } from 'solid-js'
 import { useRouter } from '../../routeContext'
-import { useStore } from '../../store/storeContext'
+import { useStore, IStoreContext } from '../../store/storeContext'
 
 import { NavLink } from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'
 
-export default props => {
-  const [store, { setPage, loadArticles, unfollow, follow }] = useStore(),
-    { location } = useRouter(),
-    handleClick = ev => {
-      ev.preventDefault()
-      store.profile.following ? unfollow() : follow()
-    },
-    handleSetPage = page => {
-      setPage(page)
-      loadArticles()
-    },
-    isUser = () => store.currentUser && props.username === store.currentUser.username
+interface IProfileProps {
+  username: string
+}
+
+export default (props: IProfileProps) => {
+  const [store, { setPage, loadArticles, unfollow, follow }] = useStore()
+  const { location } = useRouter()
+
+  const handleClick = (ev: InputEvent) => {
+    ev.preventDefault()
+    const promise = store.profile.following ? unfollow() : follow()
+  }
+
+  const handleSetPage = (page: number) => {
+    setPage(page)
+    loadArticles()
+  }
+
+  const isUser = () => store.currentUser && props.username === store.currentUser.username
 
   return (
     <div class="profile-page">

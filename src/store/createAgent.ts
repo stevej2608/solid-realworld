@@ -1,4 +1,6 @@
-import { IProfile, IArticle, INewArticle, IUserResponse } from '../api/Api'
+import { IProfile, IArticle, INewArticle, IUserResponse, IUser, IComment } from '../api/Api'
+import { IStoreState } from './storeState'
+import { IAuthorActions } from './createAuth'
 
 const API_ROOT = 'https://api.realworld.io/api'
 
@@ -9,7 +11,7 @@ interface IAgentError {
 }
 
 interface IAuthAgent {
-  current: () => Promise<any>
+  current: () => Promise<IUserResponse & IAgentError>
   login: (email: string, password: string) => Promise<IUserResponse & IAgentError>
   register: (username: string, email: string, password: string) => Promise<IUserResponse & IAgentError>
   save: (user: IUser) => Promise<IUserResponse & IAgentError>
@@ -20,32 +22,32 @@ interface ITagsAgent {
 }
 
 interface IArticlesAgent {
-  all: (page: number, lim?: number) => Promise<IArticle[]>
-  byAuthor: (author: string, page: number) => Promise<IArticle[]>
-  byTag: (tag: string, page: number, lim?: number) => Promise<IArticle[]>
+  all: (page: number, lim?: number) => Promise<IArticle[] & IAgentError>
+  byAuthor: (author: string, page: number) => Promise<IArticle[] & IAgentError>
+  byTag: (tag: string, page: number, lim?: number) => Promise<IArticle[] & IAgentError>
 
-  favorite: (slug: string) => Promise<any>
-  unfavorite: (slug: string) => Promise<any>
+  favorite: (slug: string) => Promise<IArticle & IAgentError>
+  unfavorite: (slug: string) => Promise<IArticle & IAgentError>
 
-  favoritedBy: (author: string, page: number) => Promise<IArticle[]>
-  feed: () => Promise<IArticle[]>
-  get: (slug: string) => Promise<IArticle>
+  favoritedBy: (author: string, page: number) => Promise<IArticle[] & IAgentError>
+  feed: () => Promise<IArticle[] & IAgentError>
+  get: (slug: string) => Promise<IArticle & IAgentError>
 
   create: (article: INewArticle) => Promise<IArticle>
   update: (article: IArticle) => Promise<IArticle>
-  del: (slug: string) => Promise<any>
+  del: (slug: string) => Promise<IAgentError>
 }
 
 interface ICommentsAgent {
-  create: (slug: string, comment: string) => Promise<any>
-  delete: (slug: string, commentId: string) => Promise<any>
-  forArticle: (slug: string) => Promise<any>
+  create: (slug: string, comment: string) => Promise<IComment & IAgentError>
+  delete: (slug: string, commentId: string) => Promise<IAgentError>
+  forArticle: (slug: string) => Promise<IComment & IAgentError>
 }
 
 interface IProfileAgent {
-  follow: (username: any) => Promise<any>
+  follow: (username: string) => Promise<IProfile & IAgentError>
   get: (username: string) => Promise<IProfile>
-  unfollow: (username: any) => Promise<any>
+  unfollow: (username: string) => Promise<IProfile & IAgentError>
 }
 
 export interface IApiAgent {
@@ -55,12 +57,14 @@ export interface IApiAgent {
   Comments: ICommentsAgent
   Profile: IProfileAgent
 
-  limit: (count: any, p: any) => string
-  omitSlug: (article: any) => any
+  limit: (count: number, p: number) => string
+  omitSlug: (article: IArticle) => void
 }
 
-export function createAgent([state, actions]): IApiAgent {
-  async function send(method, url, data, resKey) {
+type IStoreContext = [state: IStoreState, actions: IAuthorActions]
+
+export function createAgent([state, actions]: IStoreContext): IApiAgent {
+  async function send(method: 'send' | 'put' | 'post' | 'delete', url: string, data: object, resKey: string): object {
     const headers = {}
     const opts = { method, headers }
 
@@ -75,9 +79,9 @@ export function createAgent([state, actions]): IApiAgent {
 
     try {
       const response = await fetch(API_ROOT + url, opts)
-      const json = await response.json()
-      return resKey ? json[resKey] : json
-    } catch (err) {
+      const json = (await response.json()) as object
+      return resKey ? (json[resKey] as object) : json
+    } catch (err: any) {
       if (err && err.response && err.response.status === 401) {
         actions.logout()
       }
@@ -89,7 +93,7 @@ export function createAgent([state, actions]): IApiAgent {
     current: () => send('get', '/user', undefined, 'user'),
     login: (email, password) => send('post', '/users/login', { user: { email, password } }),
     register: (username, email, password) => send('post', '/users', { user: { username, email, password } }),
-    save: user => send('put', '/user', { user })
+    save: (user: IUser) => send('put', '/user', { user })
   }
 
   const Tags: ITagsAgent = {
@@ -97,7 +101,7 @@ export function createAgent([state, actions]): IApiAgent {
   }
 
   const limit = (count: number, p: number) => `limit=${count}&offset=${p ? p * count : 0}`
-  const omitSlug = article => Object.assign({}, article, { slug: undefined })
+  const omitSlug = (article: IArticle) => Object.assign({}, article, { slug: undefined })
 
   const Articles: IArticlesAgent = {
     all: (page, lim = 10) => send('get', `/articles?${limit(lim, page)}`),

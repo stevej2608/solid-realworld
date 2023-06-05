@@ -28,7 +28,6 @@ export function createProfile(agent: IApiAgent, actions: IProfileActions, state:
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-
     loadProfile(name: string) {
       setUsername(name)
     },
