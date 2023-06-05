@@ -1,8 +1,14 @@
-export default props => (
+export type IErrors = { [key: string]: Exception }
+
+interface IListErrorsProps {
+  errors: IErrors
+}
+
+export const ListErrors = (props: IListErrorsProps) => (
   <Show when={props.errors}>
     <ul class="error-messages">
       <For each={Object.keys(props.errors)}>
-        {key => (
+        {(key: string) => (
           <li>
             {key} {props.errors[key]}
           </li>

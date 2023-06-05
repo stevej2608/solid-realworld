@@ -13,4 +13,5 @@ export interface IStoreState {
   totalPagesCount: number
   token: string
   appName: string
+  articleSlug: string
 }

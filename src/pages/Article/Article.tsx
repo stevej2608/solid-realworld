@@ -1,5 +1,6 @@
 import { JSX } from 'solid-js'
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 import NavLink from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
 
@@ -94,7 +95,7 @@ export default ({ slug }: IArticleProps) => {
       <div class="container page">
         <div class="row article-content">
           <div class="col-xs-12">
-            <div innerHTML={article() && marked(article()?.body, { sanitize: true })} />
+            <div innerHTML={article() && DOMPurify.sanitize(marked(article()?.body))} />
             <ul class="tag-list">
               {article()?.tagList.map(tag => (
                 <li class="tag-default tag-pill tag-outline">{tag}</li>

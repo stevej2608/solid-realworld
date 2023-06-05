@@ -1,5 +1,5 @@
 import { useStore } from '../store/storeContext'
-import ListErrors from '../components/ListErrors'
+import { ListErrors } from '../components/ListErrors'
 import { createStore } from 'solid-js/store'
 
 export default () => {

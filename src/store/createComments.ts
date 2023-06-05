@@ -1,10 +1,13 @@
 import { createResource, Resource } from 'solid-js'
 import { IComment } from '../api/Api'
 import { IApiAgent } from './createAgent'
+
+import { IStoreState } from './storeState'
+
 export interface ICommentsActions {
-  loadComments(articleSlug:string, reload: boolean)
-  async createComment(comment:string)
-  async deleteComment(id:string)
+  loadComments(articleSlug: string, reload: boolean): Promise<IComment[]>
+  createComment(comment: string): Promise<IComment>
+  deleteComment(id: string)
 }
 
 /**
@@ -19,8 +22,7 @@ export interface ICommentsActions {
  * @returns
  */
 
-export function createComments(agent:IApiAgent, actions:ICommentsActions, state, setState): Resource<IComment[]> {
-
+export function createComments(agent: IApiAgent, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
   function getArticleComments(): IComment[] {
     const articleSlug = state.articleSlug
     const comments = agent.Comments.forArticle(articleSlug)
@@ -32,27 +34,24 @@ export function createComments(agent:IApiAgent, actions:ICommentsActions, state,
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-
-    loadComments(articleSlug:string, reload: boolean) {
+    loadComments(articleSlug: string, reload: boolean) {
       if (reload) return refetch()
       setState({ articleSlug })
     },
 
-    async createComment(comment:string) {
-      const { errors } = await agent.Comments.create(state.articleSlug, comment)
-      if (errors) throw errors
+    async createComment(comment: string) {
+      await agent.Comments.create(state.articleSlug, comment)
     },
 
-    async deleteComment(id:string) {
+    async deleteComment(id: string) {
       mutate(comments().filter(c => c.id !== id))
       try {
         await agent.Comments.delete(state.articleSlug, id)
       } catch (err) {
-        actions.loadComments(state.articleSlug)
+        await actions.loadComments(state.articleSlug)
         throw err
       }
     }
-
   })
 
   return comments
