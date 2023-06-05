@@ -3,10 +3,21 @@ import { createStore, IStoreContext } from 'solid-js/store'
 import { useStore } from '../../store/storeContext'
 
 import ListErrors from '../../components/ListErrors'
+import { IArticle } from '../../api/Api'
 
-export default ({ slug }) => {
+interface IEditState extends IArticle {
+  tagInput: string
+  inProgress: boolean
+  errors: string
+}
+
+interface IEditProps {
+  slug: string
+}
+
+export default ({ slug }: IEditProps) => {
   const [store, { createArticle, updateArticle }] = useStore()
-  const [state, setState] = createStore({ tagInput: '', tagList: [] })
+  const [state, setState] = createStore<IEditState>({ tagInput: '', tagList: [] })
 
   const updateState = field => (ev: InputEvent) => {
     setState(field, ev.target.value)
@@ -14,7 +25,7 @@ export default ({ slug }) => {
 
   const handleAddTag = () => {
     if (state.tagInput) {
-      setState(s => {
+      setState((s: IEditState) => {
         s.tagList.push(s.tagInput.trim())
         s.tagInput = ''
       })
@@ -50,7 +61,7 @@ export default ({ slug }) => {
       .then(article => {
         location.hash = `/article/${article.slug}`
       })
-      .catch(errors => {
+      .catch((errors: string) => {
         setState({ errors })
       })
       .finally(() => {
@@ -59,7 +70,7 @@ export default ({ slug }) => {
   }
 
   createComputed(() => {
-    let article
+    let article: IArticle
     if (!slug || !(article = store.articles[slug])) return
     setState(article)
   })

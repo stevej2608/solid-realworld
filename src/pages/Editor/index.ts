@@ -3,9 +3,13 @@ import { useStore } from '../../store/storeContext'
 
 const Editor = lazy(() => import('./Editor'))
 
-export default function (props) {
-  const [, { loadArticle }] = useStore(),
-    slug = props.params[0]
+interface IProps {
+  params: string[]
+}
+
+export default function (props: IProps) {
+  const [, { loadArticle }] = useStore()
+  const slug = props.params[0]
   slug && loadArticle(slug)
   return Editor({ slug })
 }
