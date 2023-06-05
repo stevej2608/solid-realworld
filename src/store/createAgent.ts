@@ -1,4 +1,4 @@
-import { IProfile, IArticle } from '../api/Api'
+import { IProfile, IArticle, INewArticle } from '../api/Api'
 
 const API_ROOT = 'https://api.realworld.io/api'
 
@@ -20,8 +20,6 @@ interface IArticlesAgent {
   byAuthor: (author: string, page: number) => Promise<IArticle[]>
   byTag: (tag: string, page: number, lim?: number) => Promise<IArticle[]>
 
-  del: (slug: string) => Promise<any>
-
   favorite: (slug: string) => Promise<any>
   unfavorite: (slug: string) => Promise<any>
 
@@ -29,8 +27,9 @@ interface IArticlesAgent {
   feed: () => Promise<IArticle[]>
   get: (slug: string) => Promise<IArticle>
 
-  update: (article: IArticle) => Promise<any>
-  create: (article: IArticle) => Promise<any>
+  create: (article: INewArticle) => Promise<IArticle>
+  update: (article: IArticle) => Promise<IArticle>
+  del: (slug: string) => Promise<any>
 }
 
 interface ICommentsAgent {

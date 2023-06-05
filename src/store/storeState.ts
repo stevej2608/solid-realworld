@@ -1,7 +1,9 @@
 import { IArticle, IComment, IProfile, IUser } from '../api/Api'
 
+export type IArticleMap = { [slug: string]: IArticle }
+
 export interface IStoreState {
-  readonly articles: IArticle[]
+  readonly articles: IArticleMap
   readonly comments: IComment[]
   readonly tags: string[]
   readonly profile: IProfile

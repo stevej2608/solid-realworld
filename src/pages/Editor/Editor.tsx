@@ -1,5 +1,5 @@
-import { createComputed } from 'solid-js'
-import { createStore } from 'solid-js/store'
+import { createComputed, JSX } from 'solid-js'
+import { createStore, IStoreContext } from 'solid-js/store'
 import { useStore } from '../../store/storeContext'
 
 import ListErrors from '../../components/ListErrors'
@@ -8,7 +8,7 @@ export default ({ slug }) => {
   const [store, { createArticle, updateArticle }] = useStore()
   const [state, setState] = createStore({ tagInput: '', tagList: [] })
 
-  const updateState = field => ev => {
+  const updateState = field => (ev: InputEvent) => {
     setState(field, ev.target.value)
   }
 
@@ -25,7 +25,7 @@ export default ({ slug }) => {
     !state.inProgress && setState('tagList', tags => tags.filter(t => t !== tag))
   }
 
-  const handleTagInputKeyDown = ev => {
+  const handleTagInputKeyDown = (ev: InputEvent) => {
     switch (ev.keyCode) {
       case 13: // Enter
       case 9: // Tab
@@ -38,14 +38,24 @@ export default ({ slug }) => {
     }
   }
 
-  const submitForm = ev => {
+  function submitForm(ev: Event) {
     ev.preventDefault()
+
     setState({ inProgress: true })
+
     const { inProgress, tagsInput, ...article } = state
-    ;(slug ? updateArticle : createArticle)(article)
-      .then(article => (location.hash = `/article/${article.slug}`))
-      .catch(errors => setState({ errors }))
-      .finally(() => setState({ inProgress: false }))
+    const promise = slug ? updateArticle(article) : createArticle(article)
+
+    promise
+      .then(article => {
+        location.hash = `/article/${article.slug}`
+      })
+      .catch(errors => {
+        setState({ errors })
+      })
+      .finally(() => {
+        setState({ inProgress: false })
+      })
   }
 
   createComputed(() => {

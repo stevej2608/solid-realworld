@@ -1,21 +1,23 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { IArticle, IMultipleArticlesResponse } from '../api/Api'
+import { IArticle, INewArticle, IMultipleArticlesResponse } from '../api/Api'
 import { IApiAgent } from './createAgent'
 
-import { IStoreState } from './storeState'
+import { IStoreState, IArticleMap } from './storeState'
 
 const LIMIT = 10
 
 export interface IArticleActions {
-  deleteArticle(slug: string): Promise<void>
   makeFavorite(slug: string): Promise<void>
   unmakeFavorite(slug: string): Promise<void>
-  updateArticle(data: IArticle): Promise<void>
 
-  createArticle(newArticle: INewArticle): IArticlesResponse
+  createArticle(newArticle: INewArticle): Promise<IArticle>
+  updateArticle(data: IArticle): Promise<IArticle>
+  deleteArticle(slug: string): Promise<void>
+
   loadArticle(slug: string): void
   loadArticles(predicate: string): void
+
   setPage: (page: number) => void
 }
 
@@ -47,7 +49,7 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     return agent.Articles.all(state.page, LIMIT, predicate)
   }
 
-  const fetchArticles: IArticle | IArticle[] = (args: [string, number], { value }) => {
+  const fetchArticles = (args: [string, string], { value }: IArticleMap): IArticleMap => {
     console.log('fetchArticles args=[%s]', args[0])
 
     if (args[0] === 'articles') {
@@ -58,6 +60,8 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
           setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
         })
 
+        // Convert received array of articles to a map keyed on the slug
+
         const articlesMap: { [slug: string]: IArticle } = {}
         for (const article of articles) {
           articlesMap[article.slug] = article
@@ -67,7 +71,7 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     }
 
     const article = state.articles[args[1]]
-    if (article) return value as IArticle
+    if (article) return value
 
     return agent.Articles.get(args[1]).then(article => {
       return { ...value, [args[1]]: article }
@@ -82,7 +86,7 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
   }
 
   const removeFavorite = (slug: string) => {
-    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount as number - 1 }))
+    setState('articles', slug, s => ({ favorited: false, favoritesCount: s.favoritesCount - 1 }))
   }
 
   // Add our actions the provided actions container
@@ -124,21 +128,19 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
       }
     },
 
-    async createArticle(newArticle: INewArticle): IArticlesResponse {
-      const { article, errors } = await agent.Articles.create(newArticle)
-      if (errors) throw errors
+    async createArticle(newArticle: INewArticle): Promise<IArticle> {
+      const article = await agent.Articles.create(newArticle)
       setState('articles', { [article.slug]: article })
       return article
     },
 
-    async updateArticle(data: IArticle) {
-      const { article, errors } = await agent.Articles.update(data)
-      if (errors) throw errors
+    async updateArticle(data: IArticle): Promise<IArticle> {
+      const article = await agent.Articles.update(data)
       setState('articles', { [article.slug]: article })
       return article
     },
 
-    async deleteArticle(slug) {
+    async deleteArticle(slug: string) {
       const article = state.articles[slug]
       setState('articles', { [slug]: undefined })
       try {

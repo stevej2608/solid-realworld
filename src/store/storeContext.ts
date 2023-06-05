@@ -13,10 +13,14 @@ import { createProfile, IProfileActions } from './createProfile'
 
 import { IStoreState } from './storeState'
 
-export interface IStoreContext {
-  state: IStoreState
-  actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
-}
+// export interface IStoreContext {
+//   state: IStoreState
+//   actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
+// }
+
+export type IActions = IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
+
+export type IStoreContext = [state: IStoreState, actions: IActions]
 
 export function createApplicationStore(): IStoreContext {
   // Resource accessors - see solidjs createResource()
@@ -59,7 +63,7 @@ export function createApplicationStore(): IStoreContext {
 
   const actions = {}
 
-  const store = [state, actions]
+  const store: IStoreContext = [state, actions]
   const agent = createAgent(store)
 
   // Instantiate all the resource accessors
