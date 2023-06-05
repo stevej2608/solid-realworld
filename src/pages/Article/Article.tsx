@@ -76,6 +76,14 @@ export default ({ slug }: IArticleProps) => {
   const canModify = () => store.currentUser && store.currentUser.username === article()?.author.username
   const handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
 
+  const renderMarkdown = (article: IArticle): string => {
+    if (article()) {
+      const html = marked((article() as IArticle)?.body)
+      return DOMPurify.sanitize(html)
+    }
+    return ''
+  }
+
   const {
     title,
     description,
@@ -95,7 +103,7 @@ export default ({ slug }: IArticleProps) => {
       <div class="container page">
         <div class="row article-content">
           <div class="col-xs-12">
-            <div innerHTML={article() && DOMPurify.sanitize(marked(article()?.body))} />
+            <div innerHTML={renderMarkdown(article)} />
             <ul class="tag-list">
               {article()?.tagList.map(tag => (
                 <li class="tag-default tag-pill tag-outline">{tag}</li>

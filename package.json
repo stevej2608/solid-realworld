@@ -38,6 +38,7 @@
     "yargs": "^17.7.2"
   },
   "dependencies": {
+    "@types/dompurify": "^3.0.2",
     "@types/marked": "^5.0.0",
     "dompurify": "^3.0.3",
     "marked": "^5.0.4",
