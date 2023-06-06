@@ -1,6 +1,11 @@
 import { createContext, useContext, Accessor } from 'solid-js'
 import { createSignal, onCleanup, useTransition } from 'solid-js'
 
+interface IRouteParams {
+  params: string[]
+  routeName: string
+}
+
 /**
  * @field location accessor
  */
@@ -25,7 +30,7 @@ export interface IRouteContext {
    * Returns any params associated with the match
    */
 
-  getParams: () => string[]
+  getParams: () => IRouteParams | undefined
 }
 
 /**
@@ -47,7 +52,7 @@ export function createRouteHandler(init: string): IRouteContext {
     })
   }
 
-  let params
+  let params: IRouteParams | undefined = undefined
 
   window.addEventListener('hashchange', locationHandler)
 
@@ -66,8 +71,8 @@ export function createRouteHandler(init: string): IRouteContext {
       return !!match
     },
 
-    getParams: (): string[] => {
-      const params = read()
+    getParams: (): IRouteParams | undefined => {
+      read() // TODO: figure out what this does
       return params
     }
   }
