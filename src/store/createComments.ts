@@ -1,4 +1,5 @@
 import { createResource, Resource } from 'solid-js'
+import { SetStoreFunction } from 'solid-js/store'
 import { IComment } from '../api/Api'
 import { IApiAgent } from './createAgent'
 

@@ -22,7 +22,7 @@ export default () => {
     setState({ inProgress: true })
     const p = isLogin ? login(state.email, state.password) : register(state.username, state.email, state.password)
     p.then(() => (location.hash = '/'))
-      .catch(errors => setState({ errors }))
+      .catch((errors: IErrors) => setState({ errors }))
       .finally(() => setState({ inProgress: false }))
   }
 

@@ -1,4 +1,5 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
+import { SetStoreFunction } from 'solid-js/store'
 import { INewUser, IUser } from '../api/Api'
 import { IApiAgent } from './createAgent'
 import { IStoreState, ICommonActions } from './storeState'

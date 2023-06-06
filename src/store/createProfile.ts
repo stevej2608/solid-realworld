@@ -1,4 +1,5 @@
 import { createSignal, createResource, Resource } from 'solid-js'
+import { SetStoreFunction } from 'solid-js/store'
 import { IProfile } from '../api/Api'
 import { IApiAgent } from './createAgent'
 import { IStoreState } from './storeState'

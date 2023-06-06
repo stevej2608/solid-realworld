@@ -30,7 +30,7 @@ export default () => {
     setState({ updatingUser: true })
     updateUser(user)
       .then(() => (location.hash = `/@${user.username}`))
-      .catch(errors => setState({ errors }))
+      .catch((errors: IErrors) => setState({ errors }))
       .finally(() => setState({ updatingUser: false }))
   }
 

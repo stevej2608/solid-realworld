@@ -69,7 +69,7 @@ const CommentInput = ({ slug, createComment, loadComments, currentUser }: IComme
         setState({ body: '' })
         loadComments(slug, true)
       })
-      .catch((errors: Exception) => setState({ errors }))
+      .catch((errors: IErrors) => setState({ errors }))
       .finally(() => setState({ isCreatingComment: false }))
   }
 
