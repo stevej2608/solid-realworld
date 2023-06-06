@@ -27,7 +27,7 @@ export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePrev
     favorited,
     favoritesCount,
     author: { username, image }
-  } = article as IArticle
+  } = article
 
   return (
     <div class="article-preview">
