@@ -7,7 +7,7 @@ const FAVORITED_CLASS = 'btn btn-sm btn-primary'
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
 
 interface IArticlePreviewProps {
-  article: Proxy<IArticle>
+  article: IArticle
   token: string
   onClickFavorite: (article: IArticle, e: InputEvent) => void
 }
@@ -46,7 +46,7 @@ export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePrev
         {token && (
           <div class="pull-xs-right">
             <button class={favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS} onClick={[onClickFavorite, article]}>
-              <i class="ion-heart" /> {favoritesCount}
+              <i class="ion-heart" /> {article.favoritesCount}
             </button>
           </div>
         )}
