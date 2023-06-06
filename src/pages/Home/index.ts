@@ -37,7 +37,7 @@ export default function () {
   }
 
   const handleSetPage = (page: number) => {
-    start(() => {
+    const promise = start(() => {
       setPage(page)
       loadArticles(getPredicate())
     })

@@ -77,15 +77,18 @@ export function createAgent([state, actions]: IStoreContext): IApiAgent {
 
     if (state.token) headers['Authorization'] = `Token ${state.token}`
 
+    let response: Response
+
     try {
-      const response = await fetch(API_ROOT + url, opts)
+      response = await fetch(API_ROOT + url, opts)
       const json = (await response.json()) as object
       return resKey ? (json[resKey] as object) : json
-    } catch (err: any) {
-      if (err && err.response && err.response.status === 401) {
+    } catch (err) {
+      if (err && response && response.status === 401) {
+        console.log('Network error %s - logging out', err)
         actions.logout()
       }
-      return err
+      return err as string
     }
   }
 

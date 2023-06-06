@@ -1,5 +1,5 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
-import { IUser } from '../api/Api'
+import { INewUser, IUser } from '../api/Api'
 import { IApiAgent } from './createAgent'
 import { IStoreState, ICommonActions } from './storeState'
 
@@ -53,7 +53,7 @@ export function createAuth(agent: IApiAgent, actions: IAuthorActions, setState: 
       })
     },
 
-    async updateUser(newUser) {
+    async updateUser(newUser: INewUser) {
       const { user, errors } = await agent.Auth.save(newUser)
       if (errors) throw errors
       mutate(user)
