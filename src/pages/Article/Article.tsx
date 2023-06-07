@@ -1,5 +1,6 @@
-import { JSX } from 'solid-js'
+import { JSX, Show } from 'solid-js'
 import { marked } from 'marked'
+import { Rings } from 'solid-spinner'
 import DOMPurify from 'dompurify'
 import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
@@ -65,7 +66,7 @@ interface IArticleProps {
   slug: string
 }
 
-export default ({ slug }: IArticleProps) => {
+const Article = ({ slug }: IArticleProps) => {
   const [store, { deleteArticle, unmakeFavorite, makeFavorite }] = useStore()
 
   const article = store.articles[slug]
@@ -142,5 +143,14 @@ export default ({ slug }: IArticleProps) => {
         </div>
       </div>
     </div>
+  )
+}
+
+export default ({ slug }: IArticleProps) => {
+  const [store] = useStore()
+  return (
+    <Show when={store.articles[slug]} fallback={<div class="loader"></div>}>
+      <Article slug={slug} />
+    </Show>
   )
 }
