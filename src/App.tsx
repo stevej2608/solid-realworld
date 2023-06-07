@@ -26,8 +26,8 @@ export const App = () => {
   return (
     <>
       <NavBar />
-      <Show when={appLoaded()}>
-        <Suspense fallback={<div class="container">Loading...</div>}>
+      <Show when={appLoaded()} fallback={<div class="container loader"></div>}>
+        <Suspense>
           <Switch>
             <Match when={match('editor', /^editor\/?(.*)/)}>
               <Editor {...getParams()} />

@@ -149,7 +149,7 @@ const Article = ({ slug }: IArticleProps) => {
 export default ({ slug }: IArticleProps) => {
   const [store] = useStore()
   return (
-    <Show when={store.articles[slug]} fallback={<div class="loader"></div>}>
+    <Show when={store.articles[slug]}>
       <Article slug={slug} />
     </Show>
   )
