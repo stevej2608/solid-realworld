@@ -66,7 +66,7 @@ interface IArticleProps {
   slug: string
 }
 
-const Article = ({ slug }: IArticleProps) => {
+export default ({ slug }: IArticleProps) => {
   const [store, { deleteArticle, unmakeFavorite, makeFavorite }] = useStore()
 
   const article = store.articles[slug]
@@ -143,14 +143,5 @@ const Article = ({ slug }: IArticleProps) => {
         </div>
       </div>
     </div>
-  )
-}
-
-export default ({ slug }: IArticleProps) => {
-  const [store] = useStore()
-  return (
-    <Show when={store.articles[slug]}>
-      <Article slug={slug} />
-    </Show>
   )
 }
