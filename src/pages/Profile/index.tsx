@@ -13,12 +13,12 @@ export default function (props: IProps) {
   const [, { loadProfile, loadArticles }] = useStore()
   const { location } = useRouter()
 
-  createComputed(() => props.routeName === 'profile' && loadProfile(props.params[0]))
+  const userName = props.params[0]
+
+  createComputed(() => props.routeName === 'profile' && loadProfile(userName))
 
   createComputed(
-    () =>
-      props.routeName === 'profile' &&
-      (location().includes('/favorites') ? loadArticles({ favoritedBy: props.params[0] }) : loadArticles({ author: props.params[0] }))
+    () => props.routeName === 'profile' && (location().includes('/favorites') ? loadArticles({ favoritedBy: userName }) : loadArticles({ author: userName }))
   )
   return <Profile username={props.params[0]} />
 }

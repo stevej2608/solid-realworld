@@ -32,7 +32,7 @@ export default (props: IProfileProps) => {
           <div class="row">
             <div class="col-xs-12 col-md-10 offset-md-1">
               <img src={store.profile?.image} class="user-img" alt="" />
-              <h4 textContent={props.username} />
+              <h4 textContent={store.profile?.username} />
               <p>{store.profile?.bio}</p>
               {isUser() && (
                 <NavLink route="settings" class="btn btn-sm btn-outline-secondary action-btn">

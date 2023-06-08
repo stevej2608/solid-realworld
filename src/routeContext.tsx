@@ -62,7 +62,7 @@ export function createRouteHandler(init: string): IRouteContext {
     location,
 
     match: (name: string, test: RegExp) => {
-      const loc = location().split('?')[0]
+      const loc = decodeURIComponent(location().split('?')[0])
       const match = test.exec(loc)
       if (match) {
         params = { params: match.slice(1), routeName: name }

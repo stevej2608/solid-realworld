@@ -8,26 +8,10 @@ The following changes have be made:
 - [X] Converted source to typescript
 - [X] Rationalised code and added extensive comments
 - [X] Add Follow & Favorite to Article
-- [ ] Select an article page directly via URL/slug
+- [X] Select an article page directly via URL/slug
+- [ ] Replace server API client with one based directly on openAPI
+- [ ] Replace home router with @solidjs/router
 
-## Progress
-
-* Finally got rid of all the typescript type errors.
-* The Home page, lists articles and pagination works
-* Favourites set/unset works on home page
-* Can select article on home page and view complete article
-* Favourites set/unset works on article page
-
-Selecting an article page directly via URL **fails**. This is because
-the page tries to display before the article has loaded.
-
-Investigating article load problem, I can see that homebrew router and server API client are
-complex and seriously crappy. I need to:
-
-* Replace server API client with one based directly on openAPI
-* Replace home router with @solidjs/router
-
-This is not straightforward, I need to do some reading
 
 ## Links
 
