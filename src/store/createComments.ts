@@ -38,12 +38,11 @@ export function createComments(agent: IApiAgent, actions: ICommentsActions, stat
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-
     loadComments(articleSlug: string, reload: boolean) {
       if (reload) return refetch()
       console.log('loadComments articleSlug=%s ...', articleSlug.slice(0, 15))
       setArticleSlug(articleSlug)
-      // setState({ articleSlug })
+      setState({ articleSlug })
     },
 
     async createComment(comment: string) {

@@ -9,6 +9,7 @@ The following changes have be made:
 - [X] Rationalised code and added extensive comments
 - [X] Add Follow & Favorite to Article
 - [X] Select an article page directly via URL/slug
+- [X] Article comments now load
 - [ ] Replace server API client with one based directly on openAPI
 - [ ] Replace home router with @solidjs/router
 
