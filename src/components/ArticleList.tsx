@@ -4,7 +4,7 @@ import { useStore, IStoreContext } from '../store/storeContext'
 import { ArticlePreview } from './ArticlePreview'
 import { IArticle } from '../api/Api'
 
-interface IProps {
+interface IArticleListProps {
   articles: Proxy<IArticle>[]
   currentPage: number
   onSetPage(page: number)
@@ -18,7 +18,7 @@ interface IProps {
  * @returns
  */
 
-export const ArticleList = (props: IProps) => {
+export const ArticleList = (props: IArticleListProps) => {
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
 
   const handleClickFavorite = (article: IArticle, e: InputEvent) => {

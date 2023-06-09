@@ -4,6 +4,7 @@ import { useStore, IStoreContext } from '../../store/storeContext'
 
 import { NavLink } from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'
+import { FollowingButton } from '../../components/FollowingButton'
 
 interface IProfileProps {
   username: string
@@ -39,18 +40,7 @@ export default (props: IProfileProps) => {
                   <i class="ion-gear-a" /> Edit Profile Settings
                 </NavLink>
               )}
-              {store.token && !isUser() && (
-                <button
-                  class="btn btn-sm action-btn"
-                  classList={{
-                    'btn-secondary': store.profile?.following,
-                    'btn-outline-secondary': !store.profile?.following
-                  }}
-                  onClick={handleClick}
-                >
-                  <i class="ion-plus-round" /> {store.profile?.following ? 'Unfollow' : 'Follow'} {store.profile?.username}
-                </button>
-              )}
+              {store.token && !isUser() && <FollowingButton profile={store.profile} onClick={handleClick} />}
             </div>
           </div>
         </div>
