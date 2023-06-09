@@ -5,7 +5,7 @@
       "name": "1. Launch (Chrome)",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3000",
+      "url": "http://localhost:3000/#/?tab=all",
       "webRoot": "${workspaceFolder}/src",
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
@@ -17,7 +17,7 @@
       "type": "firefox",
       "request": "launch",
       "reAttach": false,
-      "url": "http://localhost:3000",
+      "url": "http://localhost:3000/#/?tab=all",
       "webRoot": "${workspaceFolder}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": [

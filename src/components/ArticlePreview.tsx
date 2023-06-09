@@ -2,9 +2,7 @@ import type { JSX } from 'solid-js'
 
 import { NavLink } from './NavLink'
 import { IArticle } from '../api/Api'
-
-const FAVORITED_CLASS = 'btn btn-sm btn-primary'
-const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
+import { FavoriteButton } from '../components/FavoriteButton'
 
 interface IArticlePreviewProps {
   article: IArticle
@@ -45,9 +43,7 @@ export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePrev
 
         {token && (
           <div class="pull-xs-right">
-            <button class={favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS} onClick={[onClickFavorite, article]}>
-              <i class="ion-heart" /> {article.favoritesCount}
-            </button>
+            <FavoriteButton article={article} onClick={onClickFavorite} />
           </div>
         )}
       </div>

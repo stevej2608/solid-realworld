@@ -1,31 +1,12 @@
-import { JSX, Show } from 'solid-js'
+import { Show } from 'solid-js'
 import { marked } from 'marked'
-import { Rings } from 'solid-spinner'
 import DOMPurify from 'dompurify'
-import classnames from 'classnames'
 import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
 
 import Comments from './Comments'
 import { IArticle } from '../../api/Api'
-
-interface IFavoriteButtonProps {
-  article: IArticle
-  onClickFavorite: (article: IArticle, e: InputEvent) => void
-}
-
-const FavoriteButton = (props: IFavoriteButtonProps) => {
-  const { article, onClickFavorite } = props
-  const favorited = article.favorited
-  const classes = 'btn btn-sm ' + classnames({ 'btn-outline-primary': !favorited, 'btn-primary': favorited })
-
-  return (
-    <button class={classes} onClick={[onClickFavorite, article]}>
-      <i class="ion-heart"></i>
-      &nbsp; Favorite Article <span class="counter">({article.favoritesCount})</span>
-    </button>
-  )
-}
+import { FavoriteButton } from '../../components/FavoriteButton'
 
 interface IArticleMetaProps {
   article: IArticle
@@ -72,7 +53,7 @@ const ArticleMeta = (props: IArticleMetaProps) => {
           &nbsp; Follow Brad Green
         </button>
         &nbsp;
-        <FavoriteButton article={article} onClickFavorite={props.onClickFavorite} />
+        <FavoriteButton article={article} title={'Favorite Article'} onClick={props.onClickFavorite} />
       </Show>
     </div>
   )
@@ -147,7 +128,7 @@ export default ({ slug }: IArticleProps) => {
               &nbsp; Follow Brad Green
             </button>
             &nbsp;
-            <FavoriteButton article={article} onClickFavorite={onClickFavorite} />
+            <FavoriteButton article={article} title={'Favorite Article'} onClick={onClickFavorite} />
           </div>
         </div>
 
