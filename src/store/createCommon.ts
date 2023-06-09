@@ -26,7 +26,7 @@ export function createCommon(agent: IApiAgent, actions: ICommonActions, state: I
 
   createEffect(() => {
     if (state.token) {
-      console.log('Add token %s', state.token)
+      console.log('Add token %s...', state.token.slice(0, 15))
       localStorage.setItem('jwt', state.token)
     } else {
       console.log('Remove token')

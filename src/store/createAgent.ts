@@ -68,7 +68,7 @@ export function createAgent([state, actions]: IStoreContext): IApiAgent {
     const headers = {}
     const opts = { method, headers }
 
-    console.log('send url=%s', url)
+    console.log('send url=%s...', url.slice(1, 20))
 
     if (data !== undefined) {
       headers['Content-Type'] = 'application/json'
