@@ -1,6 +1,6 @@
 import { lazy } from 'solid-js'
 import { Show } from 'solid-js'
-import { useStore } from '../../store/storeContext'
+import { useStore, IStoreContext } from '../../store/storeContext'
 const Article = lazy(() => import('./Article'))
 
 interface IArticleProps {

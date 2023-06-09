@@ -42,7 +42,7 @@ const ArticleMeta = (props: IArticleMetaProps) => {
       </div>
       <Show when={props.canModify} fallback={<span />}>
         <span>
-          <NavLink href={`editor/${article.slug}`} route="editor" class="btn btn-outline-secondary btn-sm">
+          <NavLink href={`editor/${local.article.slug}`} route="editor" class="btn btn-outline-secondary btn-sm">
             <i class="ion-edit" /> Edit Article
           </NavLink>
           <button class="btn btn-outline-danger btn-sm" onClick={props.onDelete}>
@@ -74,7 +74,7 @@ export default ({ slug }: IArticleProps) => {
 
   const renderMarkdown = (article: IArticle): string => {
     if (article) {
-      const html = marked(article?.body)
+      const html = marked(article?.body, { mangle: false, headerIds: false })
       return DOMPurify.sanitize(html)
     }
     return ''
