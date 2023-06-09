@@ -1,17 +1,20 @@
-import { Show } from 'solid-js'
+import { createComputed, splitProps, Show } from 'solid-js'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
 
 import Comments from './Comments'
-import { IArticle } from '../../api/Api'
+import { IArticle, IProfile } from '../../api/Api'
 import { FavoriteButton } from '../../components/FavoriteButton'
+import { FollowingButton } from '../../components/FollowingButton'
 
 interface IArticleMetaProps {
   article: IArticle
+  profile: IProfile
   canModify: boolean
   onClickFavorite: (article: IArticle, e: InputEvent) => void
+  onClickFollow: (e: InputEvent) => void
   onDelete: () => void | object
 }
 
@@ -23,19 +26,19 @@ interface IArticleMetaProps {
  */
 
 const ArticleMeta = (props: IArticleMetaProps) => {
+  const [local] = splitProps(props, ['article', 'profile'])
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
-  const article = props.article
 
   return (
     <div class="article-meta">
-      <NavLink href={`@${article?.author.username}`} route="profile">
-        <img src={article.author.image} alt="" />
+      <NavLink href={`@${local.article?.author.username}`} route="profile">
+        <img src={local.article.author.image} alt="" />
       </NavLink>
       <div class="info">
-        <NavLink href={`@${article.author.username}`} route="profile" class="author">
-          {article?.author.username}
+        <NavLink href={`@${local.article.author.username}`} route="profile" class="author">
+          {local.article?.author.username}
         </NavLink>
-        <span class="date">{new Date(article.createdAt).toDateString()}</span>
+        <span class="date">{new Date(local.article.createdAt).toDateString()}</span>
       </div>
       <Show when={props.canModify} fallback={<span />}>
         <span>
@@ -48,12 +51,9 @@ const ArticleMeta = (props: IArticleMetaProps) => {
         </span>
       </Show>
       <Show when={!props.canModify} fallback={<span />}>
-        <button class="btn btn-sm btn-outline-secondary">
-          <i class="ion-plus-round"></i>
-          &nbsp; Follow Brad Green
-        </button>
+        <FollowingButton profile={local.profile} onClick={props.onClickFollow} />
         &nbsp;
-        <FavoriteButton article={article} title={'Favorite Article'} onClick={props.onClickFavorite} />
+        <FavoriteButton article={local.article} title={'Favorite Article'} onClick={props.onClickFavorite} />
       </Show>
     </div>
   )
@@ -64,11 +64,13 @@ interface IArticleProps {
 }
 
 export default ({ slug }: IArticleProps) => {
-  const [store, { deleteArticle, unmakeFavorite, makeFavorite }] = useStore()
+  const [store, { deleteArticle, unmakeFavorite, makeFavorite, loadProfile, unfollow, follow }] = useStore()
 
   const article = store.articles[slug]
   const canModify = () => store.currentUser && store.currentUser.username === article.author.username
   const handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
+
+  createComputed(() => loadProfile(article.author.username))
 
   const renderMarkdown = (article: IArticle): string => {
     if (article) {
@@ -84,6 +86,11 @@ export default ({ slug }: IArticleProps) => {
     article.favorited ? unmakeFavorite(slug) : makeFavorite(slug)
   }
 
+  const onClickFollow = (ev: InputEvent) => {
+    ev.preventDefault()
+    const promise = store.profile.following ? unfollow() : follow()
+  }
+
   const {
     title,
     description,
@@ -97,7 +104,14 @@ export default ({ slug }: IArticleProps) => {
       <div class="banner">
         <div class="container">
           <h1>{article?.title}</h1>
-          <ArticleMeta article={article} canModify={canModify()} onClickFavorite={onClickFavorite} onDelete={handleDeleteArticle} />
+          <ArticleMeta
+            article={article}
+            profile={store.profile}
+            canModify={canModify()}
+            onClickFavorite={onClickFavorite}
+            onClickFollow={onClickFollow}
+            onDelete={handleDeleteArticle}
+          />
         </div>
       </div>
       <div class="container page">
@@ -123,10 +137,7 @@ export default ({ slug }: IArticleProps) => {
               </a>
               <span class="date" textContent={/*@once*/ new Date(article.createdAt).toDateString()} />
             </div>
-            <button class="btn btn-sm btn-outline-secondary">
-              <i class="ion-plus-round"></i>
-              &nbsp; Follow Brad Green
-            </button>
+            <FollowingButton profile={store.profile} onClick={onClickFollow} />
             &nbsp;
             <FavoriteButton article={article} title={'Favorite Article'} onClick={onClickFavorite} />
           </div>
