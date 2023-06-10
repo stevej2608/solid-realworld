@@ -3,7 +3,7 @@ import { createStore } from 'solid-js/store'
 
 import { IApi, IArticle, IComment, IProfile, IUser } from '../api/Api'
 
-import { createAgent } from './createAgent'
+import { createAgent } from '../api/createAgent'
 
 import { createArticles, IArticleActions } from './createArticles'
 import { createAuth, IAuthorActions } from './createAuth'

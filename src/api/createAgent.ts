@@ -1,8 +1,8 @@
 import { ApiKeyAuthorization } from 'swagger-client'
-import { IApi, Api } from '../api/Api'
-import { IStoreState } from './storeState'
-import { IStoreContext } from './storeContext'
-import { IAuthorActions } from './createAuth'
+import { IApi, Api } from './Api'
+import { IStoreState } from '../store/storeState'
+import { IStoreContext } from '../store/storeContext'
+import { IAuthorActions } from '../store/createAuth'
 
 const API_ROOT = 'https://api.realworld.io/api'
 
