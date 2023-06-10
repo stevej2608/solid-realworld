@@ -1,6 +1,7 @@
 import { createComputed, createMemo, useTransition, lazy } from 'solid-js'
 import { useRouter, IRouteContext } from '../../routeContext'
 import { useStore } from '../../store/storeContext'
+import { IPredicate } from '../../store/createArticles'
 
 const Home = lazy(() => import('./Home'))
 
@@ -23,7 +24,7 @@ export default function () {
 
   const [, start] = useTransition()
 
-  const getPredicate = () => {
+  const getPredicate = (): IPredicate => {
     switch (tab()) {
       case 'feed':
         return { myFeed: true }

@@ -22,7 +22,7 @@ const API_ROOT = 'https://api.realworld.io/api'
 const getHeaders = (state: IStoreState) => {
   if (state.token) {
     return {
-      authorization: `Bearer ${state.token}`
+      Authorization: `Token ${state.token}`
     }
   }
   return {}

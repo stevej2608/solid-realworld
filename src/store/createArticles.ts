@@ -5,6 +5,14 @@ import { IStoreState, IArticleMap } from './storeState'
 
 const LIMIT = 10
 
+export type ITag = 'feed' | 'all'
+export interface IPredicate {
+  feed?: boolean
+  tag?: ITag
+  favoritedBy?: string
+  author?: string
+}
+
 export interface IArticleActions {
   makeFavorite(slug: string): void
   unmakeFavorite(slug: string): void
@@ -14,7 +22,7 @@ export interface IArticleActions {
   deleteArticle(slug: string): Promise<void>
 
   loadArticle(slug: string): void
-  loadArticles(predicate: string): void
+  loadArticles(predicate: IPredicate): void
 
   setPage: (page: number) => void
 }
@@ -26,12 +34,13 @@ export interface IArticleActions {
  */
 
 export function createArticles(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
-  interface IPredicate {
-    myFeed?: string
-    favoritedBy?: string
-    tag?: string
-    author?: string
-  }
+  // function $req(predicate: IPredicate): Promise<IMultipleArticlesResponse> {
+  //   if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
+  //   if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
+  //   if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
+  //   if (predicate.author) return agent.Articles.byAuthor(predicate.author, state.page, LIMIT)
+  //   return agent.Articles.all(state.page, LIMIT, predicate)
+  // }
 
   const $req = async (predicate: IPredicate) => {
     const args = { offset: state.page, limit: LIMIT }
@@ -47,8 +56,8 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
     return await agent.articles.getArticles(args)
   }
 
-  const fetchArticles = async (args: [string, string], { value }: IArticleMap): IArticleMap => {
-    console.log('fetchArticles args=%o', args)
+  const fetchArticles = async (args: [string, IPredicate | string], { value }: IArticleMap): IArticleMap => {
+    console.log('fetchArticles args=%s', JSON.stringify(args))
 
     if (args[0] === 'articles') {
       const { data, error } = await $req(args[1])
@@ -72,7 +81,7 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
 
     // Retrieve a single article, test if we already have it
 
-    const slug = args[1]
+    const slug: string = args[1]
     if (slug in state.articles) {
       return state.articles[slug]
     }
@@ -101,7 +110,7 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
   Object.assign(actions, {
     setPage: (page: number) => setState({ page }),
 
-    loadArticles(predicate: string) {
+    loadArticles(predicate: IPredicate) {
       setArticleSource(['articles', predicate])
     },
 
@@ -135,15 +144,15 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
       }
     },
 
-    async createArticle(newArticle: INewArticle): Promise<IArticle> {
-      const article = await agent.articles.createArticle(newArticle)
-      setState('articles', { [article.slug]: article })
+    async createArticle(article: INewArticle): Promise<IArticle> {
+      const { data, error } = await agent.articles.createArticle({ article })
+      setState('articles', { [data.article.slug]: data.article })
       return article
     },
 
-    async updateArticle(data: IArticle): Promise<IArticle> {
-      const article = await agent.articles.updateArticle(data)
-      setState('articles', { [article.slug]: article })
+    async updateArticle(article: IArticle): Promise<IArticle> {
+      const { data, error } = await agent.articles.updateArticle(article.slug, { article })
+      setState('articles', { [data.article.slug]: data.article })
       return article
     },
 
