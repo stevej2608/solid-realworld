@@ -2,7 +2,7 @@ import { JSX } from 'solid-js'
 import { ListErrors, IErrors } from '../components/ListErrors'
 import { createStore } from 'solid-js/store'
 import { useStore, IStoreContext } from '../store/storeContext'
-import { IUser } from '../api/Api'
+import { IUser } from '../api/RealWorldApi'
 
 interface IUserState extends IUser {
   password: string

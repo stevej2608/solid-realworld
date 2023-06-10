@@ -3,7 +3,7 @@ import { createStore, IStoreContext } from 'solid-js/store'
 import { useStore } from '../../store/storeContext'
 
 import { ListErrors } from '../../components/ListErrors'
-import { IArticle } from '../../api/Api'
+import { IArticle } from '../../api/RealWorldApi'
 
 interface IEditState extends IArticle {
   tagInput: string

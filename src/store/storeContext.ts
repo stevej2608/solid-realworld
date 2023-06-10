@@ -1,9 +1,8 @@
 import { createContext, useContext } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
-import { IApi, IArticle, IComment, IProfile, IUser } from '../api/Api'
-
-import { createAgent } from '../api/createAgent'
+import { IArticle, IComment, IProfile, IUser } from '../api/RealWorldApi'
+import { WorldApi } from '../api/RealWorldApi'
 
 import { createArticles, IArticleActions } from './createArticles'
 import { createAuth, IAuthorActions } from './createAuth'
@@ -64,7 +63,7 @@ export function createApplicationStore(): IStoreContext {
   const actions = {}
 
   const store: IStoreContext = [state, actions]
-  const agent: IApi = createAgent(store)
+  const agent = new WorldApi(state)
 
   // Instantiate all the resource accessors
 

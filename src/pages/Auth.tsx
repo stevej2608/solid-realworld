@@ -3,7 +3,7 @@ import { createStore } from 'solid-js/store'
 import { NavLink } from '../components/NavLink'
 import { ListErrors, IErrors } from '../components/ListErrors'
 import { useStore } from '../store/storeContext'
-import { INewUser } from '../api/Api'
+import { INewUser } from '../api/RealWorldApi'
 
 interface IAuthStore extends INewUser {
   errors: IErrors

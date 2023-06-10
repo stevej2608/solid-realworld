@@ -1,7 +1,7 @@
 import type { JSX } from 'solid-js'
 
 import { NavLink } from './NavLink'
-import { IArticle } from '../api/Api'
+import { IArticle } from '../api/RealWorldApi'
 import { FavoriteButton } from '../components/FavoriteButton'
 
 interface IArticlePreviewProps {

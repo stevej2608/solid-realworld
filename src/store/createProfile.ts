@@ -1,6 +1,6 @@
 import { createSignal, createResource, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { Api, IProfile } from '../api/Api'
+import { WorldApi, IProfile } from '../api/RealWorldApi'
 import { IStoreState } from './storeState'
 
 export interface IProfileActions {
@@ -21,7 +21,7 @@ export interface IProfileActions {
  * @returns
  */
 
-export function createProfile(agent: Api<unknown>, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
+export function createProfile(agent: WorldApi, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
   const getProfile = async (username: string) => {
     const { data, error } = await agent.profiles.getProfileByUsername(username)
     return data.profile

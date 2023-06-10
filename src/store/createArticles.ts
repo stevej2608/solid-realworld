@@ -1,6 +1,6 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { IApi, IArticle, INewArticle, IArticleResponse } from '../api/Api'
+import { WorldApi, IArticle, INewArticle, IArticleResponse } from '../api/RealWorldApi'
 import { IStoreState, IArticleMap } from './storeState'
 
 const LIMIT = 10
@@ -25,7 +25,7 @@ export interface IArticleActions {
  * server agent
  */
 
-export function createArticles(agent: IApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
+export function createArticles(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
   interface IPredicate {
     myFeed?: string
     favoritedBy?: string
@@ -33,7 +33,7 @@ export function createArticles(agent: IApi, actions: IArticleActions, state: ISt
     author?: string
   }
 
-  const $req = async (predicate: IPredicate): IArticleResponse => {
+  const $req = async (predicate: IPredicate) => {
     const args = { offset: state.page, limit: LIMIT }
 
     if (predicate.myFeed) {

@@ -5,7 +5,7 @@ import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
 
 import Comments from './Comments'
-import { IArticle, IProfile } from '../../api/Api'
+import { IArticle, IProfile } from '../../api/RealWorldApi'
 import { FavoriteButton } from '../../components/FavoriteButton'
 import { FollowingButton } from '../../components/FollowingButton'
 

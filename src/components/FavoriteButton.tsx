@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { IArticle } from '../api/Api'
+import { IArticle } from '../api/RealWorldApi'
 
 interface IFavoriteButtonProps {
   article: IArticle

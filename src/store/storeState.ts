@@ -1,4 +1,4 @@
-import { IArticle, IComment, IProfile, IUser } from '../api/Api'
+import { IArticle, IComment, IProfile, IUser } from '../api/RealWorldApi'
 
 export type IArticleMap = { [slug: string]: IArticle }
 

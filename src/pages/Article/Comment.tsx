@@ -1,5 +1,5 @@
 import { NavLink } from '../../components/NavLink'
-import { IComment, IUser } from '../../api/Api'
+import { IComment, IUser } from '../../api/RealWorldApi'
 
 interface ICommentProps {
   comment: IComment

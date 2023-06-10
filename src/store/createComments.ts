@@ -1,6 +1,6 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { IApi, IComment } from '../api/Api'
+import { WorldApi, IComment } from '../api/RealWorldApi'
 import { IStoreState } from './storeState'
 
 export interface ICommentsActions {
@@ -21,7 +21,7 @@ export interface ICommentsActions {
  * @returns
  */
 
-export function createComments(agent: IApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
+export function createComments(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
   const [articleSlug, setArticleSlug] = createSignal<string>()
 
   const getArticleComments = async (): IComment[] => {

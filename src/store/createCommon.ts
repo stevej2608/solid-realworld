@@ -1,6 +1,6 @@
 import { createEffect, createResource, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { Api, ITagsResponse } from '../api/Api'
+import { WorldApi, ITagsResponse } from '../api/RealWorldApi'
 import { IStoreState, ICommonActions } from './storeState'
 
 /**
@@ -12,7 +12,7 @@ import { IStoreState, ICommonActions } from './storeState'
  * @returns
  */
 
-export function createCommon(agent: Api<unknown>, actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<string[]> {
+export function createCommon(agent: WorldApi, actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<string[]> {
   const getTags = async () => {
     console.log('getTags')
     const tags = await agent.tags.tagsList()

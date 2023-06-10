@@ -1,6 +1,6 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { Api, INewUser, IUser, IUserResponse, IGenericErrorModel } from '../api/Api'
+import { WorldApi, INewUser, IUser, IUserResponse } from '../api/RealWorldApi'
 import { IStoreState, ICommonActions } from './storeState'
 
 export interface IAuthorActions extends ICommonActions {
@@ -23,8 +23,7 @@ export interface IAuthorActions extends ICommonActions {
  * @returns
  */
 
-export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
-
+export function createAuth(agent: WorldApi, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
   const getCurrentUser = async (): IComment[] => {
     const { data, error } = await agent.user.getCurrentUser()
     return data.user

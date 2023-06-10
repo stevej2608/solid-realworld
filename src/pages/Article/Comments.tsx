@@ -1,6 +1,6 @@
 import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
-import { IComment } from '../../api/Api'
+import { IComment } from '../../api/RealWorldApi'
 
 import { Comment } from './Comment'
 import { CommentInput } from './CommentInput'

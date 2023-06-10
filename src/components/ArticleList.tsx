@@ -2,7 +2,7 @@ import type { JSX } from 'solid-js'
 
 import { useStore, IStoreContext } from '../store/storeContext'
 import { ArticlePreview } from './ArticlePreview'
-import { IArticle } from '../api/Api'
+import { IArticle } from '../api/RealWorldApi'
 
 interface IArticleListProps {
   articles: Proxy<IArticle>[]
