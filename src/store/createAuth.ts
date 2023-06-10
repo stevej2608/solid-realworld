@@ -24,8 +24,14 @@ export interface IAuthorActions extends ICommonActions {
  */
 
 export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
+
+  const getCurrentUser = async (): IComment[] => {
+    const { data, error } = await agent.user.getCurrentUser()
+    return data.user
+  }
+
   const [loggedIn, setLoggedIn] = createSignal(false)
-  const [currentUser, { mutate }] = createResource(loggedIn, agent.user.getCurrentUser)
+  const [currentUser, { mutate }] = createResource(loggedIn, getCurrentUser)
 
   // Add our actions the provided actions container
 
@@ -33,14 +39,14 @@ export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setStat
     pullUser: () => setLoggedIn(true),
 
     async login(email: string, password: string) {
-      const { data, error } = await agent.users.login(email, password)
+      const { data, error } = await agent.users.login({ user: { email, password } })
       if (error) throw error
       actions.setToken(data.user.token)
       setLoggedIn(true)
     },
 
     async register(username: string, email: string, password: string) {
-      const { data, error } = await agent.users.createUser(username, email, password)
+      const { data, error } = await agent.users.createUser({ user: { username, email, password } })
       if (error) throw error
       actions.setToken(data.user.token)
       setLoggedIn(true)
@@ -54,7 +60,7 @@ export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setStat
     },
 
     async updateUser(newUser: INewUser) {
-      const { data, error } = await agent.user.updateCurrentUser(newUser)
+      const { data, error } = await agent.user.updateCurrentUser({ user: newUser })
       if (error) throw errors
       mutate(data.user)
     }

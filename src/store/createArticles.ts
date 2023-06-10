@@ -33,47 +33,56 @@ export function createArticles(agent: IApi, actions: IArticleActions, state: ISt
     author?: string
   }
 
-  function $req(predicate: IPredicate): IArticleResponse {
+  const $req = async (predicate: IPredicate): IArticleResponse => {
     const args = { offset: state.page, limit: LIMIT }
 
     if (predicate.myFeed) {
-      return agent.articles.getArticlesFeed(args)
+      return await agent.articles.getArticlesFeed(args)
     }
 
     if (predicate.favoritedBy) args.favorited = predicate.favoritedBy
     if (predicate.tag) args.tag = predicate.tag
     if (predicate.author) args.author = predicate.author
 
-    return agent.articles.getArticles(args)
+    return await agent.articles.getArticles(args)
   }
 
-  const fetchArticles = (args: [string, string], { value }: IArticleMap): IArticleMap => {
+  const fetchArticles = async (args: [string, string], { value }: IArticleMap): IArticleMap => {
     console.log('fetchArticles args=%o', args)
 
     if (args[0] === 'articles') {
-      return $req(args[1]).then(response => {
-        const { articles, articlesCount } = response.data
+      const { data, error } = await $req(args[1])
 
-        queueMicrotask(() => {
-          setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
-        })
+      if (error) throw error
 
-        // Convert received array of articles to a map keyed on the slug
+      const { articles, articlesCount } = data
 
-        const articlesMap: { [slug: string]: IArticle } = {}
-        for (const article of articles) {
-          articlesMap[article.slug] = article
-        }
-        return articlesMap
+      queueMicrotask(() => {
+        setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
       })
+
+      // Convert received array of articles to a map keyed on the slug
+
+      const articlesMap: { [slug: string]: IArticle } = {}
+      for (const article of articles) {
+        articlesMap[article.slug] = article
+      }
+      return articlesMap
     }
 
-    const article = state.articles[args[1]]
-    if (article) return value
+    // Retrieve a single article, test if we already have it
 
-    return agent.articles.getArticle(args[1]).then(article => {
-      return { ...value, [args[1]]: article }
-    })
+    const slug = args[1]
+    if (slug in state.articles) {
+      return state.articles[slug]
+    }
+
+    // Get the article from the server
+
+    const { data, error } = await agent.articles.getArticle(slug)
+    if (error) throw error
+
+    return { ...value, [slug]: data.article }
   }
 
   const [articleSource, setArticleSource] = createSignal()

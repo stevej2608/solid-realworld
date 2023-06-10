@@ -22,7 +22,6 @@ export interface IProfileActions {
  */
 
 export function createProfile(agent: Api<unknown>, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
-
   const getProfile = async (username: string) => {
     const { data, error } = await agent.profiles.getProfileByUsername(username)
     return data.profile

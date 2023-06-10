@@ -44,7 +44,7 @@ export function createComments(agent: IApi, actions: ICommentsActions, state: IS
     },
 
     async createComment(comment: string) {
-      await agent.articles.createArticleComment(state.articleSlug, comment)
+      await agent.articles.createArticleComment(state.articleSlug, { comment })
     },
 
     async deleteComment(id: string) {

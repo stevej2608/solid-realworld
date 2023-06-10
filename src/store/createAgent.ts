@@ -1,5 +1,5 @@
 import { ApiKeyAuthorization } from 'swagger-client'
-import { Api } from '../api/Api'
+import { IApi, Api } from '../api/Api'
 import { IStoreState } from './storeState'
 import { IStoreContext } from './storeContext'
 import { IAuthorActions } from './createAuth'
@@ -8,7 +8,7 @@ const API_ROOT = 'https://api.realworld.io/api'
 
 const encode = encodeURIComponent
 
-export function createAgent([state, actions]: IStoreContext): Api {
+export function createAgent([state, actions]: IStoreContext): IApi {
   const getHeaders = () => {
     if (state.token) {
       return {

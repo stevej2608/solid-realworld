@@ -1,7 +1,7 @@
 import { createStore } from 'solid-js/store'
 import { ListErrors, IErrors } from '../../components/ListErrors'
 import { ICommentsActions } from '../../store/createComments'
-import { IUser } from '../../api/Api';
+import { IUser } from '../../api/Api'
 
 interface ICommentStore {
   body: string
