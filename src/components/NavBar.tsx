@@ -45,6 +45,7 @@ export default () => {
             </li>
             <li class="nav-item">
               <NavLink class="nav-link" route="profile" href={`@${store.currentUser.username}`}>
+                <img src={store.currentUser.image} class="user-pic" />
                 {store.currentUser.username}
               </NavLink>
             </li>
