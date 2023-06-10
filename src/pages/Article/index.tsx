@@ -10,8 +10,13 @@ interface IArticleProps {
 export default function (props: IArticleProps) {
   const [store, { loadArticle, loadComments }] = useStore()
   const slug = props.params[0]
-  loadArticle(slug)
+
+  if (!(slug in store.articles)) {
+    loadArticle(slug)
+  }
+
   loadComments(slug)
+
   return (
     <Show when={store.articles[slug]}>
       <Article slug={slug} />
