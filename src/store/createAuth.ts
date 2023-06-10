@@ -1,7 +1,6 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { INewUser, IUser } from '../api/Api'
-import { IApiAgent } from './createAgent'
+import { Api, INewUser, IUser, IUserResponse, IGenericErrorModel } from '../api/Api'
 import { IStoreState, ICommonActions } from './storeState'
 
 export interface IAuthorActions extends ICommonActions {
@@ -24,9 +23,9 @@ export interface IAuthorActions extends ICommonActions {
  * @returns
  */
 
-export function createAuth(agent: IApiAgent, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
+export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
   const [loggedIn, setLoggedIn] = createSignal(false)
-  const [currentUser, { mutate }] = createResource(loggedIn, agent.Auth.current)
+  const [currentUser, { mutate }] = createResource(loggedIn, agent.user.getCurrentUser)
 
   // Add our actions the provided actions container
 
@@ -34,7 +33,7 @@ export function createAuth(agent: IApiAgent, actions: IAuthorActions, setState: 
     pullUser: () => setLoggedIn(true),
 
     async login(email: string, password: string) {
-      const { user, errors } = await agent.Auth.login(email, password)
+      const { user, errors } = await agent.users.login(email, password)
       if (errors) throw errors
       actions.setToken(user.token)
       setLoggedIn(true)

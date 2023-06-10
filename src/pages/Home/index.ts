@@ -19,7 +19,7 @@ export default function () {
     return query.get('tab')
   })
 
-  console.log('tab %s', tab)
+  console.log('tab %s', tab())
 
   const [, start] = useTransition()
 

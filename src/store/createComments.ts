@@ -1,8 +1,6 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { IComment } from '../api/Api'
-import { IApiAgent } from './createAgent'
-
+import { Api, IComment } from '../api/Api'
 import { IStoreState } from './storeState'
 
 export interface ICommentsActions {
@@ -23,14 +21,19 @@ export interface ICommentsActions {
  * @returns
  */
 
-export function createComments(agent: IApiAgent, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
+export function createComments(
+  agent: Api<unknown>,
+  actions: ICommentsActions,
+  state: IStoreState,
+  setState: SetStoreFunction<IStoreState>
+): Resource<IComment[]> {
   const [articleSlug, setArticleSlug] = createSignal<string>()
 
   const getArticleComments = async (): IComment[] => {
     const slug = articleSlug()
     console.log('getArticleComments articleSlug = %s ...', slug ? slug.slice(0, 15) : 'undefined')
-    const comments = await agent.Comments.forArticle(slug)
-    return comments
+    const response = await agent.articles.getArticleComments(slug)
+    return response.data.comments
   }
 
   const [comments, { mutate, refetch }] = createResource(articleSlug, getArticleComments, { initialValue: [] })

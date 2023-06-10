@@ -1,7 +1,7 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { IArticle, INewArticle, IMultipleArticlesResponse } from '../api/Api'
-import { IApiAgent } from './createAgent'
+import { Api, IArticle, INewArticle, IArticleResponse } from '../api/Api'
+
 
 import { IStoreState, IArticleMap } from './storeState'
 
@@ -25,15 +25,14 @@ export interface IArticleActions {
  * Create interface to the articles API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
  * server agent
- *
- * @param agent Used for communication with the sever API
- * @param actions The actions object to be populated
- * @param state
- * @param setState
- * @returns
  */
 
-export function createArticles(agent: IApiAgent, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
+export function createArticles(
+  agent: Api<unknown>,
+  actions: IArticleActions,
+  state: IStoreState,
+  setState: SetStoreFunction<IStoreState>
+): Resource<IArticle[]> {
   interface IPredicate {
     myFeed?: string
     favoritedBy?: string
@@ -41,20 +40,38 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     author?: string
   }
 
-  function $req(predicate: IPredicate): Promise<IMultipleArticlesResponse> {
-    if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
-    if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
-    if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
-    if (predicate.author) return agent.Articles.byAuthor(predicate.author, state.page, LIMIT)
-    return agent.Articles.all(state.page, LIMIT, predicate)
+  function isEmpty(obj: object) {
+    return Object.keys(obj).length === 0;
+  }
+
+  // function $req(predicate: IPredicate): Promise<IMultipleArticlesResponse> {
+  //   if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
+  //     if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
+  //     if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
+  //     if (predicate.author) return agent.Articles.byAuthor(predicate.author, state.page, LIMIT)
+  //     return agent.Articles.all(state.page, LIMIT, predicate)
+  // }
+
+  function $req(predicate: IPredicate): IArticleResponse {
+    const args = { offset: state.page, limit: LIMIT }
+
+    if (predicate.myFeed) {
+      return agent.articles.getArticlesFeed(args)
+    }
+
+    if (predicate.favoritedBy) args.favorited = predicate.favoritedBy
+    if (predicate.tag) args.tag = predicate.tag
+    if (predicate.author) args.author = predicate.author
+
+    return agent.articles.getArticles(args)
   }
 
   const fetchArticles = (args: [string, string], { value }: IArticleMap): IArticleMap => {
-    console.log('fetchArticles args=[%s]', args[0])
+    console.log('fetchArticles args=%o', args)
 
     if (args[0] === 'articles') {
       return $req(args[1]).then(response => {
-        const { articles, articlesCount } = response
+        const { articles, articlesCount } = response.data
 
         queueMicrotask(() => {
           setState({ totalPagesCount: Math.ceil(articlesCount / LIMIT) })
@@ -73,7 +90,7 @@ export function createArticles(agent: IApiAgent, actions: IArticleActions, state
     const article = state.articles[args[1]]
     if (article) return value
 
-    return agent.Articles.get(args[1]).then(article => {
+    return agent.articles.getArticle(args[1]).then(article => {
       return { ...value, [args[1]]: article }
     })
   }

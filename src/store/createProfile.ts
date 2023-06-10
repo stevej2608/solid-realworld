@@ -1,7 +1,6 @@
 import { createSignal, createResource, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { IProfile } from '../api/Api'
-import { IApiAgent } from './createAgent'
+import { Api, IProfile } from '../api/Api'
 import { IStoreState } from './storeState'
 
 export interface IProfileActions {
@@ -22,9 +21,15 @@ export interface IProfileActions {
  * @returns
  */
 
-export function createProfile(agent: IApiAgent, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
+export function createProfile(agent: Api<unknown>, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
+
+  const getProfile = async (username: string) => {
+    const response = await agent.profiles.getProfileByUsername(username)
+    return response.data.profile
+  }
+
   const [username, setUsername] = createSignal()
-  const [profile] = createResource(username, agent.Profile.get)
+  const [profile] = createResource(username, getProfile)
 
   // Add our actions the provided actions container
 
@@ -37,7 +42,7 @@ export function createProfile(agent: IApiAgent, actions: IProfileActions, state:
       if (state.profile && !state.profile.following) {
         setState('profile', 'following', true)
         try {
-          await agent.Profile.follow(state.profile.username)
+          await agent.profiles.followUserByUsername(state.profile.username)
         } catch (err) {
           setState('profile', 'following', false)
         }
@@ -48,7 +53,7 @@ export function createProfile(agent: IApiAgent, actions: IProfileActions, state:
       if (state.profile && state.profile.following) {
         setState('profile', 'following', false)
         try {
-          await agent.Profile.unfollow(state.profile.username)
+          await agent.profiles.unfollowUserByUsername(state.profile.username)
         } catch (err) {
           setState('profile', 'following', true)
         }
