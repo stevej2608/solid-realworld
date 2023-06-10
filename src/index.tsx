@@ -1,7 +1,7 @@
 import { JSX } from 'solid-js'
 import { render } from 'solid-js/web'
+import { Router, hashIntegration } from '@solidjs/router'
 import { App } from './App'
-import { RouterContext, createRouteHandler } from './routeContext'
 import { StoreContext, createApplicationStore } from './store/storeContext'
 
 interface IProps {
@@ -9,13 +9,11 @@ interface IProps {
 }
 
 function ContextProvider(props: IProps) {
-  const router = createRouteHandler('')
   const store = createApplicationStore()
-
   return (
-    <RouterContext.Provider value={router}>
-      <StoreContext.Provider value={store}>{props.children}</StoreContext.Provider>
-    </RouterContext.Provider>
+    <StoreContext.Provider value={store}>
+      <Router>{props.children}</Router>
+    </StoreContext.Provider>
   )
 }
 

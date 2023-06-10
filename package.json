@@ -30,6 +30,7 @@
     "yargs": "^17.7.2"
   },
   "dependencies": {
+    "@solidjs/router": "^0.8.2",
     "@types/dompurify": "^3.0.2",
     "@types/marked": "^5.0.0",
     "classnames": "^2.3.2",

@@ -1,6 +1,6 @@
 import { lazy, createSignal, createComputed } from 'solid-js'
-
-import { useRouter } from './routeContext'
+import { Router, Routes, Route } from '@solidjs/router'
+import { useRouter, IRouteContext } from './routeContext'
 import { useStore } from './store/storeContext'
 
 import NavBar from './components/NavBar'
@@ -15,7 +15,7 @@ const Auth = lazy(() => import('./pages/Auth'))
 export const App = () => {
   const [store, { pullUser }] = useStore()
   const [appLoaded, setAppLoaded] = createSignal(false)
-  const { match, getParams } = useRouter()
+  const { route } = useRouter()
 
   if (!store.token) setAppLoaded(true)
   else {
@@ -23,12 +23,23 @@ export const App = () => {
     createComputed(() => store.currentUser && setAppLoaded(true))
   }
 
+  console.log('*************** route = [%s] **************', route)
+
+  // https://github.com/solidjs/solid-router
+  // https://github.com/solidjs/solid-router/issues/273
+
   return (
     <>
       <NavBar />
       <Show when={appLoaded()} fallback={<div class="container loader"></div>}>
         <Suspense>
-          <Switch>
+          <Routes>
+            <Route element={Article} path="/article/:slug" />
+            <Route element={Profile} path="/profile" />
+            <Route element={Home} path="/" />
+          </Routes>
+
+          {/* <Switch>
             <Match when={match('editor', /^editor\/?(.*)/)}>
               <Editor {...getParams()} />
             </Match>
@@ -50,7 +61,7 @@ export const App = () => {
             <Match when={match('', /^#?$/)}>
               <Home />
             </Match>
-          </Switch>
+          </Switch> */}
         </Suspense>
       </Show>
     </>

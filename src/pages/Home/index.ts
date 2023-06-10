@@ -12,7 +12,7 @@ export default function () {
   // https://www.solidjs.com/docs/latest/api#creatememo
 
   const tab = createMemo(() => {
-    const search = location().split('?')[1]
+    const search = location.split('?')[1]
     console.log('search %s', search)
     if (!search) return token ? 'feed' : 'all'
     const query = new URLSearchParams(search)

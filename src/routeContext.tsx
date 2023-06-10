@@ -1,85 +1,40 @@
-import { createContext, useContext, Accessor } from 'solid-js'
-import { createSignal, onCleanup, useTransition } from 'solid-js'
-
-interface IRouteParams {
-  params: string[]
-  routeName: string
-}
+import { useParams, useLocation, Params } from '@solidjs/router'
 
 /**
  * @field location accessor
  */
 export interface IRouteContext {
-  /**
-   * location accessor
-   */
-
-  location: Accessor<string>
-
-  /**
-   * Return true if regex test is a match in current location
-   *
-   * @param name name to associated with the match
-   * @param test the regex test
-   * @returns true if match
-   */
-
-  match: (name: string, test: RegExp) => boolean
-
-  /**
-   * Returns any params associated with the match
-   */
-
-  getParams: () => IRouteParams | undefined
+  location: string
+  route: string
+  params: Params
 }
 
-/**
- * Return IRouteContext that updates when window.location.hash changes
- *
- * @param {string} init
- * @returns
- */
+export function useRouter(): IRouteContext {
 
-export function createRouteHandler(init: string): IRouteContext {
-  const [location, setLocation] = createSignal<string>(window.location.hash.slice(2) || init)
-  const [read, triggerParams] = createSignal()
-  const [, start] = useTransition()
+  // https://github.com/solidjs/solid-router#router-primitives
 
-  const locationHandler = () => {
-    const promise = start(() => {
-      const location = window.location.hash.slice(2)
-      setLocation(location)
-    })
-  }
-
-  let params: IRouteParams | undefined = undefined
-
-  window.addEventListener('hashchange', locationHandler)
-
-  onCleanup(() => window.removeEventListener('hashchange', locationHandler))
+  const params = useParams()
+  const location = useLocation()
 
   return {
-    location,
 
-    match: (name: string, test: RegExp) => {
-      const loc = decodeURIComponent(location().split('?')[0])
-      const match = test.exec(loc)
-      if (match) {
-        params = { params: match.slice(1), routeName: name }
-        triggerParams()
-      }
-      return !!match
+    get location(): string {
+      return location.search
     },
 
-    getParams: (): IRouteParams | undefined => {
-      read() // TODO: figure out what this does
+    get route(): string {
+      return location.pathname
+    },
+
+    get params(): Params {
       return params
+    },
+
+    getParams: (): string[] => {
+      console.log('getParams %o', params)
+      return Object.values(params)
     }
+
+
   }
-}
-
-export const RouterContext = createContext<IRouteContext>()
-
-export function useRouter() {
-  return useContext<IRouteContext>(RouterContext)
 }

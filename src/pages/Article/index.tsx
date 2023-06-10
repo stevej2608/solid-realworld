@@ -1,15 +1,13 @@
-import { lazy } from 'solid-js'
-import { Show } from 'solid-js'
+import { lazy, Show } from 'solid-js'
+import { useRouter } from '../../routeContext'
 import { useStore, IStoreContext } from '../../store/storeContext'
 const Article = lazy(() => import('./Article'))
 
-interface IArticleProps {
-  params: string[]
-}
 
-export default function (props: IArticleProps) {
+export default function () {
+  const { params } = useRouter()
   const [store, { loadArticle, loadComments }] = useStore()
-  const slug = props.params[0]
+  const slug = params['slug']
   loadArticle(slug)
   loadComments(slug)
   return (

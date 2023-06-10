@@ -13,6 +13,17 @@ The following changes have be made:
 - [ ] Replace server API client with one based directly on openAPI
 - [ ] Replace home router with @solidjs/router
 
+## Problems
+
+Hit problem with contexts:
+
+* [Context providers inside <Routes> don't provide context values to routed content](https://github.com/solidjs/solid-router/issues/273)
+
+When I load a Profile I get a crash on:
+
+    const { location } = useRouter()
+
+I think I'll back off on @solidjs/route and wait for a new release (currently 0.8.2)
 
 ## Links
 
