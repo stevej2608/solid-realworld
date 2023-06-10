@@ -33,16 +33,16 @@ export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setStat
     pullUser: () => setLoggedIn(true),
 
     async login(email: string, password: string) {
-      const { user, errors } = await agent.users.login(email, password)
-      if (errors) throw errors
-      actions.setToken(user.token)
+      const { data, error } = await agent.users.login(email, password)
+      if (error) throw error
+      actions.setToken(data.user.token)
       setLoggedIn(true)
     },
 
     async register(username: string, email: string, password: string) {
-      const { user, errors } = await agent.Auth.register(username, email, password)
-      if (errors) throw errors
-      actions.setToken(user.token)
+      const { data, error } = await agent.users.createUser(username, email, password)
+      if (error) throw error
+      actions.setToken(data.user.token)
       setLoggedIn(true)
     },
 
@@ -54,9 +54,9 @@ export function createAuth(agent: Api<unknown>, actions: IAuthorActions, setStat
     },
 
     async updateUser(newUser: INewUser) {
-      const { user, errors } = await agent.Auth.save(newUser)
-      if (errors) throw errors
-      mutate(user)
+      const { data, error } = await agent.user.updateCurrentUser(newUser)
+      if (error) throw errors
+      mutate(data.user)
     }
   })
 

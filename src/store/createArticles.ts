@@ -1,8 +1,6 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { Api, IArticle, INewArticle, IArticleResponse } from '../api/Api'
-
-
+import { IApi, IArticle, INewArticle, IArticleResponse } from '../api/Api'
 import { IStoreState, IArticleMap } from './storeState'
 
 const LIMIT = 10
@@ -27,30 +25,13 @@ export interface IArticleActions {
  * server agent
  */
 
-export function createArticles(
-  agent: Api<unknown>,
-  actions: IArticleActions,
-  state: IStoreState,
-  setState: SetStoreFunction<IStoreState>
-): Resource<IArticle[]> {
+export function createArticles(agent: IApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
   interface IPredicate {
     myFeed?: string
     favoritedBy?: string
     tag?: string
     author?: string
   }
-
-  function isEmpty(obj: object) {
-    return Object.keys(obj).length === 0;
-  }
-
-  // function $req(predicate: IPredicate): Promise<IMultipleArticlesResponse> {
-  //   if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
-  //     if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
-  //     if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
-  //     if (predicate.author) return agent.Articles.byAuthor(predicate.author, state.page, LIMIT)
-  //     return agent.Articles.all(state.page, LIMIT, predicate)
-  // }
 
   function $req(predicate: IPredicate): IArticleResponse {
     const args = { offset: state.page, limit: LIMIT }
@@ -124,7 +105,7 @@ export function createArticles(
       if (article && !article.favorited) {
         addFavorite(slug)
         try {
-          await agent.Articles.favorite(slug)
+          await agent.articles.createArticleFavorite(slug)
         } catch (err) {
           removeFavorite(slug)
           throw err
@@ -137,7 +118,7 @@ export function createArticles(
       if (article && article.favorited) {
         removeFavorite(slug)
         try {
-          await agent.Articles.unfavorite(slug)
+          await agent.articles.deleteArticleFavorite(slug)
         } catch (err) {
           addFavorite(slug)
           throw err
@@ -146,13 +127,13 @@ export function createArticles(
     },
 
     async createArticle(newArticle: INewArticle): Promise<IArticle> {
-      const article = await agent.Articles.create(newArticle)
+      const article = await agent.articles.createArticle(newArticle)
       setState('articles', { [article.slug]: article })
       return article
     },
 
     async updateArticle(data: IArticle): Promise<IArticle> {
-      const article = await agent.Articles.update(data)
+      const article = await agent.articles.updateArticle(data)
       setState('articles', { [article.slug]: article })
       return article
     },
@@ -161,7 +142,7 @@ export function createArticles(
       const article = state.articles[slug]
       setState('articles', { [slug]: undefined })
       try {
-        await agent.Articles.del(slug)
+        await agent.articles.deleteArticle(slug)
       } catch (err) {
         setState('articles', { [slug]: article })
         throw err

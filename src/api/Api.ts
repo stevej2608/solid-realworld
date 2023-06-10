@@ -733,5 +733,5 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   }
 }
 
-
+export type IApi = Api<unknown>
 export type IArticleResponse = Promise<HttpResponse<IMultipleArticlesResponse, void | IGenericErrorModel>>

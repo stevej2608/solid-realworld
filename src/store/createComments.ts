@@ -1,6 +1,6 @@
 import { createResource, createSignal, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { Api, IComment } from '../api/Api'
+import { IApi, IComment } from '../api/Api'
 import { IStoreState } from './storeState'
 
 export interface ICommentsActions {
@@ -21,19 +21,14 @@ export interface ICommentsActions {
  * @returns
  */
 
-export function createComments(
-  agent: Api<unknown>,
-  actions: ICommentsActions,
-  state: IStoreState,
-  setState: SetStoreFunction<IStoreState>
-): Resource<IComment[]> {
+export function createComments(agent: IApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
   const [articleSlug, setArticleSlug] = createSignal<string>()
 
   const getArticleComments = async (): IComment[] => {
     const slug = articleSlug()
     console.log('getArticleComments articleSlug = %s ...', slug ? slug.slice(0, 15) : 'undefined')
-    const response = await agent.articles.getArticleComments(slug)
-    return response.data.comments
+    const { data, error } = await agent.articles.getArticleComments(slug)
+    return data.comments
   }
 
   const [comments, { mutate, refetch }] = createResource(articleSlug, getArticleComments, { initialValue: [] })
@@ -49,13 +44,13 @@ export function createComments(
     },
 
     async createComment(comment: string) {
-      await agent.Comments.create(state.articleSlug, comment)
+      await agent.articles.createArticleComment(state.articleSlug, comment)
     },
 
     async deleteComment(id: string) {
       mutate(comments().filter(c => c.id !== id))
       try {
-        await agent.Comments.delete(state.articleSlug, id)
+        await agent.articles.deleteArticleComment(state.articleSlug, id)
       } catch (err) {
         actions.loadComments(state.articleSlug)
         throw err
