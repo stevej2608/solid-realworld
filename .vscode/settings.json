@@ -11,6 +11,7 @@
     "Kanban",
     "octicon",
     "solidjs",
+    "vars",
     "Windster"
   ],
   "headwind.removeDuplicates": true

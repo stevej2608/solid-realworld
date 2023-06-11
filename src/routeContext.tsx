@@ -45,6 +45,10 @@ export function createRouteHandler(init: string): IRouteContext {
   const [read, triggerParams] = createSignal()
   const [, start] = useTransition()
 
+  // Remove '#/' from location.hash
+  //
+  // #/?tab=all => ?tab=all
+
   const locationHandler = () => {
     const promise = start(() => {
       const location = window.location.hash.slice(2)

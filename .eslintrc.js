@@ -12,6 +12,7 @@ module.exports = {
     sourceType: 'module',
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
+
   },
   env: {
     es6: true,
@@ -20,11 +21,11 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier', 'unused-imports'],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
     "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unsafe-argument": 1
   },
-  ignorePatterns: ['node_modules']
+  ignorePatterns: ['node_modules', '.eslintrc.js']
 }

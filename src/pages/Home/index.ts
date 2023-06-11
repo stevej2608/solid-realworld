@@ -10,22 +10,31 @@ export default function () {
   const { token, appName } = state
   const { location } = useRouter()
 
-  // https://www.solidjs.com/docs/latest/api#creatememo
+  // The feedTab, this is driven by the page URL. If
+  // none is specified we default to the personal ('feed') if
+  // a user is signed in or the global feed ('all') if
+  // operating anonymously
 
-  const tab = createMemo(() => {
+  const feedTab = createMemo<string>(() => {
+    let feed = token ? 'feed' : 'all'
     const search = location().split('?')[1]
-    console.log('search %s', search)
-    if (!search) return token ? 'feed' : 'all'
-    const query = new URLSearchParams(search)
-    return query.get('tab')
+    if (search) {
+      const query = new URLSearchParams(search)
+      feed = query.get('tab')
+    }
+    console.log('feedTab changed to [%s]', feed)
+    return feed
   })
 
-  console.log('tab %s', tab())
+  console.log('tab %s', feedTab())
 
   const [, start] = useTransition()
 
+  // Convert the selected feed tab into a predicate that
+  // is used to load the correct articles feed
+
   const getPredicate = (): IPredicate => {
-    switch (tab()) {
+    switch (feedTab()) {
       case 'feed':
         return { myFeed: true }
       case 'all':
@@ -33,9 +42,11 @@ export default function () {
       case undefined:
         return undefined
       default:
-        return { tag: tab() }
+        return { tag: feedTab() }
     }
   }
+
+  // Linked to paginator in ArticleList.tsx
 
   const handleSetPage = (page: number) => {
     const promise = start(() => {
@@ -46,5 +57,5 @@ export default function () {
 
   createComputed(() => loadArticles(getPredicate()))
 
-  return Home({ handleSetPage, appName, token, tab, state })
+  return Home({ handleSetPage, appName, tab: feedTab, state })
 }

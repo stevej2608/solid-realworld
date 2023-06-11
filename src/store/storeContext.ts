@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'solid-js'
+import { createContext, useContext, Resource } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 import { IArticle, IComment, IProfile, IUser } from '../api/RealWorldApi'
@@ -25,11 +25,11 @@ export function createApplicationStore(): IStoreContext {
   // Resource accessors - see solidjs createResource()
   // https://www.solidjs.com/docs/latest/api#createresource
 
-  let articlesAccessor: () => IArticle[] = undefined
-  let commentsAccessor: () => IComment[] = undefined
-  let tagsAccessor: () => string[] = undefined
-  let profileAccessor: () => IProfile = undefined
-  let currentUserAccessor: () => IUser = undefined
+  let articlesAccessor: () => Resource<IArticle[]> = undefined
+  let commentsAccessor: () => Resource<IComment[]> = undefined
+  let tagsAccessor: () => Resource<string[]> = undefined
+  let profileAccessor: () => Resource<IProfile> = undefined
+  let currentUserAccessor: () => Resource<IUser> = undefined
 
   const [state, setState] = createStore<IStoreState>({
     get articles(): IArticle[] {

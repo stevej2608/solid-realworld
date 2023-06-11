@@ -4,7 +4,6 @@ import { IStoreState } from '../../store/storeState'
 
 interface IHomeProps {
   appName: string
-  token: string
   handleSetPage: (page: number) => void
   tab: string
   state: IStoreState
@@ -18,6 +17,7 @@ interface IHomeProps {
  */
 
 export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
+  console.log('************** page=[Home] ******************')
   return (
     <div class="home-page">
       <div class="banner">
@@ -36,13 +36,13 @@ export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
               <ul class="nav nav-pills outline-active">
                 {/* Users feed - only if a user is logged in */}
 
-                {token && (
+                <Show when={state.token}>
                   <li class="nav-item">
                     <NavLink class="nav-link" href="?tab=feed" active={tab() === 'feed'}>
                       Your Feed
                     </NavLink>
                   </li>
-                )}
+                </Show>
 
                 {/* Global feed - always */}
 
@@ -87,6 +87,7 @@ export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
               </Suspense>
             </div>
           </div>
+
         </div>
       </div>
     </div>
