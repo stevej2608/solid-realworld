@@ -10,7 +10,7 @@ import { createCommonStore, ICommonActions } from './createCommonStore'
 import { createCommentsStore, ICommentsActions } from './createCommentsStore'
 import { createProfileStore, IProfileActions } from './createProfileStore'
 
-import { IStoreState, ICommonActions } from './storeState'
+import { IStoreState, IArticleMap, ICommonActions } from './storeState'
 
 // export interface IStoreContext {
 //   state: IStoreState
@@ -21,11 +21,19 @@ export interface IActions extends IAuthorActions, IArticleActions, ICommentsActi
 
 export type IStoreContext = [state: IStoreState, actions: IActions]
 
+/**
+ * Create the application store. This is made available to
+ * the application
+ *
+ * @returns {IStoreContext} The application store
+ */
+
 export function createApplicationStore(): IStoreContext {
+
   // Resource accessors - see solidjs createResource()
   // https://www.solidjs.com/docs/latest/api#createresource
 
-  let articlesStore: () => Resource<IArticle[]> = undefined
+  let articlesStore: () => Resource<IArticleMap> = undefined
   let commentsStore: () => Resource<IComment[]> = undefined
   let tagsStore: () => Resource<string[]> = undefined
   let profileStore: () => Resource<IProfile> = undefined
@@ -36,7 +44,7 @@ export function createApplicationStore(): IStoreContext {
     // The following getters map each of
     // the sub-stores onto the global store
 
-    get articles(): IArticle[] {
+    get articles(): IArticleMap {
       return articlesStore()
     },
 
@@ -56,20 +64,24 @@ export function createApplicationStore(): IStoreContext {
       return currentUserStore()
     },
 
+    // The initial store state
+
     page: 0,
     totalPagesCount: 0,
     token: localStorage.getItem('jwt'),
     appName: 'conduit'
   })
 
-  // Holder for ALL the store's actions
+  // Container for ALL the store's actions
 
   const actions = {}
 
-  const store: IStoreContext = [state, actions]
+  // Agent used for communication with the server
+
   const agent = new WorldApi(state)
 
-  // Instantiate all the resource accessors
+  // Instantiate all the resource stores. The actions container
+  // is populated by each of the create methods
 
   articlesStore = createArticlesStore(agent, actions, state, setState)
   commentsStore = createCommentsStore(agent, actions, state, setState)
@@ -77,15 +89,28 @@ export function createApplicationStore(): IStoreContext {
   profileStore = createProfileStore(agent, actions, state, setState)
   currentUserStore = createAuthStore(agent, actions, setState)
 
-  return store
+  return [state, actions]
 }
 
 export const StoreContext = createContext<IStoreContext>()
 
 /**
- * Globally accessible application store
+ * Globally accessible application store and associated utility
+ * functions
+ * ```
  *
- * @returns IStoreContext
+ * Example:
+ *
+ *    const [store, { setPage, loadArticles, unfollow, follow }] = useStore()
+ *
+ *    const article = store.articles[slug]
+ *    const comment = store.comments[45]
+ *
+ *    setPage(page.page + 1)
+ *
+ *
+ * ```
+ * @returns IStoreContext - The global application context
  */
 
 export function useStore(): IStoreContext {

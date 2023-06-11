@@ -33,7 +33,7 @@ export interface IArticleActions {
  * server API
  */
 
-export function createArticlesStore(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
+export function createArticlesStore(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticleMap> {
 
   const $req = async (predicate: IPredicate) => {
     const args = { offset: state.page * LIMIT, limit: LIMIT }

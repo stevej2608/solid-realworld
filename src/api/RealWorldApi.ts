@@ -28,13 +28,14 @@ const getHeaders = (state: IStoreState) => {
   return {}
 }
 
-/**
- * Extend the swagger-typescript-api generated API to
- * provide a common access point for the API and the
- * associated API data types
- */
-
 export class WorldApi extends RealWorldApi<unknown> {
+
+  /**
+   * Extend the swagger-typescript-api generated API to
+   * provide a common access point for the API and the
+   * associated API data types
+   */
+
   constructor(state: IStoreState) {
     super({
       baseUrl: API_ROOT,
