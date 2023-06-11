@@ -20,8 +20,14 @@ export default function () {
     const search = location().split('?')[1]
     if (search) {
       const query = new URLSearchParams(search)
-      feed = query.get('tab')
+      const tab = query.get('tab')
+      if (tab) feed = tab
     }
+
+    // Go to start of newly selected feed
+
+    setPage(0)
+
     console.log('feedTab changed to [%s]', feed)
     return feed
   })
