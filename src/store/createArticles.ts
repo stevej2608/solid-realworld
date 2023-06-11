@@ -34,18 +34,15 @@ export interface IArticleActions {
  */
 
 export function createArticles(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
-  // function $req(predicate: IPredicate): Promise<IMultipleArticlesResponse> {
-  //   if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
-  //   if (predicate.favoritedBy) return agent.Articles.favoritedBy(predicate.favoritedBy, state.page, LIMIT)
-  //   if (predicate.tag) return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
-  //   if (predicate.author) return agent.Articles.byAuthor(predicate.author, state.page, LIMIT)
-  //   return agent.Articles.all(state.page, LIMIT, predicate)
-  // }
 
   const $req = async (predicate: IPredicate) => {
-    const args = { offset: state.page, limit: LIMIT }
+    const args = { offset: state.page * LIMIT, limit: LIMIT }
 
     if (predicate.myFeed) {
+      console.log('getArticlesFeed args=%s', JSON.stringify(args))
+
+      // https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints/#feed-articles
+
       return await agent.articles.getArticlesFeed(args)
     }
 
@@ -53,11 +50,13 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
     if (predicate.tag) args.tag = predicate.tag
     if (predicate.author) args.author = predicate.author
 
+    // https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints/#list-articles
+
+    console.log('getArticles args=%s', JSON.stringify(args))
     return await agent.articles.getArticles(args)
   }
 
   const fetchArticles = async (args: [string, IPredicate | string], { value }: IArticleMap): IArticleMap => {
-    console.log('fetchArticles args=%s', JSON.stringify(args))
 
     if (args[0] === 'articles') {
       const { data, error } = await $req(args[1])
@@ -108,7 +107,10 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
   // Add our actions the provided actions container
 
   Object.assign(actions, {
-    setPage: (page: number) => setState({ page }),
+    setPage: (page: number) => {
+      console.log('setPage(%d)', page)
+      setState({ page })
+    },
 
     loadArticles(predicate: IPredicate) {
       setArticleSource(['articles', predicate])
@@ -122,11 +124,10 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
       const article = state.articles[slug]
       if (article && !article.favorited) {
         addFavorite(slug)
-        try {
-          await agent.articles.createArticleFavorite(slug)
-        } catch (err) {
+        const { data, error } = await agent.articles.createArticleFavorite(slug)
+        if (error) {
           removeFavorite(slug)
-          throw err
+          throw error
         }
       }
     },
@@ -135,9 +136,8 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
       const article = state.articles[slug]
       if (article && article.favorited) {
         removeFavorite(slug)
-        try {
-          await agent.articles.deleteArticleFavorite(slug)
-        } catch (err) {
+        const { data, error } = await agent.articles.deleteArticleFavorite(slug)
+        if (error) {
           addFavorite(slug)
           throw err
         }
@@ -146,26 +146,28 @@ export function createArticles(agent: WorldApi, actions: IArticleActions, state:
 
     async createArticle(article: INewArticle): Promise<IArticle> {
       const { data, error } = await agent.articles.createArticle({ article })
+      if (error) throw error
       setState('articles', { [data.article.slug]: data.article })
-      return article
+      return data.article
     },
 
     async updateArticle(article: IArticle): Promise<IArticle> {
       const { data, error } = await agent.articles.updateArticle(article.slug, { article })
+      if (error) throw error
       setState('articles', { [data.article.slug]: data.article })
-      return article
+      return data.article
     },
 
     async deleteArticle(slug: string) {
       const article = state.articles[slug]
       setState('articles', { [slug]: undefined })
-      try {
-        await agent.articles.deleteArticle(slug)
-      } catch (err) {
+      const [data, error] = await agent.articles.deleteArticle(slug)
+      if (error) {
         setState('articles', { [slug]: article })
         throw err
       }
     }
+
   })
 
   return articles
