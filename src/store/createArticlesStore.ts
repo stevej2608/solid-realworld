@@ -30,10 +30,10 @@ export interface IArticleActions {
 /**
  * Create interface to the articles API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
- * server agent
+ * server API
  */
 
-export function createArticles(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
+export function createArticlesStore(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticle[]> {
 
   const $req = async (predicate: IPredicate) => {
     const args = { offset: state.page * LIMIT, limit: LIMIT }

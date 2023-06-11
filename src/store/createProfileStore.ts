@@ -12,7 +12,7 @@ export interface IProfileActions {
 /**
  * Create interface to the profile API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
- * server agent
+ * server API
  *
  * @param agent Used for communication with the sever API
  * @param actions The actions object to be populated
@@ -21,7 +21,7 @@ export interface IProfileActions {
  * @returns
  */
 
-export function createProfile(agent: WorldApi, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
+export function createProfileStore(agent: WorldApi, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
   const getProfile = async (username: string) => {
     const { data, error } = await agent.profiles.getProfileByUsername(username)
     return data.profile

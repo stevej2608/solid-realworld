@@ -14,7 +14,7 @@ export interface IAuthorActions extends ICommonActions {
 /**
  * Create interface to the author API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
- * server agent
+ * server API
  *
  * @param agent Used for communication with the sever API
  * @param actions The actions object to be populated
@@ -23,7 +23,7 @@ export interface IAuthorActions extends ICommonActions {
  * @returns
  */
 
-export function createAuth(agent: WorldApi, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
+export function createAuthStore(agent: WorldApi, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
   const getCurrentUser = async (): IComment[] => {
     const { data, error } = await agent.user.getCurrentUser()
     return data.user

@@ -1,7 +1,7 @@
 import { createComputed, createMemo, useTransition, lazy } from 'solid-js'
 import { useRouter, IRouteContext } from '../../routeContext'
 import { useStore } from '../../store/storeContext'
-import { IPredicate } from '../../store/createArticles'
+import { IPredicate } from '../../store/createArticlesStore'
 
 const Home = lazy(() => import('./Home'))
 

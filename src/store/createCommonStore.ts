@@ -12,7 +12,7 @@ import { IStoreState, ICommonActions } from './storeState'
  * @returns
  */
 
-export function createCommon(agent: WorldApi, actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<string[]> {
+export function createCommonStore(agent: WorldApi, actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<string[]> {
   const getTags = async () => {
     console.log('getTags')
     const tags = await agent.tags.tagsList()

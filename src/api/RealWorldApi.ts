@@ -1,6 +1,6 @@
 import { Api as RealWorldApi } from './Api'
 import { IStoreState } from '../store/storeState'
-import { IAuthorActions } from '../store/createAuth'
+import { IAuthorActions } from '../store/createAuthStore'
 
 import type {
   HttpResponse,

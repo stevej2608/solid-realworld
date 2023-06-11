@@ -12,7 +12,7 @@ export interface ICommentsActions {
 /**
  * Create interface to the comments API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
- * server agent
+ * server API
  *
  * @param agent Used for communication with the sever API
  * @param actions The actions object to be populated
@@ -21,7 +21,7 @@ export interface ICommentsActions {
  * @returns
  */
 
-export function createComments(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
+export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
   const [articleSlug, setArticleSlug] = createSignal<string>()
 
   const getArticleComments = async (): IComment[] => {
