@@ -24,14 +24,14 @@ export interface ICommentsActions {
 export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): InitializedResource<IComment[]> {
   const [articleSlug, setArticleSlug] = createSignal<string>()
 
-  const getArticleComments = async (): IComment[] => {
+  const fetchComments = async (): IComment[] => {
     const slug = articleSlug()
     console.log('getArticleComments articleSlug = %s ...', slug ? slug.slice(0, 15) : 'undefined')
     const { data, error } = await agent.articles.getArticleComments(slug)
     return data.comments
   }
 
-  const [comments, { mutate, refetch }] = createResource<IComment[]>(articleSlug, getArticleComments, { initialValue: [] })
+  const [comments, { mutate, refetch }] = createResource<IComment[]>(articleSlug, fetchComments, { initialValue: [] })
 
   // Add our actions the provided actions container
 

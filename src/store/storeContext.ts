@@ -7,10 +7,11 @@ import { WorldApi } from '../api/RealWorldApi'
 import { createArticlesStore, IArticleActions } from './createArticlesStore'
 import { createAuthStore, IAuthorActions } from './createAuthStore'
 import { createCommonStore, ICommonActions } from './createCommonStore'
+import { createTagStore } from './createTagStore'
 import { createCommentsStore, ICommentsActions } from './createCommentsStore'
 import { createProfileStore, IProfileActions } from './createProfileStore'
 
-import { IStoreState, IArticleMap, ICommonActions } from './storeState'
+import { IStoreState, IArticleMap } from './storeState'
 
 export interface IActions extends IAuthorActions, IArticleActions, ICommentsActions, IProfileActions, ICommonActions {}
 
@@ -25,9 +26,6 @@ export type IStoreContext = [state: IStoreState, actions: IActions]
 
 export function createApplicationStore(): IStoreContext {
 
-  // Resource accessors - see solidjs createResource()
-  // https://www.solidjs.com/docs/latest/api#createresource
-
   let articlesStore: InitializedResource<IArticleMap> = undefined
   let commentsStore: InitializedResource<IComment[]> = undefined
   let tagsStore: InitializedResource<string[]> = undefined
@@ -37,7 +35,7 @@ export function createApplicationStore(): IStoreContext {
   const [state, setState] = createStore<IStoreState>({
 
     // The following getters map each of
-    // the sub-stores onto the global store
+    // the resource stores onto the global store
 
     get articles(): IArticleMap {
       return articlesStore()
@@ -76,14 +74,20 @@ export function createApplicationStore(): IStoreContext {
 
   const agent = new WorldApi(state)
 
-  // Instantiate all the resource stores. The actions container
-  // is populated by each of the create methods in turn
+  // Instantiate all the resource stores. Each of these functions
+  // returns an instance of a solidJS resource state that is updated
+  // by machinery embedded in the function that accesses the associated server API
+  //
+  // The functions also populate the actions container with utility
+  // methods that manage the resource
 
   articlesStore = createArticlesStore(agent, actions, state, setState)
   commentsStore = createCommentsStore(agent, actions, state, setState)
-  tagsStore = createCommonStore(agent, actions, state, setState)
+  tagsStore = createTagStore(agent)
   profileStore = createProfileStore(agent, actions, state, setState)
   currentUserStore = createAuthStore(agent, actions, setState)
+
+  createCommonStore(actions, state, setState)
 
   // Return the fully initialised store
 

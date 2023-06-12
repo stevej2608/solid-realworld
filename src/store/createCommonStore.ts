@@ -1,7 +1,11 @@
 import { createEffect, createResource, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
 import { WorldApi, ITagsResponse } from '../api/RealWorldApi'
-import { IStoreState, ICommonActions } from './storeState'
+import { IStoreState } from './storeState'
+
+export interface ICommonActions {
+  setToken: (token: string | undefined) => void
+}
 
 /**
  *
@@ -12,15 +16,7 @@ import { IStoreState, ICommonActions } from './storeState'
  * @returns
  */
 
-export function createCommonStore(agent: WorldApi, actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<string[]> {
-
-  const getTags = async (): string[] => {
-    console.log('getTags')
-    const { data, error } = await agent.tags.tagsList()
-    return data.tags.map(t => t.toLowerCase())
-  }
-
-  const [tags] = createResource<string[]>('tags', getTags, { initialValue: [] })
+export function createCommonStore(actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): void {
 
   // Triggered by change in the store.token state. Save the new
   // token state to the local store.
@@ -44,5 +40,4 @@ export function createCommonStore(agent: WorldApi, actions: ICommonActions, stat
     setState({ token })
   }
 
-  return tags
 }

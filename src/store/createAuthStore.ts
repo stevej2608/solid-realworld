@@ -1,9 +1,10 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
 import { WorldApi, INewUser, IUser, IUserResponse } from '../api/RealWorldApi'
-import { IStoreState, ICommonActions } from './storeState'
+import { ICommonActions } from './createCommonStore'
+import { IStoreState } from './storeState'
 
-export interface IAuthorActions extends ICommonActions {
+export interface IAuthorActions {
 
   /**
    * Update store.currentUser state from the server
@@ -33,19 +34,19 @@ export interface IAuthorActions extends ICommonActions {
  * @returns
  */
 
-export function createAuthStore(agent: WorldApi, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
+export function createAuthStore(agent: WorldApi, actions: IAuthorActions & ICommonActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
 
   /**
    * Get the current user details from the server
    */
 
-  const getCurrentUser = async (): IUser => {
+  const fetchCurrentUser = async (): IUser => {
     const { data, error } = await agent.user.getCurrentUser()
     return data.user
   }
 
   const [loggedIn, setLoggedIn] = createSignal(false)
-  const [currentUser, { mutate }] = createResource<IUser>(loggedIn, getCurrentUser)
+  const [currentUser, { mutate }] = createResource<IUser>(loggedIn, fetchCurrentUser)
 
   // Add our actions the provided actions container
 
@@ -79,6 +80,7 @@ export function createAuthStore(agent: WorldApi, actions: IAuthorActions, setSta
       if (error) throw errors
       mutate(data.user)
     }
+
   })
 
   return currentUser

@@ -64,7 +64,3 @@ export interface IStoreState {
 
   appName: string
 }
-
-export interface ICommonActions {
-  setToken: (token: string | undefined) => void
-}
