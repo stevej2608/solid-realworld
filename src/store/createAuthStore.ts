@@ -4,10 +4,20 @@ import { WorldApi, INewUser, IUser, IUserResponse } from '../api/RealWorldApi'
 import { IStoreState, ICommonActions } from './storeState'
 
 export interface IAuthorActions extends ICommonActions {
+
+  /**
+   * Update store.currentUser state from the server
+   * @returns
+   */
+
   pullUser: () => true
+
   login(email: string, password: string): Promise<void>
+
   register(username: string, email: string, password: string): Promise<void>
+
   logout(): void
+
   updateUser(newUser: IUser): Promise<void>
 }
 
@@ -24,6 +34,11 @@ export interface IAuthorActions extends ICommonActions {
  */
 
 export function createAuthStore(agent: WorldApi, actions: IAuthorActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
+
+  /**
+   * Get the current user details from the server
+   */
+
   const getCurrentUser = async (): IComment[] => {
     const { data, error } = await agent.user.getCurrentUser()
     return data.user
@@ -35,6 +50,7 @@ export function createAuthStore(agent: WorldApi, actions: IAuthorActions, setSta
   // Add our actions the provided actions container
 
   Object.assign(actions, {
+
     pullUser: () => setLoggedIn(true),
 
     async login(email: string, password: string) {

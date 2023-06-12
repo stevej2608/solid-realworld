@@ -13,13 +13,14 @@ import { IStoreState, ICommonActions } from './storeState'
  */
 
 export function createCommonStore(agent: WorldApi, actions: ICommonActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<string[]> {
-  const getTags = async () => {
+
+  const getTags = async (): string[] => {
     console.log('getTags')
-    const tags = await agent.tags.tagsList()
-    return tags.data.tags.map(t => t.toLowerCase())
+    const { data, error } = await agent.tags.tagsList()
+    return data.tags.map(t => t.toLowerCase())
   }
 
-  const [tags] = createResource('tags', getTags, { initialValue: [] })
+  const [tags] = createResource<string[]>('tags', getTags, { initialValue: [] })
 
   // Triggered by change in the store.token state. Save the new
   // token state to the local store.

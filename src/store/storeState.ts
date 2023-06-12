@@ -41,7 +41,7 @@ export interface IStoreState {
   readonly profile: IProfile
 
   /**
-   * The page currently on display
+   * The article summary page currently on display
    */
 
   page: number

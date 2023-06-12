@@ -1,4 +1,4 @@
-import { createContext, useContext, Resource } from 'solid-js'
+import { createContext, useContext, Resource, InitializedResource } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 import { IArticle, IComment, IProfile, IUser } from '../api/RealWorldApi'
@@ -11,11 +11,6 @@ import { createCommentsStore, ICommentsActions } from './createCommentsStore'
 import { createProfileStore, IProfileActions } from './createProfileStore'
 
 import { IStoreState, IArticleMap, ICommonActions } from './storeState'
-
-// export interface IStoreContext {
-//   state: IStoreState
-//   actions: IAuthorActions & IArticleActions & ICommonActions & ICommentsActions & IProfileActions
-// }
 
 export interface IActions extends IAuthorActions, IArticleActions, ICommentsActions, IProfileActions, ICommonActions {}
 
@@ -33,10 +28,10 @@ export function createApplicationStore(): IStoreContext {
   // Resource accessors - see solidjs createResource()
   // https://www.solidjs.com/docs/latest/api#createresource
 
-  let articlesStore: () => Resource<IArticleMap> = undefined
-  let commentsStore: () => Resource<IComment[]> = undefined
+  let articlesStore: () => InitializedResource<IArticleMap> = undefined
+  let commentsStore: () => InitializedResource<IComment[]> = undefined
   let tagsStore: () => Resource<string[]> = undefined
-  let profileStore: () => Resource<IProfile> = undefined
+  let profileStore: () => InitializedResource<IProfile> = undefined
   let currentUserStore: () => Resource<IUser> = undefined
 
   const [state, setState] = createStore<IStoreState>({
@@ -64,9 +59,10 @@ export function createApplicationStore(): IStoreContext {
       return currentUserStore()
     },
 
-    // The initial store state
+    // Additional bits & bobs
 
     page: 0,
+    articleSlug: undefined,
     totalPagesCount: 0,
     token: localStorage.getItem('jwt'),
     appName: 'conduit'
@@ -81,13 +77,15 @@ export function createApplicationStore(): IStoreContext {
   const agent = new WorldApi(state)
 
   // Instantiate all the resource stores. The actions container
-  // is populated by each of the create methods
+  // is populated by each of the create methods in turn
 
   articlesStore = createArticlesStore(agent, actions, state, setState)
   commentsStore = createCommentsStore(agent, actions, state, setState)
   tagsStore = createCommonStore(agent, actions, state, setState)
   profileStore = createProfileStore(agent, actions, state, setState)
   currentUserStore = createAuthStore(agent, actions, setState)
+
+  // Return the fully initialised store
 
   return [state, actions]
 }

@@ -21,14 +21,15 @@ export interface IProfileActions {
  * @returns
  */
 
-export function createProfileStore(agent: WorldApi, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IProfile> {
+export function createProfileStore(agent: WorldApi, actions: IProfileActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): InitializedResource<IProfile> {
+
   const getProfile = async (username: string) => {
     const { data, error } = await agent.profiles.getProfileByUsername(username)
     return data.profile
   }
 
-  const [username, setUsername] = createSignal()
-  const [profile] = createResource(username, getProfile)
+  const [username, setUsername] = createSignal<string>()
+  const [profile] = createResource<IProfile>(username, getProfile)
 
   // Add our actions the provided actions container
 

@@ -31,9 +31,15 @@ export interface IArticleActions {
  * Create interface to the articles API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
  * server API
+ *
+ * @param agent
+ * @param actions
+ * @param state
+ * @param setState
+ * @returns InitializedResource<IArticleMap>
  */
 
-export function createArticlesStore(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IArticleMap> {
+export function createArticlesStore(agent: WorldApi, actions: IArticleActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): InitializedResource<IArticleMap> {
 
   const $req = async (predicate: IPredicate) => {
     const args = { offset: state.page * LIMIT, limit: LIMIT }
@@ -93,8 +99,8 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
     return { ...value, [slug]: data.article }
   }
 
-  const [articleSource, setArticleSource] = createSignal()
-  const [articles] = createResource<IArticle[]>(articleSource, fetchArticles, { initialValue: {} })
+  const [articleSource, setArticleSource] = createSignal<IPredicate>()
+  const [articles] = createResource<IArticleMap>(articleSource, fetchArticles, { initialValue: {} })
 
   const addFavorite = (slug: string) => {
     setState('articles', slug, s => ({ favorited: true, favoritesCount: s.favoritesCount + 1 }))

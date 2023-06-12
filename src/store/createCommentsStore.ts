@@ -21,7 +21,7 @@ export interface ICommentsActions {
  * @returns
  */
 
-export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): Resource<IComment[]> {
+export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): InitializedResource<IComment[]> {
   const [articleSlug, setArticleSlug] = createSignal<string>()
 
   const getArticleComments = async (): IComment[] => {
