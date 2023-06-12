@@ -1,4 +1,4 @@
-import { createResource, createSignal, Resource } from 'solid-js'
+import { createResource, createSignal, InitializedResource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
 import { WorldApi, IComment } from '../api/RealWorldApi'
 import { IStoreState } from './storeState'
@@ -18,7 +18,7 @@ export interface ICommentsActions {
  * @param actions The actions object to be populated
  * @param state
  * @param setState
- * @returns
+ * @returns InitializedResource<IComment[]>
  */
 
 export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, state: IStoreState, setState: SetStoreFunction<IStoreState>): InitializedResource<IComment[]> {
@@ -31,11 +31,12 @@ export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, 
     return data.comments
   }
 
-  const [comments, { mutate, refetch }] = createResource(articleSlug, getArticleComments, { initialValue: [] })
+  const [comments, { mutate, refetch }] = createResource<IComment[]>(articleSlug, getArticleComments, { initialValue: [] })
 
   // Add our actions the provided actions container
 
   Object.assign(actions, {
+
     loadComments(articleSlug: string, reload: boolean) {
       if (reload) return refetch()
       console.log('loadComments articleSlug=%s ...', articleSlug.slice(0, 15))

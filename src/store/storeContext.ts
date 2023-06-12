@@ -28,11 +28,11 @@ export function createApplicationStore(): IStoreContext {
   // Resource accessors - see solidjs createResource()
   // https://www.solidjs.com/docs/latest/api#createresource
 
-  let articlesStore: () => InitializedResource<IArticleMap> = undefined
-  let commentsStore: () => InitializedResource<IComment[]> = undefined
-  let tagsStore: () => Resource<string[]> = undefined
-  let profileStore: () => InitializedResource<IProfile> = undefined
-  let currentUserStore: () => Resource<IUser> = undefined
+  let articlesStore: InitializedResource<IArticleMap> = undefined
+  let commentsStore: InitializedResource<IComment[]> = undefined
+  let tagsStore: InitializedResource<string[]> = undefined
+  let profileStore: InitializedResource<IProfile> = undefined
+  let currentUserStore: InitializedResource<IUser> = undefined
 
   const [state, setState] = createStore<IStoreState>({
 

@@ -39,13 +39,13 @@ export function createAuthStore(agent: WorldApi, actions: IAuthorActions, setSta
    * Get the current user details from the server
    */
 
-  const getCurrentUser = async (): IComment[] => {
+  const getCurrentUser = async (): IUser => {
     const { data, error } = await agent.user.getCurrentUser()
     return data.user
   }
 
   const [loggedIn, setLoggedIn] = createSignal(false)
-  const [currentUser, { mutate }] = createResource(loggedIn, getCurrentUser)
+  const [currentUser, { mutate }] = createResource<IUser>(loggedIn, getCurrentUser)
 
   // Add our actions the provided actions container
 

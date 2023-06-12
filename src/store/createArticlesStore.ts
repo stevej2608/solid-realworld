@@ -1,4 +1,4 @@
-import { createResource, createSignal, Resource } from 'solid-js'
+import { createResource, createSignal, InitializedResource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
 import { WorldApi, IArticle, INewArticle, IArticleResponse } from '../api/RealWorldApi'
 import { IStoreState, IArticleMap } from './storeState'
