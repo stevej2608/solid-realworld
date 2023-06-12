@@ -1,21 +1,18 @@
 import { Api as RealWorldApi } from './Api'
 import { IStoreState } from '../store/storeState'
-import { IUserActions } from '../store/createUserStore'
 
 import type {
   HttpResponse,
   IArticle,
-  IArticleResponse,
   IComment,
   IGenericErrorModel,
-  IMultipleArticlesResponse,
   INewArticle,
   INewUser,
   IProfile,
   ITagsResponse,
   IUser,
-  IUserResponse
-} from './Api'
+  IUserResponse,
+} from './Api';
 
 const API_ROOT = 'https://api.realworld.io/api'
 

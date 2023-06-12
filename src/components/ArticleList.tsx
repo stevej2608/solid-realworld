@@ -1,6 +1,4 @@
-import type { JSX } from 'solid-js'
-
-import { useStore, IStoreContext } from '../store/storeContext'
+import { useStore } from '../store/storeContext';
 import { ArticlePreview } from './ArticlePreview'
 import { IArticle } from '../api/RealWorldApi'
 

@@ -1,6 +1,5 @@
-import { JSX } from 'solid-js'
 import { useRouter } from '../../routeContext'
-import { useStore, IStoreContext } from '../../store/storeContext'
+import { useStore } from '../../store/storeContext'
 
 import { NavLink } from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'

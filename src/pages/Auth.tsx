@@ -1,4 +1,3 @@
-import { JSX } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { NavLink } from '../components/NavLink'
 import { ListErrors, IErrors } from '../components/ListErrors'

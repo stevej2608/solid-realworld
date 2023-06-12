@@ -1,5 +1,4 @@
 import { splitProps } from 'solid-js'
-import classnames from 'classnames'
 import { IProfile } from '../api/RealWorldApi'
 
 interface IFollowingButtonProps {

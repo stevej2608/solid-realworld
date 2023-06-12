@@ -1,6 +1,6 @@
 import { createSignal, createResource, batch, Resource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { WorldApi, INewUser, IUser, IUserResponse } from '../api/RealWorldApi'
+import { WorldApi, INewUser, IUser } from '../api/RealWorldApi'
 import { ICommonActions } from './createCommonStore'
 import { IStoreState } from './storeState'
 

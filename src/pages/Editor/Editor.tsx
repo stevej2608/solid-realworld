@@ -1,5 +1,5 @@
-import { createComputed, JSX } from 'solid-js'
-import { createStore, IStoreContext } from 'solid-js/store'
+import { createComputed } from 'solid-js'
+import { createStore } from 'solid-js/store'
 import { useStore } from '../../store/storeContext'
 
 import { ListErrors } from '../../components/ListErrors'

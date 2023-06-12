@@ -1,6 +1,5 @@
-import { createEffect, createResource, Resource } from 'solid-js'
+import { createEffect } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { WorldApi, ITagsResponse } from '../api/RealWorldApi'
 import { IStoreState } from './storeState'
 
 export interface ICommonActions {

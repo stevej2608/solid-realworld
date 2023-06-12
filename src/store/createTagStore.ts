@@ -1,7 +1,5 @@
-import { createEffect, createResource, InitializedResourceReturn } from 'solid-js'
-import { SetStoreFunction } from 'solid-js/store'
-import { WorldApi, ITagsResponse } from '../api/RealWorldApi'
-import { IStoreState, ICommonActions } from './storeState'
+import { createResource, InitializedResourceReturn } from 'solid-js'
+import { WorldApi } from '../api/RealWorldApi'
 
 /**
  * Create interface to the tags API endpoint.

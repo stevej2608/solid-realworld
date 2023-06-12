@@ -1,6 +1,6 @@
 import { createResource, createSignal, InitializedResource } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
-import { WorldApi, IArticle, INewArticle, IArticleResponse } from '../api/RealWorldApi'
+import { WorldApi, IArticle, INewArticle } from '../api/RealWorldApi'
 import { IStoreState, IArticleMap } from './storeState'
 
 const LIMIT = 10

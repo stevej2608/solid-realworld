@@ -1,4 +1,3 @@
-import { JSX } from 'solid-js'
 import { render } from 'solid-js/web'
 import { App } from './App'
 import { RouterContext, createRouteHandler } from './routeContext'

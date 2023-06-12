@@ -1,7 +1,7 @@
-import { createContext, useContext, Resource, InitializedResource } from 'solid-js'
+import { createContext, useContext, InitializedResource } from 'solid-js';
 import { createStore } from 'solid-js/store'
 
-import { IArticle, IComment, IProfile, IUser } from '../api/RealWorldApi'
+import { IComment, IProfile, IUser } from '../api/RealWorldApi';
 import { WorldApi } from '../api/RealWorldApi'
 
 import { createArticlesStore, IArticleActions } from './createArticlesStore'
