@@ -4,7 +4,7 @@ import { WorldApi, INewUser, IUser, IUserResponse } from '../api/RealWorldApi'
 import { ICommonActions } from './createCommonStore'
 import { IStoreState } from './storeState'
 
-export interface IAuthorActions {
+export interface IUserActions {
 
   /**
    * Update store.currentUser state from the server
@@ -23,7 +23,7 @@ export interface IAuthorActions {
 }
 
 /**
- * Create interface to the author API endpoint. We populate the supplied
+ * Create interface to the user API endpoint. We populate the supplied
  * actions object with methods that wrap the low-level
  * server API
  *
@@ -34,7 +34,7 @@ export interface IAuthorActions {
  * @returns
  */
 
-export function createAuthStore(agent: WorldApi, actions: IAuthorActions & ICommonActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
+export function createUserStore(agent: WorldApi, actions: IUserActions & ICommonActions, setState: SetStoreFunction<IStoreState>): Resource<IUser> {
 
   /**
    * Get the current user details from the server

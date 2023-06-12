@@ -5,7 +5,7 @@ import { IArticle, IComment, IProfile, IUser } from '../api/RealWorldApi'
 import { WorldApi } from '../api/RealWorldApi'
 
 import { createArticlesStore, IArticleActions } from './createArticlesStore'
-import { createAuthStore, IAuthorActions } from './createAuthStore'
+import { createUserStore, IUserActions } from './createUserStore'
 import { createCommonStore, ICommonActions } from './createCommonStore'
 import { createTagStore } from './createTagStore'
 import { createCommentsStore, ICommentsActions } from './createCommentsStore'
@@ -13,7 +13,7 @@ import { createProfileStore, IProfileActions } from './createProfileStore'
 
 import { IStoreState, IArticleMap } from './storeState'
 
-export interface IActions extends IAuthorActions, IArticleActions, ICommentsActions, IProfileActions, ICommonActions {}
+export interface IActions extends IUserActions, IArticleActions, ICommentsActions, IProfileActions, ICommonActions {}
 
 export type IStoreContext = [state: IStoreState, actions: IActions]
 
@@ -85,7 +85,7 @@ export function createApplicationStore(): IStoreContext {
   commentsStore = createCommentsStore(agent, actions, state, setState)
   tagsStore = createTagStore(agent)
   profileStore = createProfileStore(agent, actions, state, setState)
-  currentUserStore = createAuthStore(agent, actions, setState)
+  currentUserStore = createUserStore(agent, actions, setState)
 
   createCommonStore(actions, state, setState)
 
