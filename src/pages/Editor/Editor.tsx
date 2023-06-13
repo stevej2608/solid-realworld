@@ -7,6 +7,7 @@ import { IArticle } from '../../api/RealWorldApi'
 
 interface IEditState extends IArticle {
   tagInput: string
+  tagList: string[]
   inProgress: boolean
   errors: string
 }
@@ -18,6 +19,10 @@ interface IEditProps {
 export default ({ slug }: IEditProps) => {
   const [store, { createArticle, updateArticle }] = useStore()
   const [state, setState] = createStore<IEditState>({ tagInput: '', tagList: [] })
+
+  console.log('***** Editor[slug=%s] **********', slug)
+
+  console.log('Article (slug=%s) inStore=%s', slug, (slug in store.articles))
 
   const updateState = field => (ev: InputEvent) => {
     setState(field, ev.target.value)
@@ -49,30 +54,41 @@ export default ({ slug }: IEditProps) => {
     }
   }
 
-  function submitForm(ev: Event) {
+  const submitForm = async (ev: Event) => {
     ev.preventDefault()
-
     setState({ inProgress: true })
 
-    const { inProgress, tagsInput, ...article } = state
-    const promise = slug ? updateArticle(article) : createArticle(article)
+    try {
+      const { inProgress, tagsInput, ...article } = state
 
-    promise
-      .then(article => {
-        location.hash = `/article/${article.slug}`
-      })
-      .catch((errors: string) => {
-        setState({ errors })
-      })
-      .finally(() => {
-        setState({ inProgress: false })
-      })
+      if (slug) {
+        await updateArticle(article)
+      }
+      else {
+        await createArticle(article)
+      }
+
+      location.hash = `/article/${article.slug}`
+    } catch(error) {
+      setState(error)
+    } finally {
+      setState({ inProgress: false })
+    }
+
   }
 
   createComputed(() => {
-    let article: IArticle
-    if (!slug || !(article = store.articles[slug])) return
-    setState(article)
+    console.log('createComputed (slug=%s)', slug)
+    if (slug) {
+      const article = store.articles[slug]
+      if (article) {
+        console.log('editing article (slug=%s)', slug)
+        setState(article)
+      }
+      else {
+        console.log('Article not in store (slug=%s)', slug)
+      }
+    }
   })
 
   return (

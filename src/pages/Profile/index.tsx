@@ -1,15 +1,10 @@
 import { createComputed, lazy } from 'solid-js'
-import { useRouter } from '../../routeContext'
+import { useRouter, IRouteParams } from '../../routeContext'
 import { useStore } from '../../store/storeContext'
 
 const Profile = lazy(() => import('./Profile'))
 
-interface IProps {
-  routeName: string
-  params: string[]
-}
-
-export default function (props: IProps) {
+export default function (props: IRouteParams) {
   const [, { loadProfile, loadArticles }] = useStore()
   const { location } = useRouter()
 
@@ -17,8 +12,17 @@ export default function (props: IProps) {
 
   createComputed(() => props.routeName === 'profile' && loadProfile(userName))
 
-  createComputed(
-    () => props.routeName === 'profile' && (location().includes('/favorites') ? loadArticles({ favoritedBy: userName }) : loadArticles({ author: userName }))
-  )
+  // Determine which article feed to display. The user/authors feed ('My Articles' tab) or
+  // the user/favorites ('Favorited Articles' tab)
+
+  createComputed(() => {
+    if (props.routeName === 'profile' && (location().includes('/favorites'))) {
+      loadArticles({ favoritedBy: userName })
+    }
+    else {
+      loadArticles({ author: userName })
+    }
+  })
+
   return <Profile username={props.params[0]} />
 }

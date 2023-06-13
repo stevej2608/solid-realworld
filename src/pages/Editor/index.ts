@@ -1,15 +1,18 @@
 import { lazy } from 'solid-js'
 import { useStore } from '../../store/storeContext'
+import { IRouteParams } from '../../routeContext'
 
 const Editor = lazy(() => import('./Editor'))
 
-interface IProps {
-  params: string[]
-}
+export default function (props: IRouteParams) {
+  const [store, { loadArticle }] = useStore()
 
-export default function (props: IProps) {
-  const [, { loadArticle }] = useStore()
   const slug = props.params[0]
+
+  console.log('***** Editor[slug=%s] **********', slug)
+
   slug && loadArticle(slug)
+
   return Editor({ slug })
+
 }

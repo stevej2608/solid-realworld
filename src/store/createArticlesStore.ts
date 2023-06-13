@@ -62,10 +62,23 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
     return await agent.articles.getArticles(args)
   }
 
+  /**
+   * Getter for the article store. Fetch the requested article(s) from the server. When
+   * fetching single articles we first check to see if the the article is already in the
+   * store. If so we just return the existing store values
+   *
+   * @param args [string, IPredicate | string] Get articles based on the slug or the predicate
+   * @param value IArticleMap The exiting store values
+   *
+   * @returns IArticleMap The updated store values or the existing store if nothing is fetched
+   */
+
   const fetchArticles = async (args: [string, IPredicate | string], { value }: IArticleMap): IArticleMap => {
 
     if (args[0] === 'articles') {
       const { data, error } = await $req(args[1])
+
+      console.log('Done')
 
       if (error) throw error
 
@@ -88,7 +101,7 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
 
     const slug: string = args[1]
     if (slug in state.articles) {
-      return state.articles[slug]
+      return value
     }
 
     // Get the article from the server
@@ -99,7 +112,10 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
     return { ...value, [slug]: data.article }
   }
 
-  const [articleSource, setArticleSource] = createSignal<IPredicate>()
+  // Calls to setArticleSource() trigger the createResource getter which
+  // in-turn calls fetchArticles
+
+  const [articleSource, setArticleSource] = createSignal<[string, IPredicate | string]>()
   const [articles] = createResource<IArticleMap>(articleSource, fetchArticles, { initialValue: {} })
 
   const addFavorite = (slug: string) => {
@@ -113,6 +129,7 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
   // Add our actions the provided actions container
 
   Object.assign(actions, {
+
     setPage: (page: number) => {
       console.log('setPage(%d)', page)
       setState({ page })
@@ -157,9 +174,8 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
       return data.article
     },
 
-    async updateArticle(article: IArticle): Promise<IArticle> {
-      const { data, error } = await agent.articles.updateArticle(article.slug, { article })
-      if (error) throw error
+    async updateArticle(article: IArticle): IArticle {
+      const { data } = await agent.articles.updateArticle(article.slug, { article })
       setState('articles', { [data.article.slug]: data.article })
       return data.article
     },
@@ -167,8 +183,9 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
     async deleteArticle(slug: string) {
       const article = state.articles[slug]
       setState('articles', { [slug]: undefined })
-      const [data, error] = await agent.articles.deleteArticle(slug)
-      if (error) {
+      try {
+        await agent.articles.deleteArticle(slug)
+      } catch (err) {
         setState('articles', { [slug]: article })
         throw err
       }

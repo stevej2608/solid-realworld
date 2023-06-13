@@ -17,7 +17,9 @@ interface IHomeProps {
  */
 
 export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
+
   console.log('************** page=[Home] ******************')
+
   return (
     <div class="home-page">
       <div class="banner">

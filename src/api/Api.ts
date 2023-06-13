@@ -196,7 +196,10 @@ export class HttpClient<SecurityDataType = unknown> {
   private securityData: SecurityDataType | null = null
   private securityWorker?: ApiConfig<SecurityDataType>['securityWorker']
   private abortControllers = new Map<CancelToken, AbortController>()
-  private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams)
+  private customFetch = (...fetchParams: Parameters<typeof fetch>) => {
+    console.log('Fetch url=%s', fetchParams[0])
+    return fetch(...fetchParams)
+  }
 
   private baseApiParams: RequestParams = {
     credentials: 'same-origin',

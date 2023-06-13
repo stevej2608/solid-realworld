@@ -1,9 +1,9 @@
 import { createContext, useContext, Accessor } from 'solid-js'
 import { createSignal, onCleanup, useTransition } from 'solid-js'
 
-interface IRouteParams {
-  params: string[]
+export interface IRouteParams {
   routeName: string
+  params: string[]
 }
 
 /**
@@ -11,7 +11,10 @@ interface IRouteParams {
  */
 export interface IRouteContext {
   /**
-   * location accessor
+   * location accessor. A solidJS reactive element, driven by
+   * a window.hashchange event
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event
    */
 
   location: Accessor<string>
@@ -49,9 +52,14 @@ export function createRouteHandler(init: string): IRouteContext {
   //
   // #/?tab=all => ?tab=all
 
+
+  // const locationHandler = () => start(() => setLocation(window.location.hash.slice(2)))
+
+
   const locationHandler = () => {
-    const promise = start(() => {
+    return start(() => {
       const location = window.location.hash.slice(2)
+      console.log('>>>>>>>>>>>>>>>>>> setLocation(%s)', location)
       setLocation(location)
     })
   }
