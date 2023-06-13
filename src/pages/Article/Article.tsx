@@ -19,7 +19,10 @@ interface IArticleMetaProps {
 }
 
 /**
- * Article meta - author image & name, date, follow, favorite
+ * Article meta - title, author image & name, and:
+ *
+ *    edit & delete buttons - for users articles
+ *    follow, favorite buttons - for other articles
  *
  * @param props
  * @returns
@@ -67,8 +70,13 @@ export default ({ slug }: IArticleProps) => {
   const [store, { deleteArticle, unmakeFavorite, makeFavorite, loadProfile, unfollow, follow }] = useStore()
 
   const article = store.articles[slug]
+
   const canModify = () => store.currentUser && store.currentUser.username === article.author.username
-  const handleDeleteArticle = () => deleteArticle(slug).then(() => (location.hash = '/'))
+
+  const handleDeleteArticle = async () => {
+    await deleteArticle(slug)
+    location.hash = '/'
+  }
 
   createComputed(() => loadProfile(article.author.username))
 
