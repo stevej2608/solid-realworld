@@ -9,6 +9,8 @@ import Article from './pages/Article'
 import Profile from './pages/Profile'
 import Editor from './pages/Editor'
 
+import { logger } from './utils/logger'
+
 const Settings = lazy(() => import('./pages/Settings'))
 const Auth = lazy(() => import('./pages/Auth'))
 
@@ -16,6 +18,8 @@ export const App = () => {
   const [store, { pullUser }] = useStore()
   const [appLoaded, setAppLoaded] = createSignal(false)
   const { match, getParams } = useRouter()
+
+  logger.info('Starting...')
 
   if (!store.token) setAppLoaded(true)
   else {
