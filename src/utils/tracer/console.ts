@@ -10,6 +10,8 @@ import * as utils from './utils'
 import { settings } from './settings'
 import * as path from './path'
 
+import StackTracey from 'stacktracey'
+
 interface Config {
   rootDir: string
   format: string | string[]
@@ -87,19 +89,22 @@ function logMain(config: Config, level: number, title: string, format: string, f
     // get call stack, and analyze it
     // get all file,method and line number
     const stacklist = new Error().stack.split('\n').slice(3)
-    const s = stacklist[config.stackIndex] || stacklist[0],
-      sp = stackReg.exec(s) || stackReg2.exec(s)
-    if (sp && sp.length === 5) {
-      data.method = sp[1]
-      data.path = sp[2]
-      data.line = sp[3]
-      data.pos = sp[4]
-      data.folder = ''
-      // data.folder = path.dirname(
-      //   config.rootDir && path.isAbsolute(config.rootDir) ? data.path.replace(new RegExp('^' + config.rootDir + path.sep + '?'), '') : path.resolve(data.path)
-      // )
-      data.file = path.basename(data.path)
+    const s = stacklist[config.stackIndex] || stacklist[0]
+    const sp = stackReg.exec(s) || stackReg2.exec(s)
 
+    if (sp && sp.length === 5) {
+
+      // https://www.npmjs.com/package/stacktracey?activeTab=readme
+
+      const stackTracey = new StackTracey().withSources().items[2]
+      // const st = stackTracey.withSources()[2]
+
+      data.method = stackTracey.callee
+      data.path = sp[2]
+      data.line = stackTracey.line
+      data.pos = stackTracey.column
+      data.folder = stackTracey.fileShort
+      data.file = stackTracey.fileName
       data.stack = stacklist.join('\n')
     }
   }

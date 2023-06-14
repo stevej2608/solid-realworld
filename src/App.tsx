@@ -14,12 +14,14 @@ import { logger } from './utils/logger'
 const Settings = lazy(() => import('./pages/Settings'))
 const Auth = lazy(() => import('./pages/Auth'))
 
+// console.log = function() {}
+
 export const App = () => {
   const [store, { pullUser }] = useStore()
   const [appLoaded, setAppLoaded] = createSignal(false)
   const { match, getParams } = useRouter()
 
-  logger.info('Starting...')
+  logger.info('Starting %d ...', 99)
 
   if (!store.token) setAppLoaded(true)
   else {
