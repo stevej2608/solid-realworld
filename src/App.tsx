@@ -21,7 +21,7 @@ export const App = () => {
   const [appLoaded, setAppLoaded] = createSignal(false)
   const { match, getParams } = useRouter()
 
-  logger.info('Starting %d ...', 99)
+  logger.info('Starting %s', 99)
 
   if (!store.token) setAppLoaded(true)
   else {

@@ -4,6 +4,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// https://github.com/baryon/tracer/blob/master/lib/console.js
+
 import dateFormat  from 'dateformat'
 import * as tim from './tim'
 import * as utils from './utils'
@@ -104,13 +106,14 @@ function logMain(config: Config, level: number, title: string, format: string, f
       data.line = stackTracey.line
       data.pos = stackTracey.column
       data.folder = stackTracey.fileShort
-      data.file = stackTracey.fileName
+      data.file = './' + stackTracey.fileShort
       data.stack = stacklist.join('\n')
     }
   }
 
   config.preprocess(data)
-  const msg = utils.format.apply(config, data.args)
+  // const msg = utils.format(config, data.args)
+  const msg = utils.format(data.args[0], data.args)
   data.message = msg
 
   // call micro-template to ouput

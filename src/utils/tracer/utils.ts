@@ -20,7 +20,7 @@ const formatRegExp = /%[sdjt]/g
 
 import * as util from 'util'
 
-export function format(f: string, ...args) {
+export function format(f: string, args) {
   const inspectOpt = this.inspectOpt
   let i = 0
   if (typeof f !== 'string') {
