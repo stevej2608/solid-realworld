@@ -3,13 +3,15 @@ import { Show } from 'solid-js'
 import { useStore } from '../../store/storeContext'
 import { IRouteParams } from '../../routeContext'
 
+import { logger } from '../../utils/logger'
+
 const Article = lazy(() => import('./Article'))
 
 export default function (props: IRouteParams) {
   const [store, { loadArticle, loadComments }] = useStore()
   const slug = props.params[0]
 
-  console.log('************** page=Article] ******************')
+  logger.info('************** page=Article] ******************')
 
   if (!(slug in store.articles)) {
     loadArticle(slug)

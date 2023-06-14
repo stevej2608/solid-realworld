@@ -3,6 +3,8 @@ import { SetStoreFunction } from 'solid-js/store'
 import { WorldApi, IArticle, INewArticle } from '../api/RealWorldApi'
 import { IStoreState, IArticleMap } from './storeState'
 
+import { logger } from '../utils/logger'
+
 const LIMIT = 10
 
 export type ITag = 'feed' | 'all'
@@ -45,7 +47,7 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
     const args = { offset: state.page * LIMIT, limit: LIMIT }
 
     if (predicate.myFeed) {
-      console.log('getArticlesFeed args=%s', JSON.stringify(args))
+      logger.info('getArticlesFeed args=%s', JSON.stringify(args))
 
       // https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints/#feed-articles
 
@@ -58,7 +60,7 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
 
     // https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints/#list-articles
 
-    console.log('getArticles args=%s', JSON.stringify(args))
+    logger.info('getArticles args=%s', JSON.stringify(args))
     return await agent.articles.getArticles(args)
   }
 
@@ -78,7 +80,7 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
     if (args[0] === 'articles') {
       const { data, error } = await $req(args[1])
 
-      console.log('Done')
+      logger.info('Done')
 
       if (error) throw error
 
@@ -131,7 +133,7 @@ export function createArticlesStore(agent: WorldApi, actions: IArticleActions, s
   Object.assign(actions, {
 
     setPage: (page: number) => {
-      console.log('setPage(%d)', page)
+      logger.info('setPage(%d)', page)
       setState({ page })
     },
 

@@ -14,12 +14,20 @@ import * as path from './path'
 
 import StackTracey from 'stacktracey'
 
-interface Config {
+export interface ITransport {
+  title: 'warn' | 'error' | 'info'
+  level: number
+  output: any[]
+}
+
+export interface Config {
   rootDir: string
   format: string | string[]
   dateformat: string
   preprocess?: (...args: any[]) => any
-  transport: (...args: any[]) => any
+
+  transport: (data: ITransport) => any
+
   filters: ((...args: any[]) => any)[]
   level: string | number
   methods: string[]
@@ -33,35 +41,6 @@ interface Config {
 
 function noop() {
   NOACTION
-}
-
-function logMainX(config: Config, level: number, title: string, format: string, filters: any[], needstack: boolean, args: any[]) {
-  let output = config.preprocess.apply(this, args)
-
-  if (output == null) {
-    if (needstack && config.stackIndex > 0) args = getArgsAndStack(config.stackIndex, args)
-
-    output = utils.format(format, {
-      level: config.methods[level],
-      title,
-      timestamp: config.dateformat ? dateFormat(new Date(), config.dateformat) : new Date(),
-      ...args[0]
-    })
-  }
-
-  if (filters && filters.length > 0) {
-    let i = 0
-    const next = function (output) {
-      if (i === filters.length) {
-        transport(output)
-        return
-      }
-      filters[i++](output, next)
-    }
-    next(output)
-  } else {
-    config.transport(output)
-  }
 }
 
 // Stack trace format :
@@ -153,7 +132,7 @@ function transport(output: string) {
   }
 }
 
-export default function (userConfig?: Config[], ...args) {
+export const tracerSetup = (userConfig?: Config | string, ...args): Config => {
   // default config
   const defaultConfig: Config = {
     rootDir: '',
@@ -186,9 +165,9 @@ export default function (userConfig?: Config[], ...args) {
 
   const config: Config[] = args
 
-  if (typeof userConfig[0] === 'string') {
-    userConfig = [require(userConfig[0])]
-  }
+  // if (typeof userConfig[0] === 'string') {
+  //   userConfig = [require(userConfig[0])]
+  // }
 
   // union user's config and default
   const _config = { ...defaultConfig, ...userConfig }

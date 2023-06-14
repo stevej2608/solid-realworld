@@ -2,6 +2,8 @@ import { NavLink } from '../../components/NavLink'
 import { ArticleList } from '../../components/ArticleList'
 import { IStoreState } from '../../store/storeState'
 
+import { logger } from '../../utils/logger'
+
 interface IHomeProps {
   appName: string
   handleSetPage: (page: number) => void
@@ -18,7 +20,7 @@ interface IHomeProps {
 
 export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
 
-  console.log('************** page=[Home] ******************')
+  logger.info('************** page=[Home] ******************')
 
   return (
     <div class="home-page">

@@ -5,6 +5,8 @@ import { useStore } from '../../store/storeContext'
 import { ListErrors } from '../../components/ListErrors'
 import { IArticle } from '../../api/RealWorldApi'
 
+import { logger } from '../../utils/logger'
+
 interface IEditState extends IArticle {
   tagInput: string
   tagList: string[]
@@ -20,9 +22,9 @@ export default ({ slug }: IEditProps) => {
   const [store, { createArticle, updateArticle }] = useStore()
   const [state, setState] = createStore<IEditState>({ tagInput: '', tagList: [] })
 
-  console.log('***** Editor[slug=%s] **********', slug)
+  logger.info('***** Editor[slug=%s] **********', slug)
 
-  console.log('Article (slug=%s) inStore=%s', slug, (slug in store.articles))
+  logger.info('Article (slug=%s) inStore=%s', slug, (slug in store.articles))
 
   const updateState = field => (ev: InputEvent) => {
     setState(field, ev.target.value)
@@ -78,15 +80,15 @@ export default ({ slug }: IEditProps) => {
   }
 
   createComputed(() => {
-    console.log('createComputed (slug=%s)', slug)
+    logger.info('createComputed (slug=%s)', slug)
     if (slug) {
       const article = store.articles[slug]
       if (article) {
-        console.log('editing article (slug=%s)', slug)
+        logger.info('editing article (slug=%s)', slug)
         setState(article)
       }
       else {
-        console.log('Article not in store (slug=%s)', slug)
+        logger.info('Article not in store (slug=%s)', slug)
       }
     }
   })

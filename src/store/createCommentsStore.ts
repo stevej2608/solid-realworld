@@ -3,6 +3,8 @@ import { SetStoreFunction } from 'solid-js/store'
 import { WorldApi, IComment } from '../api/RealWorldApi'
 import { IStoreState } from './storeState'
 
+import { logger } from '../utils/logger'
+
 export interface ICommentsActions {
   loadComments(articleSlug: string, reload: boolean): void
   createComment(comment: string): Promise<IComment>
@@ -26,7 +28,7 @@ export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, 
 
   const fetchComments = async (): IComment[] => {
     const slug = articleSlug()
-    console.log('getArticleComments articleSlug = %s ...', slug ? slug.slice(0, 15) : 'undefined')
+    logger.info('getArticleComments articleSlug = %s ...', slug ? slug.slice(0, 15) : 'undefined')
     const { data, error } = await agent.articles.getArticleComments(slug)
     return data.comments
   }
@@ -39,7 +41,7 @@ export function createCommentsStore(agent: WorldApi, actions: ICommentsActions, 
 
     loadComments(articleSlug: string, reload: boolean) {
       if (reload) return refetch()
-      console.log('loadComments articleSlug=%s ...', articleSlug.slice(0, 15))
+      logger.info('loadComments articleSlug=%s ...', articleSlug.slice(0, 15))
       setArticleSlug(articleSlug)
       setState({ articleSlug })
     },

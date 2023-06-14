@@ -2,6 +2,7 @@ import { createEffect } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
 import { IStoreState } from './storeState'
 
+import { logger } from '../utils/logger'
 export interface ICommonActions {
   setToken: (token: string | undefined) => void
 }
@@ -22,10 +23,10 @@ export function createCommonStore(actions: ICommonActions, state: IStoreState, s
 
   createEffect(() => {
     if (state.token) {
-      console.log('Add token %s...', state.token.slice(0, 15))
+      logger.info('Add token %s...', state.token.slice(0, 15))
       localStorage.setItem('jwt', state.token)
     } else {
-      console.log('Remove token')
+      logger.info('Remove token')
       localStorage.removeItem('jwt')
     }
   })
@@ -35,7 +36,7 @@ export function createCommonStore(actions: ICommonActions, state: IStoreState, s
   // the above createEffect()
 
   actions.setToken = (token: string | undefined) => {
-    console.log('setToken tok=%s', token)
+    logger.info('setToken tok=%s', token)
     setState({ token })
   }
 

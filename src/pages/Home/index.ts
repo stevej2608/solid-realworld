@@ -3,6 +3,8 @@ import { useRouter } from '../../routeContext'
 import { useStore } from '../../store/storeContext'
 import { IPredicate } from '../../store/createArticlesStore'
 
+import { logger } from '../../utils/logger'
+
 const Home = lazy(() => import('./Home'))
 
 export default function () {
@@ -28,11 +30,11 @@ export default function () {
 
     setPage(0)
 
-    console.log('feedTab changed to [%s]', feed)
+    logger.info('feedTab changed to [%s]', feed)
     return feed
   })
 
-  console.log('tab %s', feedTab())
+  logger.info('tab %s', feedTab())
 
   const [, start] = useTransition()
 

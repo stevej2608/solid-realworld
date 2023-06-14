@@ -9,6 +9,8 @@
  * ---------------------------------------------------------------
  */
 
+import { logger } from '../utils/logger'
+
 export interface ILoginUser {
   email: string
   /** @format password */
@@ -197,7 +199,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private securityWorker?: ApiConfig<SecurityDataType>['securityWorker']
   private abortControllers = new Map<CancelToken, AbortController>()
   private customFetch = (...fetchParams: Parameters<typeof fetch>) => {
-    console.log('Fetch url=%s', fetchParams[0])
+    logger.info('Fetch url=%s', fetchParams[0])
     return fetch(...fetchParams)
   }
 

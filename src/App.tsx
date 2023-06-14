@@ -14,7 +14,7 @@ import { logger } from './utils/logger'
 const Settings = lazy(() => import('./pages/Settings'))
 const Auth = lazy(() => import('./pages/Auth'))
 
-// console.log = function() {}
+// logger.info = function() {}
 
 export const App = () => {
   const [store, { pullUser }] = useStore()

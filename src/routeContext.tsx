@@ -1,6 +1,8 @@
 import { createContext, useContext, Accessor } from 'solid-js'
 import { createSignal, onCleanup, useTransition } from 'solid-js'
 
+import { logger } from './utils/logger'
+
 export interface IRouteParams {
   routeName: string
   params: string[]
@@ -59,7 +61,7 @@ export function createRouteHandler(init: string): IRouteContext {
   const locationHandler = () => {
     return start(() => {
       const location = window.location.hash.slice(2)
-      console.log('>>>>>>>>>>>>>>>>>> setLocation(%s)', location)
+      logger.info('>>>>>>>>>>>>>>>>>> setLocation(%s)', location)
       setLocation(location)
     })
   }
