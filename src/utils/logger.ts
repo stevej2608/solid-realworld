@@ -1,10 +1,7 @@
-import { tracerSetup, ITransport } from './tracer'
+import { BrowserLog, ITransport } from './BrowserLog'
 
-// https://github.com/baryon/tracer#customize-output-format
-// https://stackoverflow.com/a/47061161
-
-export const logger = tracerSetup({
-  format: '{{timestamp}} {{message}}  [{{file}}:{{line}}]',
+export const logger = new BrowserLog({
+  format: '{{timestamp}} {{message}}     [{{file}}:{{line}}]',
   dateformat: 'HH:MM:ss',
 
   transport: function (data: ITransport) {
@@ -17,3 +14,9 @@ export const logger = tracerSetup({
     }
   }
 })
+
+logger.info('setLogLevel(%s) %d', 'test', 2)
+logger.info('setLogLevel(%s) %d', 'test', 3)
+logger.info('setLogLevel(%s) %d', 'test', 4)
+logger.info('setLogLevel(%s) %d', 'test', 5)
+logger.info('setLogLevel(%s) %d', 'test', 6)
