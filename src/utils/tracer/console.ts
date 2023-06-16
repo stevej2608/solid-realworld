@@ -7,10 +7,10 @@
 // https://github.com/baryon/tracer/blob/master/lib/console.js
 
 import dateFormat  from 'dateformat'
-import * as tim from './tim'
+import * as tim from 'tinytim'
 import * as utils from './utils'
 import { settings } from './settings'
-import * as path from './path'
+
 
 import StackTracey from 'stacktracey'
 
