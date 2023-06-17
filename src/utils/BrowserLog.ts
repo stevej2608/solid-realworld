@@ -80,8 +80,8 @@ const defaultConfig: Config = {
 // Stack trace format :
 // https://github.com/v8/v8/wiki/Stack%20Trace%20API
 
-const stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i;
-const stackReg2 = /at\s+()(.*):(\d*):(\d*)/i;
+const stackRegex1 = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i;
+const stackRegex2 = /at\s+()(.*):(\d*):(\d*)/i;
 
 /**
  *
@@ -111,25 +111,40 @@ export class BrowserLog {
     data.method = data.path = data.line = data.pos = data.file = data.folder = ''
 
     if (this.needStack) {
-      // get call stack, and analyze it
-      // get all file,method and line number
-      const stackList = new Error().stack.split('\n').slice(3)
-      const s = stackList[config.stackIndex] || stackList[0]
-      const sp = stackReg.exec(s) || stackReg2.exec(s)
 
-      if (sp && sp.length === 5) {
+      // Pop the recent frames, so stackList[0] will be the
+      // log message call
+
+      const stackList = new Error().stack.split('\n').slice(3)
+
+      // Allow user the reference higher up the stack, otherwise
+      // just reference the log message call
+
+      const s = stackList[config.stackIndex] || stackList[0]
+
+      // Use regex to split the stack location message
+      //
+      // "at BrowserLog.info (http://localhost:3000/src/utils/BrowserLog.ts?t=1686990478223:90:10)",
+      // "BrowserLog.info",
+      // "http://localhost:3000/src/utils/BrowserLog.ts?t=1686990478223",
+      // "90",
+      // "10",
+
+      const locationRecord = stackRegex1.exec(s) || stackRegex2.exec(s)
+
+      if (locationRecord && locationRecord.length === 5) {
 
         // https://www.npmjs.com/package/stacktracey?activeTab=readme
 
-        const stackTracey = new StackTracey().withSources().items[2]
-        // const st = stackTracey.withSources()[2]
+        const stack = new StackTracey()
+        const top = stack.withSources().items[2]
 
-        data.method = stackTracey.callee
-        data.path = sp[2]
-        data.line = stackTracey.line
-        data.pos = stackTracey.column
-        data.folder = stackTracey.fileShort
-        data.file = './' + stackTracey.fileShort
+        data.method = top.callee
+        data.path = locationRecord[2]
+        data.line = top.line
+        data.pos = top.column
+        data.folder = top.fileShort
+        data.file = './' + top.fileShort
         data.stack = stackList.join('\n')
       }
     }
