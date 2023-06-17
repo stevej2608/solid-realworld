@@ -49,7 +49,7 @@ const defaultConfig: Config = {
   dateformat: 'isoDateTime',
 
   charactersPerLine: () => {
-    return Math.floor(window.innerWidth / 7)
+    return Math.floor(window.innerWidth / 9)
   },
 
   preprocess: function () {
@@ -91,10 +91,12 @@ export class BrowserLog {
   config: Config
   needStack: boolean
   textFit: TextFit
+  logIndex: number
 
   constructor(userConfig: Config = {}) {
     this.config = { ...defaultConfig, ...userConfig }
     this.needStack = /{{(method|path|line|pos|file|folder|stack)}}/i.test(this.config.format)
+    this.logIndex = 0
   }
 
   private async logMain(level: number, title: string, msg: string) {
@@ -167,7 +169,8 @@ export class BrowserLog {
   }
 
   private logMainPromise(level: number, title: string, msg: string) {
-    this.logMain(1, 'info', msg)
+    const indexStr = sprintf('%04d ', ++this.logIndex)
+    this.logMain(1, 'info', indexStr + msg)
       .then(data => {
         // NO ACTION
       })
