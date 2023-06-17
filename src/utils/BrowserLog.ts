@@ -2,11 +2,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+/**
+ * Minimal reworked version of tracer with source mapped line numbers
+ *
+ * https://www.npmjs.com/package/tracer
+ * https://www.npmjs.com/package/stacktracey
+ */
+
 import StackTracey from 'stacktracey'
 import dateFormat  from 'dateformat'
 import * as tinytim from 'tinytim'
 
 import { sprintf } from 'sprintf-js'
+
+import { TextFit } from './TextFit'
 
 export interface ITransport {
   title: 'warn' | 'error' | 'info'
@@ -18,8 +27,9 @@ export interface Config {
   rootDir: string
   format: string | string[]
   dateformat: string
-  preprocess?: (...args: any[]) => any
 
+  charactersPerLine: () => number
+  preprocess?: (...args: any[]) => any
   transport: (data: ITransport) => any
 
   filters: ((...args: any[]) => any)[]
@@ -35,22 +45,27 @@ export interface Config {
 
 const defaultConfig: Config = {
   rootDir: '',
-  format: '{{timestamp}} <{{title}}> {{file}}:{{line}} ({{method}}) {{message}}',
+  format: '{{timestamp}} <{{title}}>{{rhs}}{{file}}:{{line}}',
   dateformat: 'isoDateTime',
+
+  charactersPerLine : () => {
+    return Math.floor(window.innerWidth / 7)
+  },
 
   preprocess: function () {
     // NO ACTION
   },
 
-  transport: function (data) {
-    if (data.title == 'warn') {
-      console.warn(data.output)
+  transport: function (data: ITransport) {
+    if (data.title === 'warn') {
+      queueMicrotask(console.warn.bind(console, data.output))
     } else if (data.level > 4) {
-      console.error(data.output)
+      queueMicrotask(console.error.bind(console, data.output))
     } else {
-      console.log(data.output)
+      queueMicrotask(console.log.bind(console, data.output))
     }
   },
+
   filters: [],
   level: 'log',
   //methods: ['log', 'trace', 'debug', 'info', 'warn', 'error', 'fatal'],
@@ -76,6 +91,7 @@ export class BrowserLog {
 
   config: Config
   needStack: boolean
+  textFit: TextFit
 
   constructor(userConfig: Config = {}) {
     this.config = { ...defaultConfig, ...userConfig }
@@ -121,9 +137,21 @@ export class BrowserLog {
     config.preprocess(data)
 
     data.message = msg
-    data.output = tinytim.tim(config.format, data)
-    config.transport(data)
 
+    const fmt = config.format.split('{{rhs}}')
+
+    if (fmt.length > 1) {
+      const lhs: string = tinytim.tim(fmt[0], data)
+      const rhs: string = tinytim.tim(fmt[1], data)
+      const pad: number = config.charactersPerLine() - ( lhs.length + rhs.length)
+
+      data.output = `${lhs} ${rhs.padStart(pad+ rhs.length, ' ')}`
+    }
+    else {
+      data.output = tinytim.tim(config.format, data)
+    }
+
+    config.transport(data)
     return data
   }
 
