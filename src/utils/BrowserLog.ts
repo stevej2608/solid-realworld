@@ -10,7 +10,7 @@
  */
 
 import StackTracey from 'stacktracey'
-import dateFormat  from 'dateformat'
+import dateFormat from 'dateformat'
 import * as tinytim from 'tinytim'
 
 import { sprintf } from 'sprintf-js'
@@ -48,7 +48,7 @@ const defaultConfig: Config = {
   format: '{{timestamp}} <{{title}}>{{rhs}}{{file}}:{{line}}',
   dateformat: 'isoDateTime',
 
-  charactersPerLine : () => {
+  charactersPerLine: () => {
     return Math.floor(window.innerWidth / 7)
   },
 
@@ -80,15 +80,14 @@ const defaultConfig: Config = {
 // Stack trace format :
 // https://github.com/v8/v8/wiki/Stack%20Trace%20API
 
-const stackRegex1 = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i;
-const stackRegex2 = /at\s+()(.*):(\d*):(\d*)/i;
+const stackRegex1 = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i
+const stackRegex2 = /at\s+()(.*):(\d*):(\d*)/i
 
 /**
  *
  */
 
 export class BrowserLog {
-
   config: Config
   needStack: boolean
   textFit: TextFit
@@ -98,8 +97,7 @@ export class BrowserLog {
     this.needStack = /{{(method|path|line|pos|file|folder|stack)}}/i.test(this.config.format)
   }
 
-  private logMain(level: number, title: string, msg: string) {
-
+  private async logMain(level: number, title: string, msg: string) {
     const config = this.config
     const data = {
       timestamp: dateFormat(new Date(), config.dateformat),
@@ -115,7 +113,7 @@ export class BrowserLog {
       // Pop the recent frames, so stackList[0] will be the
       // log message call
 
-      const stackList = new Error().stack.split('\n').slice(3)
+      const stackList = new Error().stack.split('\n').slice(4)
 
       // Allow user the reference higher up the stack, otherwise
       // just reference the log message call location
@@ -133,11 +131,10 @@ export class BrowserLog {
       const locationRecord = stackRegex1.exec(logLoc) || stackRegex2.exec(logLoc)
 
       if (locationRecord && locationRecord.length === 5) {
-
         // https://www.npmjs.com/package/stacktracey?activeTab=readme
 
         const stack = new StackTracey(logLoc)
-        const top = stack.withSources().items[0]
+        const top = await stack.withSources().items[0]
 
         data.method = top.callee
         data.path = locationRecord[2]
@@ -158,11 +155,10 @@ export class BrowserLog {
     if (fmt.length > 1) {
       const lhs: string = tinytim.tim(fmt[0], data)
       const rhs: string = tinytim.tim(fmt[1], data)
-      const pad: number = config.charactersPerLine() - ( lhs.length + rhs.length)
+      const pad: number = config.charactersPerLine() - (lhs.length + rhs.length)
 
-      data.output = `${lhs} ${rhs.padStart(pad+ rhs.length, ' ')}`
-    }
-    else {
+      data.output = `${lhs} ${rhs.padStart(pad + rhs.length, ' ')}`
+    } else {
       data.output = tinytim.tim(config.format, data)
     }
 
@@ -170,19 +166,28 @@ export class BrowserLog {
     return data
   }
 
+  private logMainPromise(level: number, title: string, msg: string) {
+    this.logMain(1, 'info', msg)
+      .then(data => {
+        // NO ACTION
+      })
+      .catch(error => {
+        console.log('???')
+      })
+  }
+
   public info(format: string, ...args: any[]) {
-    const _msg = sprintf(format, ...args )
-    this.logMain(1, 'info', _msg)
+    const msg = sprintf(format, ...args)
+    this.logMainPromise(1, 'info', msg)
   }
 
   public warn(format: string, ...args: any[]) {
-    const _msg = sprintf(2, 'warn',format, ...args )
-    this.logMain(_msg)
+    const msg = sprintf(format, ...args)
+    this.logMainPromise(2, 'warn', msg)
   }
 
   public fatal(format: string, ...args: any[]) {
-    const _msg = sprintf(3, 'fatal',format, ...args )
-    this.logMain(_msg)
+    const msg = sprintf(format, ...args)
+    this.logMainPromise(3, 'error', msg)
   }
-
 }
