@@ -118,9 +118,9 @@ export class BrowserLog {
       const stackList = new Error().stack.split('\n').slice(3)
 
       // Allow user the reference higher up the stack, otherwise
-      // just reference the log message call
+      // just reference the log message call location
 
-      const s = stackList[config.stackIndex] || stackList[0]
+      const logLoc = (stackList[config.stackIndex] || stackList[0]) + '\n'
 
       // Use regex to split the stack location message
       //
@@ -130,14 +130,14 @@ export class BrowserLog {
       // "90",
       // "10",
 
-      const locationRecord = stackRegex1.exec(s) || stackRegex2.exec(s)
+      const locationRecord = stackRegex1.exec(logLoc) || stackRegex2.exec(logLoc)
 
       if (locationRecord && locationRecord.length === 5) {
 
         // https://www.npmjs.com/package/stacktracey?activeTab=readme
 
-        const stack = new StackTracey()
-        const top = stack.withSources().items[2]
+        const stack = new StackTracey(logLoc)
+        const top = stack.withSources().items[0]
 
         data.method = top.callee
         data.path = locationRecord[2]
