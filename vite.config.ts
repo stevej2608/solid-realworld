@@ -10,8 +10,8 @@ export default defineConfig(({ command, mode }) => {
       solidPlugin()
     ],
     build: {
-      sourcemap: ['serve', 'dev'].includes(command) ? 'inline' : false,
-      minify: ['serve', 'dev'].includes(command) ? false : true,
+      sourcemap: ['serve', 'dev'].includes(command) ? true : true,
+      minify: ['serve', 'dev'].includes(command) ? false : false,
       target: 'esnext',
       chunkSizeWarningLimit: 510 * 1024,
       rollupOptions: {

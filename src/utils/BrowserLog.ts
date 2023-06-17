@@ -134,7 +134,7 @@ export class BrowserLog {
         // https://www.npmjs.com/package/stacktracey?activeTab=readme
 
         const stack = new StackTracey(logLoc)
-        const top = await stack.withSources().items[0]
+        const top = (await stack.withSourcesAsync()).items[0]
 
         data.method = top.callee
         data.path = locationRecord[2]
@@ -172,7 +172,7 @@ export class BrowserLog {
         // NO ACTION
       })
       .catch(error => {
-        console.log('???')
+        console.log(error)
       })
   }
 
