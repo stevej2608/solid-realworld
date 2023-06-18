@@ -1,4 +1,4 @@
-import { BrowserLog, ILevel } from './BrowserLog'
+import { BrowserLog } from './BrowserLog'
 
 export const logger = new BrowserLog({
   format: '{{index}} {{timestamp}} {{message}}{{rhs}}{{file}}:{{line}}',
