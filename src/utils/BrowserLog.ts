@@ -28,6 +28,7 @@ interface ILogProps {
   level: number
   title: string
   msg: string
+  index: number
   errorStack : Error
 }
 
@@ -35,6 +36,7 @@ export interface Config {
   rootDir: string
   format: string | string[]
   dateformat: string
+  indexFormat: string
 
   charactersPerLine: () => number
   preprocess?: (...args: any[]) => any
@@ -55,6 +57,7 @@ const defaultConfig: Config = {
   rootDir: '',
   format: '{{timestamp}} <{{title}}>{{rhs}}{{file}}:{{line}}',
   dateformat: 'isoDateTime',
+  indexFormat: "%03s",
 
   charactersPerLine: () => {
     return Math.floor(window.innerWidth / 12)
@@ -97,6 +100,7 @@ const stackRegex3 = /.*?@()(.*):(\d*):(\d*)/i
  */
 
 export class BrowserLog {
+
   config: Config
   needStack: boolean
   textFit: TextFit
@@ -115,6 +119,7 @@ export class BrowserLog {
     const config = this.config
     const data = {
       timestamp: dateFormat(new Date(), config.dateformat),
+      index: sprintf(this.config.indexFormat, ++this.logIndex),
       message: '',
       title: title,
       level: level
@@ -185,8 +190,6 @@ export class BrowserLog {
   }
 
   private queueLogMessage(args: ILogProps) {
-    const indexStr = sprintf('%04d ', ++this.logIndex)
-    args.msg = `${indexStr} ${args.msg}`
 
     if (this.needStack) {
       args.errorStack = new Error()
