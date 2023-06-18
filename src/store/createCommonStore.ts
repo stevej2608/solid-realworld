@@ -23,10 +23,10 @@ export function createCommonStore(actions: ICommonActions, state: IStoreState, s
 
   createEffect(() => {
     if (state.token) {
-      logger.info('Add token %s...', state.token.slice(0, 15))
+      logger.warn('Add token [%s ...]', state.token.slice(0, 15))
       localStorage.setItem('jwt', state.token)
     } else {
-      logger.info('Remove token')
+      logger.warn('Remove token')
       localStorage.removeItem('jwt')
     }
   })
