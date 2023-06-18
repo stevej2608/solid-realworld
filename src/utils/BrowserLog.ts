@@ -128,7 +128,7 @@ export class BrowserLog {
 
       // console.log('%s', errorStack.stack)
 
-      const stackList = errorStack.stack.split('\n').slice(3)
+      const stackList = errorStack.stack.split('\n').slice(2)
 
       // Allow user the reference higher up the stack, otherwise
       // just reference the log message call location
