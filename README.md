@@ -1,6 +1,6 @@
 # ![RealWorld Example App](logo.png)
 
-![](./docs/img/screenshot-1png.png)
+![](./docs/img/real-world.png)
 
 This project is a reworking of [solid-realworld].
 
