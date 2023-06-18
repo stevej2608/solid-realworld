@@ -36,7 +36,8 @@ Server *VSCODE Go Live*
 - [x] Chrome
 - [ ] Firefox
 
-
+enqueue@http://127.0.0.1:4000/assets/index-e80f7c45.js:258:12
+at http://127.0.0.1:4000/assets/index-e80f7c45.js:264:12\n
 
 ## Links
 

@@ -10,7 +10,8 @@
  * https://www.npmjs.com/package/stacktracey
  */
 
-import StackTracey from 'stacktracey'
+import { StackTracey } from './StackTracy'
+// import StackTracey from 'stacktracey'
 import dateFormat from 'dateformat'
 import { sprintf } from 'sprintf-js'
 
@@ -27,6 +28,7 @@ interface ILogProps {
   level: number
   title: string
   msg: string
+  errorStack : Error
 }
 
 export interface Config {
@@ -88,6 +90,7 @@ const defaultConfig: Config = {
 
 const stackRegex1 = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i
 const stackRegex2 = /at\s+()(.*):(\d*):(\d*)/i
+const stackRegex3 = /.*?@()(.*):(\d*):(\d*)/i
 
 /**
  *
@@ -108,7 +111,7 @@ export class BrowserLog {
   }
 
   private async logMain(args: ILogProps) {
-    const { level, title, msg } = args
+    const { level, title, msg, errorStack } = args
     const config = this.config
     const data = {
       timestamp: dateFormat(new Date(), config.dateformat),
@@ -123,7 +126,9 @@ export class BrowserLog {
       // Pop the recent frames, so stackList[0] will be the
       // log message call
 
-      const stackList = new Error().stack.split('\n').slice(4)
+      // console.log('%s', errorStack.stack)
+
+      const stackList = errorStack.stack.split('\n').slice(3)
 
       // Allow user the reference higher up the stack, otherwise
       // just reference the log message call location
@@ -138,7 +143,7 @@ export class BrowserLog {
       // "90",
       // "10",
 
-      const locationRecord = stackRegex1.exec(logLoc) || stackRegex2.exec(logLoc)
+      const locationRecord = stackRegex1.exec(logLoc) || stackRegex2.exec(logLoc) || stackRegex3.exec(logLoc)
 
       if (locationRecord && locationRecord.length === 5) {
         // https://www.npmjs.com/package/stacktracey?activeTab=readme
@@ -153,6 +158,9 @@ export class BrowserLog {
         data.folder = top.fileShort
         data.file = './' + top.fileShort
         data.stack = stackList.join('\n')
+      }
+      else {
+        console.log('Unable to decode stack:\n%s', errorStack.stack)
       }
     }
 
@@ -180,8 +188,11 @@ export class BrowserLog {
     const indexStr = sprintf('%04d ', ++this.logIndex)
     args.msg = `${indexStr} ${args.msg}`
 
-    const promise = this.queue.enqueue(() => this.logMain(args))
+    if (this.needStack) {
+      args.errorStack = new Error()
+    }
 
+    const promise = this.queue.enqueue(() => this.logMain(args))
     promise
       .then(data => {
         // NO ACTION
