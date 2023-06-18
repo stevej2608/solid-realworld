@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -11,10 +12,9 @@
 
 import StackTracey from 'stacktracey'
 import dateFormat from 'dateformat'
-import * as tinytim from 'tinytim'
-
 import { sprintf } from 'sprintf-js'
 
+import { tim } from './tinytim'
 import { PromiseQueue } from './PromiseQueue'
 
 export interface ITransport {
@@ -160,16 +160,16 @@ export class BrowserLog {
 
     data.message = msg
 
-    const fmt = config.format.split('{{rhs}}')
+    const fmt: string[] = config.format.split('{{rhs}}')
 
     if (fmt.length > 1) {
-      const lhs: string = tinytim.tim(fmt[0], data)
-      const rhs: string = tinytim.tim(fmt[1], data)
+      const lhs: string = tim(fmt[0], data)
+      const rhs: string = tim(fmt[1], data)
       const pad: number = config.charactersPerLine() - (lhs.length + rhs.length)
 
       data.output = `${lhs} ${rhs.padStart(pad + rhs.length, ' ')}`
     } else {
-      data.output = tinytim.tim(config.format, data)
+      data.output = tim(config.format, data)
     }
 
     config.transport(data)

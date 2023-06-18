@@ -42,7 +42,6 @@
     "marked": "^5.0.4",
     "solid-js": "1.7.3",
     "sprintf-js": "^1.1.2",
-    "stacktracey": "^2.1.8",
-    "tinytim": "^0.1.1"
+    "stacktracey": "^2.1.8"
   }
 }
