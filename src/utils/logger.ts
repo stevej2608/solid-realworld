@@ -1,7 +1,7 @@
-import { BrowserLog } from './BrowserLog'
+import { BrowserLog, ILevel } from './BrowserLog'
 
 export const logger = new BrowserLog({
   format: '{{index}} {{timestamp}} {{message}}{{rhs}}{{file}}:{{line}}',
-  dateformat: 'HH:MM:ss',
+  dateformat: 'HH:MM:ss'
 })
 

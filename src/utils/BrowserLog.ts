@@ -17,6 +17,27 @@ import { sprintf } from 'sprintf-js'
 import { tim } from './tinytim'
 import { PromiseQueue } from './PromiseQueue'
 
+// export enum ILevel {
+//   LOG = "log",
+//   TRACE = "trace",
+//   DEBUG = "debug",
+//   INFO = "info",
+//   WARN = "warn",
+//   ERROR = "error",
+//   FATAL = "fatal"
+// }
+
+export enum ILevel {
+  LOG = 1,
+  TRACE,
+  DEBUG,
+  INFO,
+  WARN,
+  ERROR,
+  FATAL
+}
+
+
 export interface ITransport {
   title: 'warn' | 'error' | 'info'
   level: number
@@ -24,8 +45,7 @@ export interface ITransport {
 }
 
 interface ILogProps {
-  level: number
-  title: string
+  level: ILevel
   msg: string
   index: number
   errorStack : Error
@@ -42,7 +62,7 @@ export interface Config {
   transport: (data: ITransport) => any
 
   filters: ((...args: any[]) => any)[]
-  level: string | number
+  level: ILevel
   // methods: string[]
   stackIndex: number
   inspectOpt: {
@@ -59,7 +79,7 @@ const defaultConfig: Config = {
   indexFormat: "%03s",
 
   charactersPerLine: () => {
-    return Math.floor(window.innerWidth / 12)
+    return 180
   },
 
   preprocess: function () {
@@ -77,8 +97,7 @@ const defaultConfig: Config = {
   },
 
   filters: [],
-  level: 'log',
-  //methods: ['log', 'trace', 'debug', 'info', 'warn', 'error', 'fatal'],
+  level: ILevel.INFO,
   stackIndex: 0,
   inspectOpt: {
     showHidden: false,
@@ -114,13 +133,13 @@ export class BrowserLog {
   }
 
   private async logMain(args: ILogProps) {
-    const { level, title, msg, errorStack } = args
+    const { level, msg, errorStack } = args
     const config = this.config
     const data = {
       timestamp: dateFormat(new Date(), config.dateformat),
       index: sprintf(this.config.indexFormat, ++this.logIndex),
       message: '',
-      title: title,
+      title: ILevel[level],
       level: level
     }
 
@@ -193,14 +212,21 @@ export class BrowserLog {
     return data
   }
 
+  /**
+   * We need queue the log messages in order of submission since
+   * the resolution of the source file & line number via a source map
+   * request relies on network activity. Having several simultaneous
+   * request in progress could result the log messages being
+   * reported in the wrong order.
+   */
+
   private queueLogMessage(args: ILogProps) {
 
     if (this.needStack) {
       args.errorStack = new Error()
     }
 
-    const promise = this.queue.enqueue(() => this.logMain(args))
-    promise
+    this.queue.enqueue(() => this.logMain(args))
       .then(data => {
         // NO ACTION
       })
@@ -209,18 +235,48 @@ export class BrowserLog {
       })
   }
 
-  public info(format: string, ...args: any[]) {
+  public log(format: string, ...args: any[]) {
+    if (ILevel.LOG < this.config.level) return
     const msg = sprintf(format, ...args)
-    this.queueLogMessage({ level: 1, title: 'info', msg })
+    this.queueLogMessage({ level: ILevel.LOG, msg })
+  }
+
+  public trace(format: string, ...args: any[]) {
+    if (ILevel.TRACE < this.config.level) return
+    const msg = sprintf(format, ...args)
+    this.queueLogMessage({ level: ILevel.TRACE, msg })
+  }
+
+  public debug(format: string, ...args: any[]) {
+    if (ILevel.DEBUG < this.config.level) return
+    const msg = sprintf(format, ...args)
+    this.queueLogMessage({ level: ILevel.DEBUG, msg })
+  }
+
+  public info(format: string, ...args: any[]) {
+    if (ILevel.INFO < this.config.level) return
+    const msg = sprintf(format, ...args)
+    this.queueLogMessage({ level: ILevel.INFO, msg })
   }
 
   public warn(format: string, ...args: any[]) {
+    if (ILevel.WARN < this.config.level) return
     const msg = sprintf(format, ...args)
-    this.queueLogMessage(2, 'warn', msg)
+    this.queueLogMessage({ level: ILevel.WARN, msg })
+  }
+
+  public error(format: string, ...args: any[]) {
+    if (ILevel.ERROR < this.config.level) return
+    const msg = sprintf(format, ...args)
+    this.queueLogMessage({ level:ILevel.ERROR, msg })
   }
 
   public fatal(format: string, ...args: any[]) {
     const msg = sprintf(format, ...args)
-    this.queueLogMessage(3, 'error', msg)
+    this.queueLogMessage({ level: ILevel.FATAL, msg })
+  }
+
+  public setLevel(level: ILevel) {
+    this.config.level = level
   }
 }
