@@ -13,6 +13,30 @@ The following changes have be made:
 - [ ] Replace server API client with one based directly on openAPI
 - [ ] Replace home router with @solidjs/router
 
+## Log Messages
+
+The application has an embedded logger that outputs to the console and
+to the vscode debugger. The logger resolves log message file and line
+numbers using [stacktracey] which uses [get-source]
+
+The logger is primarily used as a coding/debugging aid. The following
+
+Server *Vite dev*
+
+- [x] Firefox
+- [x] Chrome
+
+Server *Vite preview*
+
+- [x] Chrome
+- [ ] Firefox
+
+Server *VSCODE Go Live*
+
+- [x] Chrome
+- [ ] Firefox
+
+
 
 ## Links
 
@@ -21,6 +45,9 @@ The canonical [realworld] project links.
 * The reference demo for the project [demo.realworld.io]
 * The demo source [angularjs-realworld-example-app]
 
+[How to manage Promises into dynamic queue with vanilla JavaScript]: https://medium.com/@karenmarkosyan/how-to-manage-promises-into-dynamic-queue-with-vanilla-javascript-9d0d1f8d4df5
+[get-source]: https://www.npmjs.com/package/get-source
+[stacktracey]: https://www.npmjs.com/package/stacktracey/v/1.0.68
 [angularjs-realworld-example-app]: https://github.com/gothinkster/angularjs-realworld-example-app
 [demo.realworld.io]: https://demo.realworld.io/#/
 [realworld]:https://github.com/gothinkster/realworld

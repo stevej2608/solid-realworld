@@ -15,12 +15,18 @@ import * as tinytim from 'tinytim'
 
 import { sprintf } from 'sprintf-js'
 
-import { TextFit } from './TextFit'
+import { PromiseQueue } from './PromiseQueue'
 
 export interface ITransport {
   title: 'warn' | 'error' | 'info'
   level: number
   output: any[]
+}
+
+interface ILogProps {
+  level: number
+  title: string
+  msg: string
 }
 
 export interface Config {
@@ -49,7 +55,7 @@ const defaultConfig: Config = {
   dateformat: 'isoDateTime',
 
   charactersPerLine: () => {
-    return Math.floor(window.innerWidth / 9)
+    return Math.floor(window.innerWidth / 12)
   },
 
   preprocess: function () {
@@ -92,14 +98,17 @@ export class BrowserLog {
   needStack: boolean
   textFit: TextFit
   logIndex: number
+  queue: PromiseQueue
 
   constructor(userConfig: Config = {}) {
     this.config = { ...defaultConfig, ...userConfig }
     this.needStack = /{{(method|path|line|pos|file|folder|stack)}}/i.test(this.config.format)
     this.logIndex = 0
+    this.queue = new PromiseQueue()
   }
 
-  private async logMain(level: number, title: string, msg: string) {
+  private async logMain(args: ILogProps) {
+    const { level, title, msg } = args
     const config = this.config
     const data = {
       timestamp: dateFormat(new Date(), config.dateformat),
@@ -111,7 +120,6 @@ export class BrowserLog {
     data.method = data.path = data.line = data.pos = data.file = data.folder = ''
 
     if (this.needStack) {
-
       // Pop the recent frames, so stackList[0] will be the
       // log message call
 
@@ -168,9 +176,13 @@ export class BrowserLog {
     return data
   }
 
-  private logMainPromise(level: number, title: string, msg: string) {
+  private queueLogMessage(args: ILogProps) {
     const indexStr = sprintf('%04d ', ++this.logIndex)
-    this.logMain(1, 'info', indexStr + msg)
+    args.msg = `${indexStr} ${args.msg}`
+
+    const promise = this.queue.enqueue(() => this.logMain(args))
+
+    promise
       .then(data => {
         // NO ACTION
       })
@@ -181,16 +193,16 @@ export class BrowserLog {
 
   public info(format: string, ...args: any[]) {
     const msg = sprintf(format, ...args)
-    this.logMainPromise(1, 'info', msg)
+    this.queueLogMessage({ level: 1, title: 'info', msg })
   }
 
   public warn(format: string, ...args: any[]) {
     const msg = sprintf(format, ...args)
-    this.logMainPromise(2, 'warn', msg)
+    this.queueLogMessage(2, 'warn', msg)
   }
 
   public fatal(format: string, ...args: any[]) {
     const msg = sprintf(format, ...args)
-    this.logMainPromise(3, 'error', msg)
+    this.queueLogMessage(3, 'error', msg)
   }
 }
