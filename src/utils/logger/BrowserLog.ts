@@ -87,10 +87,10 @@ const defaultConfig: Config = {
   },
 
   transport: function (data: ITransport) {
-    if (data.title === 'warn') {
-      queueMicrotask(console.warn.bind(console, data.output))
+    if (data.title === ILevel[ILevel.WARN]) {
+      queueMicrotask(console.log.bind(console, `%c${data.output}`, "color:yellow"))
     } else if (data.level > 4) {
-      queueMicrotask(console.error.bind(console, data.output))
+      queueMicrotask(console.log.bind(console, `%c${data.output}`, "color:red"))
     } else {
       queueMicrotask(console.log.bind(console, data.output))
     }
