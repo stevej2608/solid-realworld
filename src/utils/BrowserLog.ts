@@ -10,8 +10,7 @@
  * https://www.npmjs.com/package/stacktracey
  */
 
-import { StackTracey } from './StackTracy'
-// import StackTracey from 'stacktracey'
+import StackTracey from 'stacktracey'
 import dateFormat from 'dateformat'
 import { sprintf } from 'sprintf-js'
 
@@ -128,12 +127,17 @@ export class BrowserLog {
     data.method = data.path = data.line = data.pos = data.file = data.folder = ''
 
     if (this.needStack) {
+
       // Pop the recent frames, so stackList[0] will be the
       // log message call
+      //
+      // Some stack dumps start with an error line, others don't
 
       // console.log('%s', errorStack.stack)
 
-      const stackList = errorStack.stack.split('\n').slice(2)
+      const drop = errorStack.stack.startsWith('Error') ? 3 : 2
+
+      const stackList = errorStack.stack.split('\n').slice(drop)
 
       // Allow user the reference higher up the stack, otherwise
       // just reference the log message call location
