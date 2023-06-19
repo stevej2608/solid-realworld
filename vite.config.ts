@@ -1,16 +1,14 @@
 import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig(({ command, mode }) => {
   console.log('command=[%s]', command)
   return {
     plugins: [
-      nodePolyfills(),
       solidPlugin()
     ],
     build: {
-      sourcemap: ['serve', 'dev'].includes(command) ? true : false,
+      sourcemap: ['serve', 'dev'].includes(command) ? true : true,
       minify: ['serve', 'dev'].includes(command) ? false : true,
       target: 'esnext',
       chunkSizeWarningLimit: 510 * 1024,
