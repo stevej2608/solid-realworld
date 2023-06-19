@@ -35,6 +35,7 @@
   "dependencies": {
     "@types/dompurify": "^3.0.2",
     "@types/marked": "^5.0.0",
+    "browser-logger": "link:..\\browser-logger",
     "browser-util-inspect": "^0.2.0",
     "classnames": "^2.3.2",
     "dateformat": "^5.0.3",
