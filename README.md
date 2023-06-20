@@ -30,11 +30,11 @@ Run the following commands (pnpm is used here but npm and yarn are both ok)
 
 Visit [http://localhost:3000/](http://localhost:3000/)
 
-### VSCODE debugging
+#### VSCODE debugging
 
     pnpm dev
 
-Press F5 in VSCODE, a Chrome browser windows will open. Set
+Press F5 in VSCODE, a Chrome browser window will open. Set
 breakpoints as required.
 
 A debug template is included for Firefox.
