@@ -40,7 +40,7 @@
     "classnames": "^2.3.2",
     "dateformat": "^5.0.3",
     "dompurify": "^3.0.3",
-    "marked": "^5.0.4",
+    "marked": "^5.1.0",
     "solid-js": "1.7.3",
     "sprintf-js": "^1.1.2",
     "stacktracey": "^2.1.8"

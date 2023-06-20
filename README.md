@@ -16,10 +16,11 @@ The following changes have be made:
 - [X] Add diagnostic/debug logging
 
 ## LOC
+
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript | 16 | 1,155 | 466 | 344 | 1,965 |
 | TypeScript JSX | 21 | 1,055 | 104 | 175 | 1,334 |
+| TypeScript | 13 | 913 | 388 | 267 | 1,568 |
 | CSS | 1 | 16 | 1 | 3 | 20 |
 
 ## Links
