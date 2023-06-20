@@ -4,10 +4,10 @@
 
 This project is a reworking of [solid-realworld].
 
-The following changes have be made:
+The following updates have be made:
 
-- [X] Builds & runs with yarn/vite
-- [X] Converted javascript source to fully typed typescript
+- [X] Builds & runs with Vite
+- [X] Source is now fully typed typescript
 - [X] Rationalised code and added extensive comments
 - [X] Add Follow & Favorite to Article
 - [X] Select an article page directly via URL/slug
