@@ -15,6 +15,30 @@ The following updates have be made:
 - [X] Replace server API client with one based directly on openAPI
 - [X] Add diagnostic/debug logging
 
+
+## Running the project
+
+Run the following commands (pnpm is used here but npm and yarn are both ok)
+
+    git clone https://github.com/stevej2608/solid-realworld.git
+
+    cd solid-realworld
+
+    pnpm install
+
+    pnpm dev
+
+Visit [http://localhost:3000/](http://localhost:3000/)
+
+### VSCODE debugging
+
+    pnpm dev
+
+Press F5 in VSCODE, a Chrome browser windows will open. Set
+breakpoints as required.
+
+A debug template is included for Firefox.
+
 ## LOC
 
 | language | files | code | comment | blank | total |
