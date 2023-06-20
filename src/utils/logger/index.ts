@@ -1,4 +1,4 @@
-import { LogLevel, BrowserLog } from 'browser-logger'
+import { LogLevel, BrowserLog } from '@holonix/browser-logger'
 
 export const logger = new BrowserLog({
   format: '{{index}} {{timestamp}} {{title}} {{message}}{{rhs}}{{file}}:{{line}}',

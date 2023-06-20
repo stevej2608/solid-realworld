@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@holonix/browser-logger':
+    specifier: ^0.0.4
+    version: 0.0.4
   '@types/dompurify':
     specifier: ^3.0.2
     version: 3.0.2
@@ -671,6 +674,14 @@ packages:
   /@exodus/schemasafe@1.0.1:
     resolution: {integrity: sha512-PQdbF8dGd4LnbwBlcc4ML8RKYdplm+e9sUeWBTr4zgF13/Shiuov9XznvM4T8cb1CfyKK21yTUkuAIIh/DAH/g==}
     dev: true
+
+  /@holonix/browser-logger@0.0.4:
+    resolution: {integrity: sha512-ttUPjtNpetM40oaYy2HEW7vWM/Bva7035+fys3femOkwDhy2zCR21OQDtDqtFsWORc1N5Zbv6DvgQycSPMuSjA==}
+    dependencies:
+      dateformat: 5.0.3
+      sprintf-js: 1.1.2
+      stacktracey: 2.1.8
+    dev: false
 
   /@humanwhocodes/config-array@0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}
