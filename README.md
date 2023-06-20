@@ -32,12 +32,16 @@ Visit [http://localhost:3000/](http://localhost:3000/)
 
 #### VSCODE debugging
 
+In the vscode terminal window run the following command:
+
     pnpm dev
 
-Press F5 in VSCODE, a Chrome browser window will open. Set
-breakpoints as required.
+Then press F5 in VSCODE, a Chrome browser window will open.
 
-A debug template is included for Firefox.
+Set breakpoints and modify the code as required. Hot module
+replacement (HMR) is enabled.
+
+A debug template for Firefox is included.
 
 ## LOC
 
