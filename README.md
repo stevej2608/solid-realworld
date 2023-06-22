@@ -30,6 +30,12 @@ Run the following commands (pnpm is used here but npm and yarn are both ok)
 
 Visit [http://localhost:3000/](http://localhost:3000/)
 
+## Testing
+
+[vitest] is used for testing the application
+
+    pnpm test
+
 #### VSCODE debugging
 
 In the vscode terminal window run the following command:
@@ -58,6 +64,7 @@ The canonical [realworld] project links.
 * The reference demo for the project [demo.realworld.io]
 * The demo source [angularjs-realworld-example-app]
 
+[vitest]: https://vitest.dev/
 [angularjs-realworld-example-app]: https://github.com/gothinkster/angularjs-realworld-example-app
 [demo.realworld.io]: https://demo.realworld.io/#/
 [realworld]:https://github.com/gothinkster/realworld

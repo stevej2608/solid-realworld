@@ -10,10 +10,12 @@
     "eslint:fix": "eslint src --fix",
     "clean": "rm -rf ./public/*",
     "prettier": "prettier --write src",
+    "test": "vitest",
     "genapi": "swagger-typescript-api --type-prefix 'I' -o src/api -p https://raw.githubusercontent.com/gothinkster/realworld/db2aef2c70e1be92524572d63269c3fc4d6d8a16/api/openapi.yml"
   },
   "license": "MIT",
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
     "@types/node": "18.15.13",
     "@types/sprintf-js": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "5.59.0",
@@ -33,15 +35,18 @@
   },
   "dependencies": {
     "@holonix/browser-logger": "^0.0.5",
+    "@solidjs/testing-library": "0.7.0",
     "@types/dompurify": "^3.0.2",
     "@types/marked": "^5.0.0",
     "browser-util-inspect": "^0.2.0",
     "classnames": "^2.3.2",
     "dateformat": "^5.0.3",
     "dompurify": "^3.0.3",
+    "jsdom": "^22.1.0",
     "marked": "^5.1.0",
     "solid-js": "1.7.3",
     "sprintf-js": "^1.1.2",
-    "stacktracey": "^2.1.8"
+    "stacktracey": "^2.1.8",
+    "vitest": "0.31.0"
   }
 }

@@ -23,6 +23,31 @@
       "skipFiles": [
         "${workspaceFolder}/node_modules/**"
       ],
+    },
+
+    {
+      "name": "3. Vitest, current test file",
+      "type": "node",
+      "request": "launch",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}"],
+      "smartStep": true,
+      "console": "internalConsole"
+    },
+
+    {
+      "name": "4. Vitest, all",
+      "type": "node",
+      "request": "launch",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run"],
+      "smartStep": true,
+      "console": "internalConsole"
     }
+
   ]
 }

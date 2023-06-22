@@ -18,11 +18,10 @@ function ContextProvider(props: IProps) {
   )
 }
 
-render(
-  () => (
-    <ContextProvider>
-      <App />
-    </ContextProvider>
-  ),
-  document.body
+export const AppMain = () => (
+  <ContextProvider>
+    <App />
+  </ContextProvider>
 )
+
+render(() => AppMain(), document.body)

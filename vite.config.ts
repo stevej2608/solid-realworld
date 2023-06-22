@@ -26,6 +26,14 @@ export default defineConfig(({ command, mode }) => {
           },
         },
       },
-    }
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './test/setupVitest.js',
+      deps: {
+        inline: [/solid-js/, /solid-testing-library/],
+      },
+    },
   }
 })
