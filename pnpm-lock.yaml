@@ -6,17 +6,14 @@ settings:
 
 dependencies:
   '@holonix/browser-logger':
-    specifier: ^0.0.4
-    version: 0.0.4
+    specifier: ^0.0.5
+    version: 0.0.5
   '@types/dompurify':
     specifier: ^3.0.2
     version: 3.0.2
   '@types/marked':
     specifier: ^5.0.0
     version: 5.0.0
-  browser-logger:
-    specifier: link:..\browser-logger
-    version: link:../browser-logger
   browser-util-inspect:
     specifier: ^0.2.0
     version: 0.2.0
@@ -675,8 +672,8 @@ packages:
     resolution: {integrity: sha512-PQdbF8dGd4LnbwBlcc4ML8RKYdplm+e9sUeWBTr4zgF13/Shiuov9XznvM4T8cb1CfyKK21yTUkuAIIh/DAH/g==}
     dev: true
 
-  /@holonix/browser-logger@0.0.4:
-    resolution: {integrity: sha512-ttUPjtNpetM40oaYy2HEW7vWM/Bva7035+fys3femOkwDhy2zCR21OQDtDqtFsWORc1N5Zbv6DvgQycSPMuSjA==}
+  /@holonix/browser-logger@0.0.5:
+    resolution: {integrity: sha512-QIK0rtKsDuxN4gnHU6dpWqXpwCPYRCGjcGb+IypFjTQ8K8oIlHvSH/0MncuTksy8gTPhYKeCaRbN/FH4zvUjIg==}
     dependencies:
       dateformat: 5.0.3
       sprintf-js: 1.1.2
