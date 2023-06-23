@@ -29,6 +29,7 @@ export default defineConfig(({ command, mode }) => {
     },
     test: {
       globals: true,
+      include: ['./src/**/*.spec.{js,ts,jsx,tsx}'],
       environment: 'jsdom',
       setupFiles: './test/setupVitest.js',
       deps: {

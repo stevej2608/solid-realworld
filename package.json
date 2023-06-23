@@ -10,7 +10,7 @@
     "eslint:fix": "eslint src --fix",
     "clean": "rm -rf ./public/*",
     "prettier": "prettier --write src",
-    "test": "vitest",
+    "test": "vitest run",
     "genapi": "swagger-typescript-api --type-prefix 'I' -o src/api -p https://raw.githubusercontent.com/gothinkster/realworld/db2aef2c70e1be92524572d63269c3fc4d6d8a16/api/openapi.yml"
   },
   "license": "MIT",
@@ -25,6 +25,7 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "msw": "1.2.1",
     "prettier": "^2.8.8",
     "swagger-typescript-api": "^12.0.4",
     "types": "^0.1.1",
