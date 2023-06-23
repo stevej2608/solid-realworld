@@ -1,6 +1,8 @@
 import { Api as RealWorldApi } from './Api'
 import { IStoreState } from '../store/storeState'
 
+import { API_ROOT } from '../config'
+
 import type {
   HttpResponse,
   IArticle,
@@ -13,8 +15,6 @@ import type {
   IUser,
   IUserResponse,
 } from './Api';
-
-const API_ROOT = 'https://api.realworld.io/api'
 
 const getHeaders = (state: IStoreState) => {
   if (state.token) {
