@@ -25,6 +25,7 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "jsdom": "^22.1.0",
     "msw": "1.2.1",
     "prettier": "^2.8.8",
     "swagger-typescript-api": "^12.0.4",
@@ -32,6 +33,7 @@
     "typescript": "5.0.4",
     "vite": "4.3.1",
     "vite-plugin-solid": "2.7.0",
+    "vitest": "0.31.0",
     "yargs": "^17.7.2"
   },
   "dependencies": {
@@ -39,15 +41,10 @@
     "@solidjs/testing-library": "0.7.0",
     "@types/dompurify": "^3.0.2",
     "@types/marked": "^5.0.0",
-    "browser-util-inspect": "^0.2.0",
     "classnames": "^2.3.2",
-    "dateformat": "^5.0.3",
     "dompurify": "^3.0.3",
-    "jsdom": "^22.1.0",
     "marked": "^5.1.0",
     "solid-js": "1.7.3",
-    "sprintf-js": "^1.1.2",
-    "stacktracey": "^2.1.8",
-    "vitest": "0.31.0"
+    "sprintf-js": "^1.1.2"
   }
 }
