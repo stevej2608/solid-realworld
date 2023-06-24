@@ -82,7 +82,7 @@ export default ({ appName, token, handleSetPage, tab, state }: IHomeProps) => {
                 <div class="tag-list">
                   <For each={state.tags}>
                     {(tag: string) => (
-                      <a href={`#/?tab=${tag}`} class="tag-pill tag-default">
+                      <a href={`#/?tab=${tag}`} class="tag-pill tag-default" data-testid="tag-link">
                         {tag}
                       </a>
                     )}
