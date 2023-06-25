@@ -25,6 +25,8 @@
       ],
     },
 
+    // https://vitest.dev/guide/debugging.html#vscode
+
     {
       "name": "3. Vitest, current test file",
       "type": "node",
@@ -44,7 +46,10 @@
       "autoAttachChildProcesses": true,
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
-      "args": ["run"],
+      // "args": ["run"],
+      // https://vitest.dev/guide/debugging.html#node-inspector-e-g-chrome-devtools
+      // "args": ["run", "--inspect-brk", "--single-thread"],
+      "args": ["run", "--inspect-brk", "--no-threads"],
       "smartStep": true,
       "console": "internalConsole"
     }

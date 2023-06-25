@@ -35,8 +35,8 @@ async function mockFetch(url, config) {
   }
 }
 
-// beforeAll(() => vi.spyOn(window, 'fetch'))
-// beforeEach(() => window.fetch.mockImplementation(mockFetch))
+beforeAll(() => vi.spyOn(window, 'fetch'))
+beforeEach(() => window.fetch.mockImplementation(mockFetch))
 
 const server = { fetch: mockFetch}
 export { server }
