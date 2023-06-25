@@ -1,3 +1,6 @@
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
+
 import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
 
@@ -29,9 +32,12 @@ export default defineConfig(({ command, mode }) => {
     },
     test: {
       globals: true,
+      transformMode: { web: [/\.[jt]sx?$/] },
       include: ['./src/**/*.spec.{js,ts,jsx,tsx}'],
       environment: 'jsdom',
-      setupFiles: './test/setupVitest.js',
+      setupFiles: [
+        './test/setupVitest.js'
+      ],
       deps: {
         inline: [/solid-js/, /solid-testing-library/],
       },
