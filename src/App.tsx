@@ -30,7 +30,7 @@ export const App = () => {
   }
 
   return (
-    <>
+    <div data-testid="container">
       <NavBar />
       <Show when={appLoaded()} fallback={<div class="container loader"></div>}>
         <Suspense>
@@ -59,6 +59,6 @@ export const App = () => {
           </Switch>
         </Suspense>
       </Show>
-    </>
+    </div>
   )
 }

@@ -33,7 +33,7 @@ export default defineConfig(({ command, mode }) => {
     test: {
       globals: true,
       transformMode: { web: [/\.[jt]sx?$/] },
-      include: ['./src/**/*.spec.{js,ts,jsx,tsx}'],
+      include: ['./src/**/*.test.{js,ts,jsx,tsx}'],
       environment: 'jsdom',
       setupFiles: [
         './test/setupVitest.js'
