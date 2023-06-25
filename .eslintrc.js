@@ -19,7 +19,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  plugins: ['@typescript-eslint', 'prettier', 'unused-imports'],
+  plugins: ['@typescript-eslint', 'prettier', 'unused-imports', 'jest-dom'],
   rules: {
     "prettier/prettier": "off",
     "unused-imports/no-unused-imports": "error",
@@ -27,6 +27,11 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unsafe-argument": 1,
+
+    "jest-dom/prefer-checked": "error",
+    "jest-dom/prefer-enabled-disabled": "error",
+    "jest-dom/prefer-required": "error",
+    "jest-dom/prefer-to-have-attribute": "error",
   },
   ignorePatterns: ['node_modules', '.eslintrc.js']
 }
