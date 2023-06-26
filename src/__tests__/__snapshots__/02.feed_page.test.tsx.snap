@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Confirm Feed can be elected > 1. Should see clicking on tag selects a new feed 1`] = `
+exports[`Confirm Tag feed can be selected > 1. Should see clicking on tag selects a new feed 1`] = `
 <div
   data-testid="container"
 >
@@ -197,7 +197,7 @@ exports[`Confirm Feed can be elected > 1. Should see clicking on tag selects a n
 </div>
 `;
 
-exports[`Confirm Feed can be elected > 1. Should see clicking on tag selects a new feed 2`] = `
+exports[`Confirm Tag feed can be selected > 1. Should see clicking on tag selects a new feed 2`] = `
 <div
   data-testid="container"
 >

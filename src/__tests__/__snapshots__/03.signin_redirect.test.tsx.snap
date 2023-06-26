@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Signin redirect > 1. Should redirect when favorite is clicked 1`] = `
+exports[`Favorite badge click - redirect to signin page > 1. Should redirect when favorite is clicked 1`] = `
 <div
   data-testid="container"
 >

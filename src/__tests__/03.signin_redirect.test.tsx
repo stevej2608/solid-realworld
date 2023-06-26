@@ -8,7 +8,10 @@ import { AppMain } from '../AppMain'
 // https://testing-library.com/docs/react-testing-library/cheatsheet/
 // https://testing-library.com/docs/guide-disappearance/
 
-describe('Signin redirect', () => {
+// Clicking a favorite badge when not logged should result in a
+// redirect to th signin page
+
+describe('Favorite badge click - redirect to signin page', () => {
 
   it('1. Should redirect when favorite is clicked', async () => {
     let result = undefined

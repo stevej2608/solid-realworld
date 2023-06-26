@@ -8,7 +8,7 @@ import { AppMain } from '../AppMain'
 // https://testing-library.com/docs/react-testing-library/cheatsheet/
 // https://testing-library.com/docs/guide-disappearance/
 
-describe('Confirm Feed can be elected', () => {
+describe('Confirm Tag feed can be selected', () => {
 
   // Confirm tag selection opens new tag feed
 
