@@ -1,0 +1,198 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Confirm Feed can be elected > 1. Should see clicking on tag selects a new feed 1`] = `
+<div
+  data-testid="container"
+>
+  <nav
+    class="navbar navbar-light"
+  >
+    <div
+      class="container"
+    >
+      <a
+        class="navbar-brand"
+        href="#/"
+      >
+        conduit
+      </a>
+      <ul
+        class="nav navbar-nav pull-xs-right"
+      >
+        <li
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            href="#/"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            href="#/login"
+          >
+            Sign in
+          </a>
+        </li>
+        <li
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            href="#/register"
+          >
+            Sign up
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    class="home-page"
+  >
+    <div
+      class="banner"
+    >
+      <div
+        class="container"
+      >
+        <h1
+          class="logo-font"
+        >
+          conduit
+        </h1>
+        <p>
+          A place to share your knowledge.
+        </p>
+      </div>
+    </div>
+    <div
+      class="container page"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-md-9"
+        >
+          <div
+            class="feed-toggle"
+          >
+            <ul
+              class="nav nav-pills outline-active"
+            >
+              
+              <li
+                class="nav-item"
+              >
+                <a
+                  class="nav-link active"
+                  href="#/?tab=all"
+                >
+                  Global Feed
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+          <div
+            class="article-preview"
+          >
+            Loading articles...
+          </div>
+        </div>
+        <div
+          class="col-md-3"
+        >
+          <div
+            class="sidebar"
+          >
+            <p>
+              Popular Tags
+            </p>
+            <div
+              class="tag-list"
+            >
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=implementations"
+              >
+                implementations
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=welcome"
+              >
+                welcome
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=introduction"
+              >
+                introduction
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=codebaseshow"
+              >
+                codebaseshow
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=ipsum"
+              >
+                ipsum
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=qui"
+              >
+                qui
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=cupiditate"
+              >
+                cupiditate
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=et"
+              >
+                et
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=quia"
+              >
+                quia
+              </a>
+              <a
+                class="tag-pill tag-default"
+                data-testid="tag-link"
+                href="#/?tab=deserunt"
+              >
+                deserunt
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

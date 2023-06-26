@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Confirm Home page loads > Should see "Loading articles and then articles" 1`] = `
+exports[`Confirm Home page loads > 1. Should see "Loading articles..." and then articles themselves 1`] = `
 <div
   data-testid="container"
 >
@@ -129,7 +129,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    1452
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -199,7 +221,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    1137
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -269,7 +313,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    157
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -339,7 +405,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    206
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -409,7 +497,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    194
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -479,7 +589,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    343
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -544,7 +676,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    211
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -614,7 +768,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    170
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -679,7 +855,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    156
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
@@ -749,7 +947,29 @@ exports[`Confirm Home page loads > Should see "Loading articles and then article
                   Fri Dec 09 2022
                 </span>
               </div>
-              
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    12
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
             </div>
             <a
               class="preview-link"
