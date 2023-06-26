@@ -9,12 +9,12 @@ The following updates have be made:
 - [X] Builds & runs with Vite
 - [X] Source is now fully typed typescript
 - [X] Rationalised code and added extensive comments
-- [X] Add Follow & Favorite to Article
+- [X] Added Follow & Favorite to Article
 - [X] Select an article page directly via URL/slug
 - [X] Article comments now load
 - [X] Replace server API client with one based directly on openAPI
-- [X] Add diagnostic/debug logging
-
+- [X] Added diagnostic/debug logging
+- [X] Added comprehensive Vitest mock testing
 
 ## Running the project
 
