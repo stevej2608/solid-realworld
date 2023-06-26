@@ -27,7 +27,11 @@ describe('Confirm Feed can be elected', () => {
     result = await screen.findByTestId ('container')
     expect(result).toMatchSnapshot()
 
+    // Click on a tag
+
     fireEvent.click(screen.getByText('welcome'))
+
+    // Wait for the new feed...
 
     await waitFor(() =>
       expect(
@@ -36,8 +40,8 @@ describe('Confirm Feed can be elected', () => {
 
     // Final snapshot
 
-    // result = await screen.findByTestId ('container')
-    // expect(result).toMatchSnapshot()
+    result = await screen.findByTestId ('container')
+    expect(result).toMatchSnapshot()
 
   })
 

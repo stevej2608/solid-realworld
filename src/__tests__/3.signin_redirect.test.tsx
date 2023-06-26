@@ -10,29 +10,28 @@ import { AppMain } from '../AppMain'
 
 describe('Signin redirect', () => {
 
-  // Confirm tag selection opens new tag feed
-
-  it('1. Should see clicking on tag selects a new feed', async () => {
+  it('1. Should redirect when favorite is clicked', async () => {
     let result = undefined
 
     const screen = render(() => <AppMain />)
-
     expect(screen).toBeTruthy()
 
-    // Confirm we have ten global tags
+    // Confirm we have the first 10 articles listed
 
-    result = await screen.findAllByTestId ('tag-link')
+    result = await screen.findAllByText('Anah Benešová')
     expect((result as HTMLElement[]).length).toBe(10)
 
-    result = await screen.findByTestId ('container')
-    expect(result).toMatchSnapshot()
+    // First article has 1452 likes, click it!
 
-    fireEvent.click(screen.getByText('welcome'))
+    const favorite = await screen.findByText((text) => text.includes('1452'))
+    fireEvent.click(favorite)
+
+    // We're not signed-in so a redirect to the signin page is expected
 
     await waitFor(() =>
       expect(
-        screen.queryByText('Welcome to RealWorld project')
-      ).toBeTruthy(), {timeout: 2000} )
+        screen.queryByText('Sign in')
+      ).toBeTruthy())
 
     // Final snapshot
 

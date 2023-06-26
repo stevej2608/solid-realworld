@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 1`] = `
+exports[`Signin redirect > 1. Should redirect when favorite is clicked 1`] = `
 <div
   data-testid="container"
 >
@@ -98,216 +98,6 @@ exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 1`] 
                 </a>
               </li>
               
-            </ul>
-          </div>
-          <div
-            class="article-preview"
-          >
-            Loading articles...
-          </div>
-        </div>
-        <div
-          class="col-md-3"
-        >
-          <div
-            class="sidebar"
-          >
-            <p>
-              Popular Tags
-            </p>
-            <div
-              class="tag-list"
-            >
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=implementations"
-              >
-                implementations
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=welcome"
-              >
-                welcome
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=introduction"
-              >
-                introduction
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=codebaseshow"
-              >
-                codebaseshow
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=ipsum"
-              >
-                ipsum
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=qui"
-              >
-                qui
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=cupiditate"
-              >
-                cupiditate
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=et"
-              >
-                et
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=quia"
-              >
-                quia
-              </a>
-              <a
-                class="tag-pill tag-default"
-                data-testid="tag-link"
-                href="#/?tab=deserunt"
-              >
-                deserunt
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 2`] = `
-<div
-  data-testid="container"
->
-  <nav
-    class="navbar navbar-light"
-  >
-    <div
-      class="container"
-    >
-      <a
-        class="navbar-brand"
-        href="#/"
-      >
-        conduit
-      </a>
-      <ul
-        class="nav navbar-nav pull-xs-right"
-      >
-        <li
-          class="nav-item"
-        >
-          <a
-            class="nav-link"
-            href="#/"
-          >
-            Home
-          </a>
-        </li>
-        <li
-          class="nav-item"
-        >
-          <a
-            class="nav-link"
-            href="#/login"
-          >
-            Sign in
-          </a>
-        </li>
-        <li
-          class="nav-item"
-        >
-          <a
-            class="nav-link"
-            href="#/register"
-          >
-            Sign up
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div
-    class="home-page"
-  >
-    <div
-      class="banner"
-    >
-      <div
-        class="container"
-      >
-        <h1
-          class="logo-font"
-        >
-          conduit
-        </h1>
-        <p>
-          A place to share your knowledge.
-        </p>
-      </div>
-    </div>
-    <div
-      class="container page"
-    >
-      <div
-        class="row"
-      >
-        <div
-          class="col-md-9"
-        >
-          <div
-            class="feed-toggle"
-          >
-            <ul
-              class="nav nav-pills outline-active"
-            >
-              
-              <li
-                class="nav-item"
-              >
-                <a
-                  class="nav-link"
-                  href="#/?tab=all"
-                >
-                  Global Feed
-                </a>
-              </li>
-              <li
-                class="nav-item"
-              >
-                <a
-                  class="nav-link active"
-                  href=""
-                >
-                  <i
-                    class="ion-pound"
-                  />
-                   
-                  welcome
-                </a>
-              </li>
             </ul>
           </div>
           <div
@@ -317,7 +107,7 @@ exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 2`] 
               class="article-meta"
             >
               <a
-                href="#/@Gerome"
+                href="#/@Anah Benešová"
               >
                 <img
                   alt=""
@@ -329,14 +119,14 @@ exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 2`] 
               >
                 <a
                   class="author"
-                  href="#/@Gerome"
+                  href="#/@Anah Benešová"
                 >
-                  Gerome
+                  Anah Benešová
                 </a>
                 <span
                   class="date"
                 >
-                  Wed Nov 24 2021
+                  Fri Dec 09 2022
                 </span>
               </div>
               <div
@@ -356,7 +146,7 @@ exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 2`] 
                     class="counter"
                   >
                     (
-                    3194
+                    1452
                     <!---->
                     )
                   </span>
@@ -365,13 +155,13 @@ exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 2`] 
             </div>
             <a
               class="preview-link"
-              href="#/article/Welcome-to-RealWorld-project-1"
+              href="#/article/If-we-quantify-the-alarm-we-can-get-to-the-FTP-pixel-through-the-online-SSL-interface!-120863"
             >
               <h1>
-                Welcome to RealWorld project
+                If we quantify the alarm, we can get to the FTP pixel through the online SSL interface!
               </h1>
               <p>
-                Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more
+                Omnis perspiciatis qui quia commodi sequi modi. Nostrum quam aut cupiditate est facere omnis possimus. Tenetur similique nemo illo soluta molestias facere quo. Ipsam totam facilis delectus nihil quidem soluta vel est omnis.
               </p>
               <span>
                 Read more...
@@ -382,12 +172,840 @@ exports[`Signin redirect > 1. Should see clicking on tag selects a new feed 2`] 
                 <li
                   class="tag-default tag-pill tag-outline"
                 >
-                  welcome
+                  rerum
                 </li>
                 <li
                   class="tag-default tag-pill tag-outline"
                 >
-                  introduction
+                  maiores
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  omnis
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  quae
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    1137
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/Try-to-transmit-the-HTTP-card-maybe-it-will-override-the-multi-byte-hard-drive!-120863"
+            >
+              <h1>
+                Try to transmit the HTTP card, maybe it will override the multi-byte hard drive!
+              </h1>
+              <p>
+                Assumenda molestiae laboriosam enim ipsum quaerat enim officia vel quo. Earum odit rem natus totam atque cumque. Sint dolorem facere non.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  voluptate
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  rerum
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  ducimus
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  hic
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    157
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/Use-the-auxiliary-EXE-monitor-then-you-can-hack-the-haptic-port!-120863"
+            >
+              <h1>
+                Use the auxiliary EXE monitor, then you can hack the haptic port!
+              </h1>
+              <p>
+                Et id harum unde et ratione minima non. Suscipit ipsum rem. Sed asperiores quaerat dolorum autem nihil voluptatem et hic ut. Molestiae rerum autem. Dolores nam soluta officia pariatur debitis.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  necessitatibus
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  vitae
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  repellat
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  labore
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    206
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/Try-to-generate-the-TCP-bus-maybe-it-will-override-the-neural-bandwidth!-120863"
+            >
+              <h1>
+                Try to generate the TCP bus, maybe it will override the neural bandwidth!
+              </h1>
+              <p>
+                Pariatur ut dolor repellendus dolores ut debitis. Est iusto neque dicta voluptatibus quia nulla consequatur. Omnis aut sed dolores qui laborum a amet.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  dicta
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  rerum
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  omnis
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  blanditiis
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    194
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/We-need-to-calculate-the-bluetooth-JBOD-bus!-120863"
+            >
+              <h1>
+                We need to calculate the bluetooth JBOD bus!
+              </h1>
+              <p>
+                Ipsa nemo eos sequi nulla id accusamus nam ratione dolore. Omnis sint quisquam accusamus rem rem nihil. Non minus animi cum dolorem earum odit sequi. Rem non inventore sed dicta atque modi. Sed dolorem iste molestiae. Sed eum iste aliquid aliquid.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  nostrum
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  quia
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  quaerat
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  numquam
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    343
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/quantifying-the-microchip-wont-do-anything-we-need-to-index-the-online-SQL-hard-drive!-120863"
+            >
+              <h1>
+                quantifying the microchip wont do anything, we need to index the online SQL hard drive!
+              </h1>
+              <p>
+                Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  possimus
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  voluptatem
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  cupiditate
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    211
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/Try-to-bypass-the-SAS-card-maybe-it-will-transmit-the-solid-state-system!-120863"
+            >
+              <h1>
+                Try to bypass the SAS card, maybe it will transmit the solid state system!
+              </h1>
+              <p>
+                Est iste totam accusamus dolorem est. Quis non sit impedit similique incidunt odio aspernatur aut rem. Architecto est eum.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  dolores
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  aut
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  consectetur
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  ullam
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    170
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/You-cant-transmit-the-firewall-without-copying-the-1080p-SDD-interface!-120863"
+            >
+              <h1>
+                You cant transmit the firewall without copying the 1080p SDD interface!
+              </h1>
+              <p>
+                Est sed deserunt eligendi in velit saepe. Dolorem quis illo vero qui ut recusandae occaecati dolores quae. Voluptatem vero aliquam alias adipisci reiciendis odit nobis est. Vel laboriosam quia commodi rerum. Voluptatum et sed et nesciunt iure ipsum iste aut enim.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  possimus
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  maiores
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  facilis
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    156
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/You-cant-connect-the-interface-without-programming-the-virtual-PNG-protocol!-120863"
+            >
+              <h1>
+                You cant connect the interface without programming the virtual PNG protocol!
+              </h1>
+              <p>
+                Vel facere dolorem sit hic non. Veniam nihil cumque sed et delectus. Maiores minus quisquam nostrum. Eius quasi nostrum. Molestiae recusandae ut. Suscipit natus aliquam eos sit aut.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  dicta
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  repellat
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  facilis
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  labore
+                </li>
+              </ul>
+            </a>
+          </div>
+          <div
+            class="article-preview"
+          >
+            <div
+              class="article-meta"
+            >
+              <a
+                href="#/@Anah Benešová"
+              >
+                <img
+                  alt=""
+                  src="https://api.realworld.io/images/demo-avatar.png"
+                />
+              </a>
+              <div
+                class="info"
+              >
+                <a
+                  class="author"
+                  href="#/@Anah Benešová"
+                >
+                  Anah Benešová
+                </a>
+                <span
+                  class="date"
+                >
+                  Fri Dec 09 2022
+                </span>
+              </div>
+              <div
+                class="pull-xs-right"
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="ion-heart"
+                  />
+                    
+                  
+                  <!---->
+                   
+                  <span
+                    class="counter"
+                  >
+                    (
+                    12
+                    <!---->
+                    )
+                  </span>
+                </button>
+              </div>
+            </div>
+            <a
+              class="preview-link"
+              href="#/article/Ill-synthesize-the-primary-AI-capacitor-that-should-array-the-JBOD-sensor!-120863"
+            >
+              <h1>
+                Ill synthesize the primary AI capacitor, that should array the JBOD sensor!
+              </h1>
+              <p>
+                Perspiciatis illum illum et et error labore ut iure. Eius quidem eius placeat blanditiis in et deserunt. Eligendi fugiat vero nam asperiores sequi sit dignissimos. Quam rerum consequuntur dolor.
+              </p>
+              <span>
+                Read more...
+              </span>
+              <ul
+                class="tag-list"
+              >
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  possimus
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  eos
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  omnis
+                </li>
+                <li
+                  class="tag-default tag-pill tag-outline"
+                >
+                  laborum
                 </li>
               </ul>
             </a>
