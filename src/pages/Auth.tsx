@@ -2,6 +2,7 @@ import { createStore } from 'solid-js/store'
 import { NavLink } from '../components/NavLink'
 import { ListErrors, IErrors } from '../components/ListErrors'
 import { useStore } from '../store/storeContext'
+import { useRouter } from '../routeContext'
 import { INewUser } from '../api/RealWorldApi'
 
 interface IAuthStore extends INewUser {
@@ -12,6 +13,7 @@ interface IAuthStore extends INewUser {
 export default () => {
   const [state, setState] = createStore<IAuthStore>({ username: '', inProgress: false })
   const [, { register, login }] = useStore()
+  const { setLocation } = useRouter()
   const isLogin = location.hash.includes('login')
   const text = isLogin ? 'Sign in' : 'Sign up'
   const link = isLogin ? <NavLink route="register">Need an account?</NavLink> : <NavLink route="login">Have an account?</NavLink>
@@ -20,7 +22,7 @@ export default () => {
     e.preventDefault()
     setState({ inProgress: true })
     const p = isLogin ? login(state.email, state.password) : register(state.username, state.email, state.password)
-    p.then(() => (location.hash = '/'))
+    p.then(() => (setLocation('')))
       .catch((errors: IErrors) => setState({ errors }))
       .finally(() => setState({ inProgress: false }))
   }
@@ -39,6 +41,7 @@ export default () => {
                   <input
                     class="form-control form-control-lg"
                     type="text"
+                    aria-label="username"
                     placeholder="Username"
                     value={state.username || ''}
                     onChange={e => setState({ username: e.target.value })}
@@ -49,6 +52,7 @@ export default () => {
                 <input
                   class="form-control form-control-lg"
                   type="text"
+                  aria-label="email"
                   placeholder="Email"
                   value={state.email || ''}
                   onChange={e => setState({ email: e.target.value })}
@@ -58,6 +62,7 @@ export default () => {
                 <input
                   class="form-control form-control-lg"
                   type="password"
+                  aria-label="password"
                   placeholder="Password"
                   value={state.password || ''}
                   onChange={e => setState({ password: e.target.value })}

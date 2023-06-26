@@ -6,3 +6,5 @@ import { server } from './mock/serverSetup'
 // hack is tested prior to enabling the logger
 
 window.name = "JSDOM"
+window.scrollTo = () => {}
+

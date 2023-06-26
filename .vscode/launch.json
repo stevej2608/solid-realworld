@@ -49,7 +49,7 @@
       // "args": ["run"],
       // https://vitest.dev/guide/debugging.html#node-inspector-e-g-chrome-devtools
       // "args": ["run", "--inspect-brk", "--single-thread"],
-      "args": ["run", "--inspect-brk", "--no-threads"],
+      "args": ["run", "4.register.test.tsx"],
       "smartStep": true,
       "console": "internalConsole"
     }
