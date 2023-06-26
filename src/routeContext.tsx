@@ -1,4 +1,4 @@
-import { createContext, useContext, Accessor } from 'solid-js'
+import { createContext, useContext, Accessor, Setter } from 'solid-js'
 import { createSignal, onCleanup, useTransition } from 'solid-js'
 
 import { logger } from './utils/logger'
@@ -20,6 +20,8 @@ export interface IRouteContext {
    */
 
   location: Accessor<string>
+
+  setLocation: (route: string) => void
 
   /**
    * Return true if regex test is a match in current location
@@ -74,6 +76,10 @@ export function createRouteHandler(init: string): IRouteContext {
 
   return {
     location,
+
+    setLocation: (route: string) => {
+      window.location.hash = `#/${route}`
+    },
 
     match: (name: string, test: RegExp) => {
       const loc = decodeURIComponent(location().split('?')[0])

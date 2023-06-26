@@ -39,11 +39,10 @@ export const ArticlePreview = ({ article, token, onClickFavorite }: IArticlePrev
           <span class="date" textContent={/*@once*/ new Date(createdAt).toDateString()} />
         </div>
 
-        {token && (
-          <div class="pull-xs-right">
-            <FavoriteButton article={article} onClick={onClickFavorite} />
-          </div>
-        )}
+        <div class="pull-xs-right">
+          <FavoriteButton article={article} onClick={onClickFavorite} />
+        </div>
+
       </div>
 
       <NavLink href={`article/${slug}`} route="article" class="preview-link">

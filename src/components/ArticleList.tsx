@@ -1,4 +1,5 @@
 import { useStore } from '../store/storeContext';
+import { useRouter } from '../routeContext'
 import { ArticlePreview } from './ArticlePreview'
 import { IArticle } from '../api/RealWorldApi'
 
@@ -17,11 +18,17 @@ interface IArticleListProps {
  */
 
 export const ArticleList = (props: IArticleListProps) => {
+  const { location, setLocation } = useRouter()
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore()
 
   const handleClickFavorite = (article: IArticle, e: InputEvent) => {
     e.preventDefault()
-    article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
+    if (token) {
+      article.favorited ? unmakeFavorite(article.slug) : makeFavorite(article.slug)
+    }
+    else {
+      setLocation('login')
+    }
   }
 
   const handlePage = (v: number, e: InputEvent) => {
