@@ -3,6 +3,7 @@ import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import { NavLink } from '../../components/NavLink'
 import { useStore } from '../../store/storeContext'
+import { useRouter } from '../../routeContext'
 
 import Comments from './Comments'
 import { IArticle, IProfile } from '../../api/RealWorldApi'
@@ -68,7 +69,7 @@ interface IArticleProps {
 
 export default ({ slug }: IArticleProps) => {
   const [store, { deleteArticle, unmakeFavorite, makeFavorite, loadProfile, unfollow, follow }] = useStore()
-
+  const { setLocation } = useRouter()
   const article = store.articles[slug]
 
   const canModify = () => store.currentUser && store.currentUser.username === article.author.username
@@ -90,8 +91,15 @@ export default ({ slug }: IArticleProps) => {
 
   const onClickFavorite = (article: IArticle, e: InputEvent) => {
     e.preventDefault()
-    const slug: string = article.slug
-    article.favorited ? unmakeFavorite(slug) : makeFavorite(slug)
+    if (store.token){
+      const slug: string = article.slug
+      article.favorited ? unmakeFavorite(slug) : makeFavorite(slug)
+    }
+    else {
+      setLocation('login')
+    }
+
+
   }
 
   const onClickFollow = (ev: InputEvent) => {
