@@ -8,7 +8,7 @@ import { AppMain } from '../AppMain'
 // https://testing-library.com/docs/react-testing-library/cheatsheet/
 // https://testing-library.com/docs/guide-disappearance/
 
-describe.only('Signup', () => {
+describe('Signup', () => {
 
   it('1. Sign Up', async () => {
     let result = undefined
