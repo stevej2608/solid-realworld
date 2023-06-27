@@ -6,23 +6,29 @@ on:
       - main
   pull_request:
 
+env:
+  PNPM_VERSION: 7.24.3
+
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - run: npm i -g pnpm@${PNPM_VERSION}
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 18
 
       - name: Installing deps
-        run: npm install
+        run: npm i -g pnpm@${PNPM_VERSION}
+        run: pnpm install
 
       - name: Test
-        run: npm run test
+        run: pnpm test
 
       - name: Building
-        run: npm run build
+        run: pnpm build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
