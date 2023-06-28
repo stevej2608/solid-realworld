@@ -10,25 +10,29 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       solidPlugin()
     ],
+    base: './',
     build: {
       sourcemap: ['serve', 'dev'].includes(command) ? true : true,
       minify: ['serve', 'dev'].includes(command) ? false : true,
-      target: 'esnext',
-      chunkSizeWarningLimit: 510 * 1024,
-      rollupOptions: {
-        output: {
-          manualChunks: (id) => {
-            if (id.includes('node_modules')) {
+      // target: 'esnext',
+      // chunkSizeWarningLimit: 510 * 1024,
+      // rollupOptions: {
+      //   input: {
+      //     app: './index.html',
+      //   },
+      //   output: {
+      //     manualChunks: (id) => {
+      //       if (id.includes('node_modules')) {
 
-              if (id.includes('apexcharts')) {
-                return 'apexcharts';
-              }
+      //         if (id.includes('apexcharts')) {
+      //           return 'apexcharts';
+      //         }
 
-              return 'vendor';
-            }
-          },
-        },
-      },
+      //         return 'vendor';
+      //       }
+      //     },
+      //   },
+      // },
     },
     test: {
       globals: true,

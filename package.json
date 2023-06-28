@@ -1,6 +1,7 @@
 {
   "name": "solid-realworld",
   "version": "1.0.0",
+  "homepage": "https://stevej2608.github.io/solid-realworld/",
   "author": "AR10",
   "scripts": {
     "dev": "vite --port 3000",
