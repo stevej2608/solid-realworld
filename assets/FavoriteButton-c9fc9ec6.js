@@ -1,0 +1,6 @@
+import{i as u,d as m,m as b,e as v,t as $}from"./index-24d74da4.js";var c={},x={get exports(){return c},set exports(n){c=n}};/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/(function(n){(function(){var i={}.hasOwnProperty;function s(){for(var e=[],o=0;o<arguments.length;o++){var t=arguments[o];if(t){var l=typeof t;if(l==="string"||l==="number")e.push(t);else if(Array.isArray(t)){if(t.length){var a=s.apply(null,t);a&&e.push(a)}}else if(l==="object"){if(t.toString!==Object.prototype.toString&&!t.toString.toString().includes("[native code]")){e.push(t.toString());continue}for(var r in t)i.call(t,r)&&t[r]&&e.push(r)}}}return e.join(" ")}n.exports?(s.default=s,n.exports=s):window.classNames=s})()})(x);const h=c,S=$('<button><i class="ion-heart"></i>&nbsp; <!> <span class="counter">(<!>)'),_=n=>{const{article:i,onClick:s}=n;return(()=>{const e=S(),o=e.firstChild,t=o.nextSibling,l=t.nextSibling,a=l.nextSibling,r=a.nextSibling,p=r.firstChild,f=p.nextSibling;return f.nextSibling,e.$$click=s,e.$$clickData=i,u(e,()=>n.title,l),u(r,()=>i.favoritesCount,f),m(()=>b(e,"btn btn-sm "+h({"btn-outline-primary":!i.favorited,"btn-primary":i.favorited}))),e})()};v(["click"]);export{_ as F};
+//# sourceMappingURL=FavoriteButton-c9fc9ec6.js.map

@@ -1,2 +1,0 @@
-import{m as l,i as t,F as c,S as i,t as o}from"./vendor-26062862.js";const m=o('<ul class="error-messages">'),h=o("<li> "),_=e=>l(i,{get when(){return e.errors},get children(){const s=m();return t(s,l(c,{get each(){return Object.keys(e.errors)},children:n=>(()=>{const r=h(),a=r.firstChild;return t(r,n,a),t(r,()=>e.errors[n],null),r})()})),s}});export{_ as L};
-//# sourceMappingURL=ListErrors-0bcc1fdc.js.map
