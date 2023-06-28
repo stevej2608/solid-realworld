@@ -19,7 +19,7 @@ The following updates have be made:
 
 ## Running the project
 
-The project is hosted on on GitHub Pages, visit [https://stevej2608.github.io/solid-realworld/](https://stevej2608.github.io/solid-realworld/)
+The project is hosted on GitHub Pages, visit [solid-realworld](https://stevej2608.github.io/solid-realworld/)
 
 To download, build and run the project locally, run the following commands (pnpm is used here but npm and yarn are both ok)
 
