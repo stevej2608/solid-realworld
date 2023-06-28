@@ -15,10 +15,13 @@ The following updates have be made:
 - [X] Replace server API client with one based directly on openAPI
 - [X] Added diagnostic/debug logging
 - [X] Added comprehensive Vitest mock testing
+- [X] Updated workflow to build the project for GitHub Pages
 
 ## Running the project
 
-Run the following commands (pnpm is used here but npm and yarn are both ok)
+The project is hosted on on GitHub Pages, visit [https://stevej2608.github.io/solid-realworld/](https://stevej2608.github.io/solid-realworld/)
+
+To download, build and run the project locally, run the following commands (pnpm is used here but npm and yarn are both ok)
 
     git clone https://github.com/stevej2608/solid-realworld.git
 
